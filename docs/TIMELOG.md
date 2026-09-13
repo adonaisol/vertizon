@@ -18,9 +18,8 @@ reported by the author and cross-checked against gaps in the transcript.
 | 13:19 | 13:44 | 25m    | Build started (subagent-driven): scaffold, schemas, scoring library — Tasks 1–5 done and reviewed |
 | 13:44 | 14:12 | 28m    | Synthetic data (30 reviews), prompt + SDK wrapper; zod v3/v4 incompatibility found and fixed — Tasks 6–7 |
 | 14:12 | 14:54 | 42m    | Headless precompute (90 calls), eval script; eval exposed two design flaws (plants contaminating manager offsets; averaging hiding spiky profiles) → fixed in eval + product — Tasks 8–10 |
-
 | 14:54 | 15:12 | 18m    | UI: app shell, calibration map, agenda, drilldown, other-managers' bars — Tasks 11–14 |
-
 | 15:12 | 15:30 | 18m    | Key dialog + live re-run; browser checks in Chrome; fixed dropped fit lines and diff level marking — Task 15 |
+| 15:30 | 16:05 | 35m    | README + rationale draft; final whole-branch review; fix wave (no-evidence points, disclosures, reset-all, a11y, responsive, contradiction chip); 401 path verified in Chrome |
 
-**Running total: ~234 min active** (as of 15:30, including the ~10 min of pre-work)
+**Running total: ~269 min active** (as of 16:05, including the ~10 min of pre-work). Deployment, video and transcript export not yet included.
