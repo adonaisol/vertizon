@@ -37,6 +37,7 @@ export function App() {
         <aside className="overflow-y-auto rounded-lg border border-slate-200 bg-white p-4 text-sm">
           {selected ? (
             <Drilldown
+              key={selected.id}
               employee={selected} rubric={rubric} managers={managers} derived={derived}
               overrides={overrides} dispatch={dispatch}
               apiKey={apiKey} onNeedKey={() => setKeyOpen(true)} onBack={() => setSelectedId(null)}

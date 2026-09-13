@@ -5,15 +5,23 @@ import { DIMENSION_COLORS } from "./dimensionColors";
 type Span = { start: number; end: number; index: number };
 
 export function ReviewText({ review, evidence, activeIndex, onActivate }: { review: string; evidence: EvidenceItem[]; activeIndex: number | null; onActivate: (i: number | null) => void }) {
-  const spans: Span[] = [];
+  // Build a candidate span for every evidence item, sort by start (earlier wins ties
+  // broken by longer span first), then greedily accept, rejecting overlaps with an
+  // already-accepted span. This makes "earlier-starting wins" independent of the
+  // evidence array's order.
+  const candidates: Span[] = [];
   evidence.forEach((e, index) => {
     const start = review.indexOf(e.quote);
     if (start < 0) return;
-    const end = start + e.quote.length;
-    if (spans.some((s) => start < s.end && end > s.start)) return; // overlap: skip
-    spans.push({ start, end, index });
+    candidates.push({ start, end: start + e.quote.length, index });
   });
-  spans.sort((a, b) => a.start - b.start);
+  candidates.sort((a, b) => a.start - b.start || (b.end - b.start) - (a.end - a.start));
+
+  const spans: Span[] = [];
+  for (const c of candidates) {
+    if (spans.some((s) => c.start < s.end && c.end > s.start)) continue; // overlap: skip
+    spans.push(c);
+  }
 
   const parts: ReactNode[] = [];
   let cursor = 0;
@@ -23,7 +31,15 @@ export function ReviewText({ review, evidence, activeIndex, onActivate }: { revi
     parts.push(
       <mark
         key={s.index}
+        role="button"
+        tabIndex={0}
         onClick={() => onActivate(activeIndex === s.index ? null : s.index)}
+        onKeyDown={(ev) => {
+          if (ev.key === "Enter" || ev.key === " ") {
+            ev.preventDefault();
+            onActivate(activeIndex === s.index ? null : s.index);
+          }
+        }}
         className={`cursor-pointer rounded px-0.5 ${activeIndex === s.index ? "ring-2 ring-slate-500" : ""}`}
         style={{ background: DIMENSION_COLORS[item.dimension] }}
         title={`${item.dimension} · ${item.level}`}
