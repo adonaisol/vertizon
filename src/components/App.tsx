@@ -5,6 +5,7 @@ import { useDerived } from "../state/useDerived";
 import { TopBar } from "./TopBar";
 import { CalibrationMap } from "./CalibrationMap";
 import { Agenda } from "./Agenda";
+import { Drilldown } from "./Drilldown";
 
 export function App() {
   const { rubric, managers, employees } = useMemo(loadData, []);
@@ -14,11 +15,12 @@ export function App() {
   const [apiKey, setApiKey] = useState<string | null>(null);
   const [keyOpen, setKeyOpen] = useState(false);
   const derived = useDerived(employees, managers, rubric, overrides);
+  const selected = employees.find((e) => e.id === selectedId) ?? null;
 
   const toggleManager = (id: string) =>
     setHidden((prev) => { const next = new Set(prev); next.has(id) ? next.delete(id) : next.add(id); return next; });
 
-  void dispatch; void apiKey; void setApiKey; void keyOpen; // used in later tasks
+  void apiKey; void setApiKey; void keyOpen; // used in later tasks
 
   return (
     <div className="flex h-screen flex-col text-slate-800">
@@ -33,7 +35,15 @@ export function App() {
           />
         </div>
         <aside className="overflow-y-auto rounded-lg border border-slate-200 bg-white p-4 text-sm">
-          {selectedId ? <p>Selected: {selectedId}</p> : <Agenda employees={employees} managers={managers} derived={derived} onSelect={setSelectedId} />}
+          {selected ? (
+            <Drilldown
+              employee={selected} rubric={rubric} managers={managers} derived={derived}
+              overrides={overrides} dispatch={dispatch}
+              apiKey={apiKey} onNeedKey={() => setKeyOpen(true)} onBack={() => setSelectedId(null)}
+            />
+          ) : (
+            <Agenda employees={employees} managers={managers} derived={derived} onSelect={setSelectedId} />
+          )}
         </aside>
       </main>
     </div>
