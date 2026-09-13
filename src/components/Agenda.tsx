@@ -3,6 +3,7 @@ import type { Manager } from "../lib/schema";
 import type { AgendaGroup } from "../lib/scoring";
 import type { Derived } from "../state/derive";
 import { managerColor } from "./colors";
+import { flagsSelfContradiction } from "../lib/notes";
 
 const GROUPS: { key: AgendaGroup; title: string; hint: string }[] = [
   { key: "discuss", title: "Discuss", hint: "rating and evidence disagree by a full step, or the profile is uneven across dimensions" },
@@ -26,7 +27,7 @@ export function Agenda({ employees, managers, derived, onSelect }: { employees: 
                 const e = byId.get(r.id)!;
                 const mi = managers.findIndex((m) => m.id === e.managerId);
                 const low = e.extraction.sufficiency === "low";
-                const contradictionNoted = e.extraction.notes.some((n) => /contradict/i.test(n));
+                const contradictionNoted = flagsSelfContradiction(e.extraction.notes);
                 return (
                   <li key={r.id}>
                     <button onClick={() => onSelect(r.id)} className="flex w-full items-start gap-2 py-1.5 text-left hover:bg-slate-50">
@@ -36,7 +37,7 @@ export function Agenda({ employees, managers, derived, onSelect }: { employees: 
                         <div className="text-xs text-slate-600">
                           {r.reason}
                           {contradictionNoted && (
-                            <span className="ml-1 rounded bg-amber-100 px-1 text-[10px] text-amber-800">model flagged a contradiction</span>
+                            <span className="ml-1 rounded bg-amber-100 px-1 text-[10px] text-amber-800">review contradicts itself</span>
                           )}
                         </div>
                       </span>

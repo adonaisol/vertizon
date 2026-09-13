@@ -1,5 +1,6 @@
 import type { EmployeeRecord, ExtractionRecord, Manager, ManagerStyle } from "../src/lib/schema";
 import type { AgendaRow } from "../src/lib/scoring";
+import { flagsSelfContradiction } from "../src/lib/notes";
 
 export type Joined = { emp: EmployeeRecord; manager: Manager; rec: ExtractionRecord; ruleStrength: number | null };
 
@@ -98,7 +99,7 @@ export function plantedChecks(rows: Joined[], agendaRows: AgendaRow[]) {
   for (const r of rows.filter((r) => r.emp.plant)) {
     const g = group(r.emp.id);
     if (r.emp.plant === "self_contradicting") {
-      const noted = r.rec.extraction.notes.some((n) => /contradict/i.test(n));
+      const noted = flagsSelfContradiction(r.rec.extraction.notes);
       checks.push({
         name: `planted ${r.emp.plant} (${r.emp.id}) lands in Discuss or is noted as contradictory`,
         pass: g === "discuss" || noted,
