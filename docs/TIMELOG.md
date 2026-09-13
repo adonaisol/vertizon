@@ -6,7 +6,7 @@ reported by the author and cross-checked against gaps in the transcript.
 
 | Start | End   | Active | Notes                                              |
 |-------|-------|--------|----------------------------------------------------|
-| prior | prior | ~10m   | Initial read of the brief with Gemini on the day it arrived; summary in `.assets/prem_review.md` |
+| prior | prior | ~10m   | Initial read of the brief with Gemini on the day it arrived; summary kept locally, not in the repo |
 | 10:59 | 11:00 | 1m     | Read the assignment PDF                            |
 | 11:00 | 11:31 | —      | Break (AFK)                                        |
 | 11:31 | 11:42 | 11m    | PDF hidden-content check; reviewed prior notes     |

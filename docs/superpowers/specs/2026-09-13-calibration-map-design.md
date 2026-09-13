@@ -96,7 +96,7 @@ If check 3 fails, the prompt is revised, not the data; the report records what f
 
 ## 6. UI
 
-Layout and interaction flow are in `.assets/ui-design.md` (wireframe + Mermaid). Summary:
+Layout and interaction flow are in `docs/ui-design.md` (wireframe + Mermaid). Summary:
 
 - **Top bar:** title, one-line reading guide, key icon (BYOK dialog).
 - **Map (left, ~60%):** X = evidence strength (continuous, 1–4), Y = manager rating (integer, small vertical jitter only); points coloured by manager, hollow when sufficiency is low; diagonal reference line; per-manager fitted lines toggleable via legend; hover tooltip; click opens drilldown. A badge shows "N overrides applied" when any exist.
