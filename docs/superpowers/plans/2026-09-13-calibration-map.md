@@ -13,7 +13,8 @@
 ## Global Constraints
 
 - Node is at `~/.nvm/versions/node/v22.22.3/bin` and not on the non-interactive PATH. **Every shell command in this plan is run as** `export PATH="$HOME/.nvm/versions/node/v22.22.3/bin:$PATH" && <command>`. The prefix is omitted below for brevity.
-- Model ID: `claude-opus-5` (constant `MODEL` in `src/lib/anthropic.ts`). No `temperature` (rejected on this model). No prefill.
+- Model ID for the browser SDK path: `claude-opus-5` (constant `MODEL` in `src/lib/anthropic.ts`). No `temperature` (rejected on this model). No prefill.
+- **No API key is available during development.** The precompute runs through Claude Code headless mode (`claude -p … --json-schema …`) on the author's subscription; the recorded `model` field is whatever `claude -p` reports. The browser re-run is verified against a mock (success path) and the real API with a bogus key (401 path) only; the README says so.
 - Rating scale: integers 1–4 = Below, Meets, Exceeds, Greatly Exceeds.
 - Evidence item levels: `well_below | below | at | above | well_above` → −2..+2.
 - Strength rule: `clamp(2 + mean, 1, 4)`, mean = average over dimensions present of the per-dimension average. Continuous.
@@ -44,7 +45,9 @@
 | `src/lib/prompt.ts` | `buildExtractionPrompt()` (system + user text) |
 | `src/lib/anthropic.ts` | `MODEL`, `makeClient()`, `extractOne()` shared by script and browser |
 | `src/lib/data.ts` | Loads the three JSON files, joins them into `Employee[]` with manager info |
-| `scripts/extract.ts` | Precompute: 3 runs per employee → `data/extractions.json` |
+| `scripts/extract.ts` | Precompute via `claude -p`: 3 runs per employee → `data/extractions.json` |
+| `scripts/headless.ts` | `runHeadless(system, user)`: spawns `claude -p` with the JSON schema, parses and validates the result |
+| `src/lib/mockExtract.ts` | Canned `extractOne`-shaped function for verifying the re-run UI without a key |
 | `scripts/eval.ts` | Stability, quote fidelity, planted-truth checks → `data/eval-report.md` |
 | `src/state/overrides.ts` | Reducer + `applyOverrides()` |
 | `src/state/useDerived.ts` | Memoised: effective evidence → strengths → fits → agenda |
@@ -103,7 +106,8 @@
     "tsx": "^4.20.0",
     "typescript": "~5.9.0",
     "vite": "^7.0.0",
-    "vitest": "^3.2.0"
+    "vitest": "^3.2.0",
+    "zod-to-json-schema": "^3.24.0"
   }
 }
 ```
@@ -1141,21 +1145,104 @@ git add src/lib/prompt.ts src/lib/prompt.test.ts src/lib/anthropic.ts && git com
 
 ---
 
-### Task 8: Precompute script
+### Task 8: Precompute script (Claude Code headless)
 
 **Files:**
-- Create: `scripts/extract.ts`, `data/extractions.json` (generated)
+- Create: `scripts/headless.ts`, `scripts/headless.test.ts`, `scripts/extract.ts`, `data/extractions.json` (generated)
 
 **Interfaces:**
-- Consumes: `extractOne`, `makeClient`, `MODEL`; `EmployeesFileSchema`, `RubricSchema`, `ExtractionRecord`.
-- Produces: `data/extractions.json` = `ExtractionRecord[]` with `strengthByRun` of length 3.
+- Consumes: `buildExtractionPrompt`; `ExtractionSchema`, `filterQuotes`, `EmployeesFileSchema`, `RubricSchema`, `ExtractionRecord`.
+- Produces:
+  ```ts
+  // headless.ts
+  export function parseHeadlessOutput(stdout: string): { structured: unknown; model: string | null };
+  export async function runHeadless(system: string, user: string): Promise<{ raw: Extraction; model: string }>;
+  ```
+  and `data/extractions.json` = `ExtractionRecord[]` with `strengthByRun` of length 3.
 
-- [ ] **Step 1: Write `scripts/extract.ts`**
+- [ ] **Step 1: Probe the headless output shape**
+
+Run:
+```bash
+claude -p "Return the number 4 as the value of field n." --output-format json --json-schema '{"type":"object","properties":{"n":{"type":"number"}},"required":["n"],"additionalProperties":false}' --model opus 2>&1 | head -40
+```
+Expected: a JSON object. Note (a) which field holds the schema-validated object (look for `structured_output`; if absent, the `result` field holds a JSON string) and (b) which field names the model (look for `model`, or `modelUsage` keys). Write both down; the parser in Step 3 targets them, and the test in Step 2 pins them.
+
+- [ ] **Step 2: Write the failing parser test**
+
+`scripts/headless.test.ts` (replace the sample with the real shape from Step 1):
+```ts
+import { describe, it, expect } from "vitest";
+import { parseHeadlessOutput } from "./headless";
+
+describe("parseHeadlessOutput", () => {
+  it("extracts the structured object and the model name", () => {
+    const sample = JSON.stringify({ type: "result", structured_output: { n: 4 }, modelUsage: { "claude-opus-5": { inputTokens: 1 } } });
+    const out = parseHeadlessOutput(sample);
+    expect(out.structured).toEqual({ n: 4 });
+    expect(out.model).toBe("claude-opus-5");
+  });
+  it("falls back to parsing result as JSON text", () => {
+    const sample = JSON.stringify({ type: "result", result: "{\"n\":4}" });
+    expect(parseHeadlessOutput(sample).structured).toEqual({ n: 4 });
+  });
+  it("throws on non-JSON", () => {
+    expect(() => parseHeadlessOutput("not json")).toThrow();
+  });
+});
+```
+
+Run: `npx vitest run scripts/headless.test.ts` → FAIL, module not found.
+
+- [ ] **Step 3: Implement `scripts/headless.ts`**
+
+```ts
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
+import { zodToJsonSchema } from "zod-to-json-schema";
+import { ExtractionSchema, type Extraction } from "../src/lib/schema";
+
+const exec = promisify(execFile);
+const SCHEMA = JSON.stringify(zodToJsonSchema(ExtractionSchema, { target: "openAi" }));
+
+export function parseHeadlessOutput(stdout: string): { structured: unknown; model: string | null } {
+  const obj = JSON.parse(stdout) as Record<string, unknown>;
+  let structured: unknown = obj.structured_output;
+  if (structured === undefined && typeof obj.result === "string") structured = JSON.parse(obj.result);
+  const usage = obj.modelUsage as Record<string, unknown> | undefined;
+  const model = typeof obj.model === "string" ? obj.model : usage ? Object.keys(usage)[0] ?? null : null;
+  return { structured, model };
+}
+
+/** One extraction through `claude -p`. Each call is a fresh process, so repeated runs are independent samples. */
+export async function runHeadless(system: string, user: string): Promise<{ raw: Extraction; model: string }> {
+  const args = [
+    "-p", user,
+    "--system-prompt", system,
+    "--output-format", "json",
+    "--json-schema", SCHEMA,
+    "--model", "opus",
+    "--tools", "",          // no tool use: pure text-in, JSON-out
+    "--max-turns", "1",
+  ];
+  const { stdout } = await exec("claude", args, { maxBuffer: 10 * 1024 * 1024 });
+  const { structured, model } = parseHeadlessOutput(stdout);
+  const raw = ExtractionSchema.parse(structured);
+  return { raw, model: model ?? "claude (headless, model not reported)" };
+}
+```
+
+If `--system-prompt`, `--tools`, or `--max-turns` is not accepted by the installed `claude`, run `claude -p --help` and use the equivalent flag (e.g. `--append-system-prompt`, `--allowedTools ""`); the intent is: system text supplied separately, no tools, single turn.
+
+Run: `npx vitest run scripts/headless.test.ts` → 3 passed.
+
+- [ ] **Step 4: Write `scripts/extract.ts`**
 
 ```ts
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
-import { EmployeesFileSchema, RubricSchema, type ExtractionRecord } from "../src/lib/schema";
-import { extractOne, makeClient, MODEL } from "../src/lib/anthropic";
+import { EmployeesFileSchema, RubricSchema, filterQuotes, type ExtractionRecord } from "../src/lib/schema";
+import { buildExtractionPrompt } from "../src/lib/prompt";
+import { runHeadless } from "./headless";
 
 const RUNS = 3;
 const OUT = "data/extractions.json";
@@ -1166,20 +1253,21 @@ const only = process.argv[2]; // optional employee id to re-run a single one
 
 const existing: ExtractionRecord[] = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf8")) : [];
 const byId = new Map(existing.map((r) => [r.employeeId, r]));
-const client = makeClient();
 
 for (const e of employees) {
   if (only && e.id !== only) continue;
   if (!only && byId.has(e.id)) { console.log(`${e.id}: cached`); continue; }
-  const runs = [];
+  const { system, user } = buildExtractionPrompt({ rubric, level: e.level, review: e.review, rating: e.rating });
+  const runs: { extraction: ReturnType<typeof filterQuotes>["extraction"]; dropped: string[]; model: string }[] = [];
   for (let i = 0; i < RUNS; i++) {
-    const r = await extractOne(client, { rubric, level: e.level, review: e.review, rating: e.rating });
-    runs.push(r);
-    console.log(`${e.id} run ${i + 1}: strength=${r.extraction.strength} suff=${r.extraction.sufficiency} items=${r.extraction.evidence.length} dropped=${r.dropped.length}`);
+    const { raw, model } = await runHeadless(system, user);
+    const { extraction, dropped } = filterQuotes(raw, e.review);
+    runs.push({ extraction, dropped, model });
+    console.log(`${e.id} run ${i + 1}: strength=${extraction.strength} suff=${extraction.sufficiency} items=${extraction.evidence.length} dropped=${dropped.length}`);
   }
   byId.set(e.id, {
     employeeId: e.id,
-    model: MODEL,
+    model: runs[0].model,
     extraction: runs[0].extraction,
     strengthByRun: runs.map((r) => r.extraction.strength),
     droppedQuotes: runs.flatMap((r) => r.dropped),
@@ -1189,17 +1277,15 @@ for (const e of employees) {
 console.log(`wrote ${OUT}`);
 ```
 
-- [ ] **Step 2: Run it**
+- [ ] **Step 5: Run one employee first, then all**
 
-Run: `ANTHROPIC_API_KEY=<key> npm run extract`
-Expected: 30 × 3 lines, then `wrote data/extractions.json`. Spot-check: the terse manager's employees show `suff=low`; the calibrated manager's show `high`.
+Run: `npm run extract e01` and read the three lines and the written record. If the model returned no evidence for a review that clearly has some, or quotes are all dropped, fix the prompt before running the rest.
+Then: `npm run extract` (90 headless calls; expect several minutes). Spot-check: the terse manager's employees show `suff=low`; the calibrated manager's show `high`.
 
-If any call fails with `AuthenticationError`, the key is wrong; with `RateLimitError`, re-run (cached employees are skipped).
-
-- [ ] **Step 3: Commit**
+- [ ] **Step 6: Commit**
 
 ```bash
-git add scripts/extract.ts data/extractions.json && git commit -m "Precompute Claude extractions (3 runs per review)"
+git add scripts/headless.ts scripts/headless.test.ts scripts/extract.ts data/extractions.json && git commit -m "Precompute extractions via Claude Code headless mode (3 runs per review)"
 ```
 
 ---
@@ -2221,13 +2307,15 @@ git add src/components && git commit -m "Add implied-rating comparison across ma
 ### Task 15: API key dialog and live re-run
 
 **Files:**
-- Create: `src/components/KeyDialog.tsx`, `src/components/Rerun.tsx`
+- Create: `src/components/KeyDialog.tsx`, `src/components/Rerun.tsx`, `src/lib/mockExtract.ts`
 - Modify: `src/components/Drilldown.tsx`, `src/components/App.tsx`
 
 **Interfaces:**
 - `KeyDialog` props: `{ open: boolean; onClose: () => void; onSave: (key: string | null) => void; hasKey: boolean }`
-- `Rerun` props: `{ employee: Employee; rubric: Rubric; apiKey: string | null; onNeedKey: () => void }`
+- `Rerun` props: `{ employee: Employee; rubric: Rubric; apiKey: string | null; onNeedKey: () => void; extractor?: Extractor }` where `export type Extractor = (apiKey: string, input: ExtractionInput) => Promise<{ extraction: Extraction; dropped: string[] }>`
+- `mockExtract.ts`: `export const mockExtractor: Extractor` — waits 1.5 s, returns the bundled extraction with the first evidence item's level bumped one step and one extra note, so the diff view has something to show.
 - Consumes: `makeClient`, `extractOne`, `strength`, `ratingLabel`.
+- Dev switch: when `import.meta.env.VITE_MOCK_RERUN === "1"`, `App` passes `mockExtractor`; production builds never set it.
 
 - [ ] **Step 1: `src/components/KeyDialog.tsx`**
 
@@ -2268,6 +2356,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import type { Employee } from "../lib/data";
 import type { Extraction, Rubric } from "../lib/schema";
 import { extractOne, makeClient, MODEL } from "../lib/anthropic";
+import type { ExtractionInput } from "../lib/prompt";
 import { ratingLabel, strength } from "../lib/scoring";
 
 type State = { status: "idle" } | { status: "running" } | { status: "done"; live: Extraction; dropped: string[] } | { status: "error"; message: string };
@@ -2280,15 +2369,22 @@ function describeError(err: unknown): string {
   return err instanceof Error ? err.message : "Unknown error";
 }
 
-export function Rerun({ employee: e, rubric, apiKey, onNeedKey }: { employee: Employee; rubric: Rubric; apiKey: string | null; onNeedKey: () => void }) {
+export type Extractor = (apiKey: string, input: ExtractionInput) => Promise<{ extraction: Extraction; dropped: string[] }>;
+
+export const realExtractor: Extractor = async (apiKey, input) => {
+  const client = makeClient({ apiKey, browser: true });
+  const r = await extractOne(client, input);
+  return { extraction: r.extraction, dropped: r.dropped };
+};
+
+export function Rerun({ employee: e, rubric, apiKey, onNeedKey, extractor = realExtractor }: { employee: Employee; rubric: Rubric; apiKey: string | null; onNeedKey: () => void; extractor?: Extractor }) {
   const [state, setState] = useState<State>({ status: "idle" });
 
   async function run() {
     if (!apiKey) { onNeedKey(); return; }
     setState({ status: "running" });
     try {
-      const client = makeClient({ apiKey, browser: true });
-      const r = await extractOne(client, { rubric, level: e.level, review: e.review, rating: e.rating });
+      const r = await extractor(apiKey, { rubric, level: e.level, review: e.review, rating: e.rating });
       setState({ status: "done", live: r.extraction, dropped: r.dropped });
     } catch (err) {
       setState({ status: "error", message: describeError(err) });
@@ -2333,32 +2429,66 @@ export function Rerun({ employee: e, rubric, apiKey, onNeedKey }: { employee: Em
 }
 ```
 
-- [ ] **Step 3: Add to `Drilldown.tsx`**
+- [ ] **Step 3: `src/lib/mockExtract.ts`**
 
-Replace `{/* Rerun (Task 15) */}` with:
+```ts
+import type { Extractor } from "../components/Rerun";
+import { LEVELS, type Extraction } from "./schema";
+
+/** Dev-only stand-in for the live API: returns a slightly perturbed copy of a bundled extraction after a delay. */
+export function makeMockExtractor(bundledFor: (review: string) => Extraction | undefined): Extractor {
+  return async (_apiKey, input) => {
+    await new Promise((r) => setTimeout(r, 1500));
+    const base = bundledFor(input.review);
+    if (!base) throw new Error("mock: no bundled extraction for this review");
+    const evidence = base.evidence.map((item, i) => {
+      if (i !== 0) return item;
+      const idx = Math.min(LEVELS.length - 1, LEVELS.indexOf(item.level) + 1);
+      return { ...item, level: LEVELS[idx] };
+    });
+    return { extraction: { ...base, evidence, notes: [...base.notes, "(mock) live re-run"] }, dropped: [] };
+  };
+}
+```
+
+- [ ] **Step 4: Add to `Drilldown.tsx`**
+
+Add `extractor?: Extractor` to `DrilldownProps` (import the type from `./Rerun`) and replace `{/* Rerun (Task 15) */}` with:
 ```tsx
 <section>
   <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Check the model</h3>
   <p className="mb-1 text-xs text-slate-600">Bundled runs gave strength {e.strengthByRun.join(", ")} across {e.strengthByRun.length} runs.</p>
-  <Rerun employee={e} rubric={rubric} apiKey={p.apiKey} onNeedKey={p.onNeedKey} />
+  <Rerun employee={e} rubric={rubric} apiKey={p.apiKey} onNeedKey={p.onNeedKey} extractor={p.extractor} />
 </section>
 ```
-and `import { Rerun } from "./Rerun";`.
+and `import { Rerun, type Extractor } from "./Rerun";`.
 
-- [ ] **Step 4: Wire `KeyDialog` into `App.tsx`**
+- [ ] **Step 5: Wire `KeyDialog` and the dev mock into `App.tsx`**
 
 After `</main>` add:
 ```tsx
 <KeyDialog open={keyOpen} onClose={() => setKeyOpen(false)} onSave={setApiKey} hasKey={apiKey !== null} />
 ```
-with `import { KeyDialog } from "./KeyDialog";` and delete the `void` line entirely.
+with `import { KeyDialog } from "./KeyDialog";` and delete the `void` line entirely. Above the return:
+```tsx
+const extractor = import.meta.env.VITE_MOCK_RERUN === "1"
+  ? makeMockExtractor((review) => employees.find((x) => x.review === review)?.extraction)
+  : undefined;
+```
+with `import { makeMockExtractor } from "../lib/mockExtract";`, and pass `extractor={extractor}` to `Drilldown`.
 
-- [ ] **Step 5: Verify**
+- [ ] **Step 6: Verify (no key available)**
 
-Run: `npx tsc -b && npm run build && npm run dev`
-Expected: build clean. In the browser: "Re-run" without a key opens the dialog; with a valid key, a live extraction appears beside the bundled one within ~10–30 s; with a bad key, "The API key was rejected." appears; reload forgets the key. Check DevTools → Application → Local/Session Storage: nothing written.
+Run: `npx tsc -b && npm run build`
+Expected: build clean.
 
-If the browser call fails with a CORS error, confirm `dangerouslyAllowBrowser: true` is set; the API supports direct browser calls when that flag is on.
+Success path (mock): `VITE_MOCK_RERUN=1 npm run dev`, open a drilldown, enter any text as the key, click Re-run. Expected: "Running…" for ~1.5 s, then bundled and live side by side with the first item's level changed and one green note.
+
+Error path (real API): `npm run dev` (no mock), enter the key `sk-ant-bogus`, click Re-run. Expected: the request goes to `api.anthropic.com` (visible in DevTools → Network, status 401) and the panel shows "The API key was rejected." If instead a CORS error appears, confirm `dangerouslyAllowBrowser: true` is set in `makeClient`.
+
+Storage: DevTools → Application → Local/Session Storage: nothing written. Reload: key forgotten.
+
+Record in `docs/RATIONALE.md` (Task 16) that the live path was verified this way and not end to end.
 
 - [ ] **Step 6: Commit**
 
@@ -2394,8 +2524,10 @@ Everything needed is bundled (synthetic company + precomputed extractions). An A
 
 ## Regenerate the data
 
-    ANTHROPIC_API_KEY=… npm run extract   # 30 reviews × 3 runs
-    npm run eval                          # writes data/eval-report.md
+    npm run extract   # 30 reviews × 3 runs, through Claude Code headless mode (`claude -p`), no API key needed
+    npm run eval      # writes data/eval-report.md
+
+The extraction prompt and validation are identical between the precompute and the in-browser re-run; only the transport differs (`claude -p` vs the Anthropic SDK). The browser path was verified with a mocked extractor (success) and against the real API with an invalid key (401 handling); it was not run end to end with a valid key during development.
 
 ## Layout
 
@@ -2415,7 +2547,7 @@ The Claude Code session used to design and build this: <TRANSCRIPT LINK>
 Write it from the spec and the eval report. Required sections, in order:
 1. **Why this theme and approach** — Theme 4 applied to the People domain; the three calibration failures; why comparing ratings across managers cannot separate leniency from team strength; the evidence-vs-rating reframe; connection to labeler auditing.
 2. **What is non-obvious** — sufficiency ≠ strength (no evidence is not weak evidence); the model is itself a rater and must be evaluated; "under another manager's bar" falls out of the same fit; uncertainty that widens on extrapolation.
-3. **Key decisions and trade-offs** — precompute + live re-run; continuous strength; shrinkage k=3; SE band floor; manager identity withheld from the prompt; key in memory only; direct browser call as a demo trade-off; no manager rankings.
+3. **Key decisions and trade-offs** — precompute + live re-run; precompute through Claude Code headless mode because no API key was available (same prompt and validation, different transport), and how the live path was verified (mock + 401) without a key; continuous strength; shrinkage k=3; SE band floor; manager identity withheld from the prompt; key in memory only; direct browser call as a demo trade-off; no manager rankings.
 4. **What the eval found** — paste the numbers from `data/eval-report.md` and what was changed in response.
 5. **What was cut** — auth, editing, export, multi-cycle, per-manager scorecards, shared test cases.
 6. **With more time** — shared test cases for managers (rater calibration); multi-cycle drift; an MCP server exposing `extractOne` so it runs inside an HRIS; human-labelled evidence set to score the extractor properly.
