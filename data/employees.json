@@ -1,0 +1,256 @@
+{
+  "managers": [
+    { "id": "m1", "name": "Priya Nair", "style": "calibrated" },
+    { "id": "m2", "name": "Tom Whitaker", "style": "lenient" },
+    { "id": "m3", "name": "Marcus Bell", "style": "harsh" },
+    { "id": "m4", "name": "Sofia Ramos", "style": "verbose" },
+    { "id": "m5", "name": "Lena Fischer", "style": "nonnative" },
+    { "id": "m6", "name": "Omar Haddad", "style": "terse" }
+  ],
+  "employees": [
+    {
+      "id": "e01",
+      "name": "Tomas Herrera",
+      "level": "L3",
+      "managerId": "m1",
+      "rating": 2,
+      "review": "Tomas spent the year on the notifications service and closed 31 tickets against it, including the digest-email batching work that cut our email vendor bill by about 9%. The work he is given, he finishes: nothing he committed to in sprint planning slipped past the following sprint. His pull requests need a normal amount of review, two rounds on average, mostly naming and test coverage, and he takes the comments well. When the paging queue backed up in March he noticed the alert before the on-call did and escalated it to the platform on-call rather than trying to fix it alone, which was the right call. He answers questions in the team channel quickly and wrote the runbook for the digest job. What he has not done yet is take anything on that wasn't assigned to him; the two ideas he raised in retro he left for me to pick up. That is what Meets looks like at L3, and that is the rating."
+    },
+    {
+      "id": "e02",
+      "name": "Aisha Bello",
+      "level": "L3",
+      "managerId": "m1",
+      "rating": 4,
+      "review": "Aisha was given the search autocomplete latency work as a two-week task and turned it into the best piece of engineering on the team this half. She rewrote the suggestion cache, took p99 from 340ms to 45ms, and then kept going: she found that 12% of autocomplete queries were being logged twice, which had been inflating our relevance dashboards for at least a year. Nobody asked her to look. She wrote the fix, the backfill, and a one-page note explaining what the corrected numbers meant, and the data science team has cited it twice since. Her design for the cache eviction policy went through review with two comments, both cosmetic. She caught a race condition in Nikhil's indexer patch during review that would have dropped documents under load. She also rebuilt our local dev seed script because she was tired of watching new hires lose a day to it. For an L3 this is well above the bar in every dimension. Greatly Exceeds."
+    },
+    {
+      "id": "e03",
+      "name": "Nikhil Raghavan",
+      "level": "L4",
+      "managerId": "m1",
+      "rating": 3,
+      "plant": "over_rated",
+      "review": "Nikhil owned the document indexer refresh this year and delivered it in the quarter we planned for it. The new indexer replaced the nightly full rebuild with incremental updates, so index freshness went from roughly 18 hours to under 10 minutes. He wrote the design doc, it went through review without major correction, and the rollout had one rollback on the first attempt which he diagnosed and fixed in two days. He kept to the scope he was given: the indexer and its tests, nothing adjacent. His code reviews are prompt and he answers questions from the mobile team when they ask about index staleness. He followed through on the project's loose ends, including the dashboard and the alert thresholds, without me having to chase him. He did not take on work outside the project this year, and the one cross-team question that came up, how ranking would consume the new freshness signal, he left with me. Exceeds."
+    },
+    {
+      "id": "e04",
+      "name": "Dana Kowalski",
+      "level": "L4",
+      "managerId": "m1",
+      "rating": 3,
+      "review": "Dana led the migration of the billing service off the legacy queue, cutting p95 latency from 800ms to 120ms with no customer-facing incidents. She scoped the project herself and kept the two dependent teams informed through weekly notes, which is why the cutover went smoothly. Her design doc missed the retry semantics and we caught it late in review; she fixed it within the sprint and added a test suite for it. She mentored the two new grads through their first on-call rotations, and both said her runbook was the reason they felt ready. Where she can grow: she still waits for me to bring cross-team problems to her rather than picking them up herself. Overall a clear Exceeds for an L4 this year."
+    },
+    {
+      "id": "e05",
+      "name": "Mei-Ling Chan",
+      "level": "L5",
+      "managerId": "m1",
+      "rating": 2,
+      "review": "Mei-Ling led the identity consolidation program, which pulled four separate login paths, web, iOS, Android and the partner API, onto one auth service. That ran three quarters, involved five teams, and finished with support ticket volume for login problems down 40% and a single place to change password policy. She ran the working group, wrote the migration guides each team used, and did the unglamorous part herself: chasing the last two partner integrations for six weeks after everyone else had moved on. Her designs hold up; the token rotation scheme she picked has survived two incidents that would have broken the old setup. She mentors the two L4s on the team and has a standing office hour that engineers from payments use too. Where she is not yet above the bar: the program was one I set the direction for, and she executed it rather than shaping what we should do next. For an L5 that is squarely Meets."
+    },
+    {
+      "id": "e06",
+      "name": "Declan O'Rourke",
+      "level": "L3",
+      "managerId": "m2",
+      "rating": 2,
+      "review": "Declan had a bumpy year and I want to be fair about the circumstances. He picked up the checkout retry work in Q1 and it landed two months after the date we agreed, mostly because the first implementation had to be rewritten after review found it was retrying non-idempotent calls. We caught two production defects from his changes in Q3: a double-charge path on the coupon flow, which finance had to reconcile by hand, and a null handling bug in the receipt renderer. Both were fixed quickly once flagged. He needs close review; I would say roughly half his pull requests come back with correctness comments rather than style ones. On the other hand he is genuinely pleasant to work with, he never hides a problem, and he tells the team early when he is stuck. He is newer to this codebase than anyone else on the team and I think the trajectory is fine. Meets for the year."
+    },
+    {
+      "id": "e07",
+      "name": "Yuki Tanaka",
+      "level": "L3",
+      "managerId": "m2",
+      "rating": 3,
+      "review": "Yuki did exactly what we asked of her on the mobile release tooling and did it reliably. She took over the Android build pipeline in February, kept the weekly release train running for 22 consecutive weeks without a missed train, and cut the build from 19 minutes to 14 by caching the dependency resolution step. Her changes are clean, review is routine, and I cannot remember a rollback that came from her. When the Play Store signing cert rotation came up she flagged it three weeks ahead and worked through the checklist with me rather than letting it surprise us. She is responsive in channel and writes good release notes that the support team actually reads. She has not gone looking for work beyond the release tooling, but honestly the release tooling has never been in better shape and that is worth a lot to this team. I am giving her an Exceeds; she earned the benefit of the doubt this year."
+    },
+    {
+      "id": "e08",
+      "name": "Fatima Zahra Idrissi",
+      "level": "L4",
+      "managerId": "m2",
+      "rating": 2,
+      "plant": "under_rated",
+      "review": "Fatima drove the shared feature-flag platform across three teams this year. Growth, checkout and the iOS client all moved onto it, and we retired two homegrown flag systems in the process. Flag-related incidents went from nine last year to one. She negotiated the API with each team herself, ran the migration office hours, and wrote the SDK for both TypeScript and Swift. The rollout was staged and nothing broke. She also mentored two engineers through the migration: Ben's first design doc was hers to review, and she spent real time on it rather than rubber-stamping. She caught the stale-cache failure mode before launch and built the kill switch for it. Partner teams ask for her by name now. She could be sharper about writing decisions down; some of the API rationale lives only in her head and in old Slack threads. Solid year. Meets."
+    },
+    {
+      "id": "e09",
+      "name": "Ben Adler",
+      "level": "L4",
+      "managerId": "m2",
+      "rating": 3,
+      "review": "Ben owned the payouts reconciliation service this year and shipped it on the schedule we set in January. It replaced a spreadsheet process that took our ops team about six hours a week; that is now a report they read in ten minutes. The design doc was sound. I had one substantive comment about how to handle partial settlements and he had already thought about it. He handled the unplanned part well too: when the bank changed their file format in August with two weeks' notice, he absorbed it without moving the launch date. Within the project he is fully autonomous and I do not worry about it. He works well with ops and they like him. He has not yet reached outside the project, so no mentoring, no cross-team work, nothing that raises the bar for others, but he has only been at L4 for a year and what he does own, he owns completely. Exceeds for me."
+    },
+    {
+      "id": "e10",
+      "name": "Grace Mutiso",
+      "level": "L5",
+      "managerId": "m2",
+      "rating": 4,
+      "review": "Grace spent the year making streaming ingest something the whole company can build on, and the numbers are hard to argue with. The new ingest platform now carries traffic from six teams, end-to-end lag dropped from around 40 seconds to under 3, and infra spend on the old clusters came down by roughly $180k annualised. More than that, she wrote the schema-evolution standard that ads, growth and fraud all adopted, which is the first time those three teams have agreed on anything in my time here. She ran the design review series herself and talked two teams out of building their own thing, patiently, over months. She is the person other staff engineers go to before they write a design doc. Nobody handed her this mandate; she built the case for it in a memo last January. If I have a note, it is that she takes on too much and the long tail of migration work is slower than it should be. Greatly Exceeds, easily."
+    },
+    {
+      "id": "e11",
+      "name": "Andrei Popescu",
+      "level": "L3",
+      "managerId": "m3",
+      "rating": 1,
+      "review": "Andrei delivered what was on his plate: the observability agent upgrade went out in Q2, the metrics cardinality cleanup in Q3 that took our time-series count down by about 30%, and he kept the dashboards current. None of it slipped. The code is clean enough and review is unremarkable. But unremarkable is the word for the whole year. He does the ticket, he closes the ticket, and he stops. When the tracing sampler started dropping spans in June he noted it in the channel and waited three days for somebody else to pick it up. He is not curious about the systems around his own. He answers questions when asked and does not ask many. At L3 I expect someone to start showing me they want more than the assigned queue, and I did not see it this year. Below."
+    },
+    {
+      "id": "e12",
+      "name": "Hana Kim",
+      "level": "L3",
+      "managerId": "m3",
+      "rating": 2,
+      "review": "Hana's support tooling work was better than I expected. She took the agent console rewrite, scoped as a six-week project, and delivered it in seven with average handle time moving from 4.2 minutes to 3.1, a real number that held for two quarters. She also, without being asked, fixed the macro-expansion bug that support had been working around for two years, and she found it by sitting with the support team for a day, which nobody else on this team has bothered to do. Her designs need little from me. She caught a SQL injection path in a teammate's patch during review. Against that: she over-explains in writing, her documents run three times longer than they need to, and she has twice committed to dates in front of stakeholders before checking with me. She is doing more than the job requires, but the judgment is still developing. Meets."
+    },
+    {
+      "id": "e13",
+      "name": "Rafael Moreira",
+      "level": "L5",
+      "managerId": "m3",
+      "rating": 2,
+      "plant": "contradictory",
+      "review": "Rafael's technical output this year was the strongest on my team. He led the fraud-scoring rewrite across payments and risk, took model-serving latency from 210ms to 35ms, and the new rules engine caught $2.1M in fraudulent volume in its first two quarters that the old system missed. He owned it end to end, including the parts nobody assigned him: when the risk team's data pipeline broke over the holidays he fixed their code himself rather than filing a ticket, and he has quietly carried the on-call burden for two services that are not his. The problem is how he works with people. Two partner teams escalated to me about him this year. The risk team's lead asked that he not attend their design reviews after he called their proposal amateur hour in front of six people. The mobile team stopped inviting him to the fraud integration sync in March and routed questions through me instead; they said they would rather wait a day than be told they were wrong in that tone. I have raised this with him three times and the pattern has not changed. Meets."
+    },
+    {
+      "id": "e14",
+      "name": "Ingrid Bergqvist",
+      "level": "L4",
+      "managerId": "m3",
+      "rating": 3,
+      "review": "Ingrid rebuilt how this company does data quality and I am not going to pretend otherwise. She shipped the contract-testing layer for the warehouse, which now blocks about 40 bad schema changes a quarter before they reach production; before her, we found those in dashboards, usually a week late and usually from a customer complaint. She wrote the standard, she wrote the tooling, and she got analytics, growth and finance to adopt it without any authority to make them. Revenue reporting has not needed a correction in three quarters, which was not true in any prior year I have been here. She anticipates failure modes better than anyone at her level; the backfill guard she added caught a duplicate-load bug within a week of landing. She mentors well, and two engineers asked to work with her by name. She is occasionally slow to declare something finished and polishes past the point of value. Exceeds."
+    },
+    {
+      "id": "e15",
+      "name": "Samuel Okonkwo",
+      "level": "L4",
+      "managerId": "m3",
+      "rating": 1,
+      "review": "Samuel delivered the mobile checkout redesign on the date he committed to, and conversion on the payment step moved up 1.4%, which held after the A/B test closed. That is the scoped project he owned and he owned it properly, including the two weeks of Android-specific bugs after launch that were not fun for anyone. The design doc was adequate. Beyond that, the year was thin. He did not take on anything that was not handed to him. His code reviews on other people's work are one-line approvals; I have stopped counting the number of times he has approved a patch in under two minutes. He does not engage in design discussion unless directly asked, and when the checkout and payments teams disagreed about error-state ownership he sat it out for a month. One scoped project delivered is not a year at L4. Below."
+    },
+    {
+      "id": "e16",
+      "name": "Leila Farouk",
+      "level": "L3",
+      "managerId": "m4",
+      "rating": 3,
+      "review": "Leila has been such a joy to work with this year and I find myself constantly impressed by the energy and the positivity she brings into every single room she walks into. She is thoughtful, she is kind, she is endlessly curious, and she has that rare quality of making the people around her feel heard, which is not something you can teach. Her growth over the last twelve months has been genuinely remarkable to watch and I have said as much to my peers more than once. She has contributed to so many different projects that I honestly lose track, and in every one of them she has brought the same care and the same attention and the same willingness to roll up her sleeves and do whatever the moment requires. The feedback I hear about her from across the organisation is uniformly glowing. People like working with her. People want her on their projects. She asks wonderful questions in reviews and she has a real instinct for when something is not quite right. She has made countless improvements to our systems, many of them the kind nobody notices until they are gone, and the overall impact of her work this year has been substantial. She is dependable, she is humble, and she is always the first to celebrate somebody else's win. I could not be happier to have her on the team and I am excited about everything that is ahead for her. Exceeds."
+    },
+    {
+      "id": "e17",
+      "name": "Peter Novak",
+      "level": "L3",
+      "managerId": "m4",
+      "rating": 3,
+      "review": "Peter is one of those engineers who makes a team better simply by being in it, and I have felt that every single week this year. He is calm, he is steady, and he has an unflappable quality that is worth a great deal when things get noisy. He has worked on a huge number of things this year, more than I could reasonably list here, and across all of them he has shown the same dedication and the same quiet excellence. He never complains. He never drops something. He is the person who quietly picks up the thing everyone else walked past, and he does it without needing any credit for it, which I think says everything about his character. His technical judgement is excellent and his colleagues trust it, which is about the highest compliment I know how to give. He communicates with real warmth and I have watched him defuse more than one tense conversation with nothing more than patience and good faith. His impact this year has been enormous and far-reaching and I do not think the organisation fully appreciates how much smoother things run because of him. He has grown tremendously and I fully expect that growth to continue. Working with Peter has been a genuine highlight of my year and I am grateful for everything he brings to this team. Exceeds, and very well deserved."
+    },
+    {
+      "id": "e18",
+      "name": "Ravi Subramanian",
+      "level": "L4",
+      "managerId": "m4",
+      "rating": 3,
+      "review": "Ravi has been an absolute pleasure to have on the team this year and I cannot say enough good things about his attitude, his energy, and the way he lifts everyone around him. He is the kind of engineer every manager hopes to have: positive, dependable, always willing to jump in wherever the need is greatest, and not once has he made a fuss about it. He has been involved in so many projects this year that I would struggle to name them all, and in each of them he has brought the same enthusiasm and the same generosity of spirit. The countless improvements he has made across our systems have had a huge impact, and I hear that echoed back to me from every direction. He is brilliant in design discussions. He is patient with newer engineers in a way that is genuinely rare. He has a wonderful way of explaining complicated things simply, and people seek him out for exactly that reason. His work ethic is second to none and his standards are extremely high, both for himself and for what we ship. I want to be clear that the value he adds goes well beyond anything that would ever show up in a ticket queue. He is a culture carrier for this team and I hope he knows how much he is valued here. An easy Exceeds."
+    },
+    {
+      "id": "e19",
+      "name": "Chloe Dubois",
+      "level": "L4",
+      "managerId": "m4",
+      "rating": 3,
+      "plant": "self_contradicting",
+      "review": "Chloe is a phenomenal engineer and an even better teammate, and this review is going to struggle to do her justice. She is meticulous, she is fast, and she always ships on time; I genuinely cannot think of a commitment she has not honoured, and that reliability is something the whole team leans on more than they realise. Her enthusiasm is infectious and she brings a wonderful optimism to even the most tedious work. She has touched an enormous number of projects this year and improved every one of them in ways large and small. People adore working with her. She gives thoughtful, generous code reviews and she has a real gift for making newer engineers feel safe asking questions. Her technical instincts are superb and her curiosity is boundless. If I am being completely candid, the two biggest deliverables she owned this year each slipped by a quarter, and I know that weighed on her, though much of that was outside her control and I do not hold it against her at all. What matters far more to me is the attitude, the growth, and the extraordinary care she puts into everything she does. She has had a tremendous year and I am thrilled to have her. Exceeds."
+    },
+    {
+      "id": "e20",
+      "name": "Dmitri Volkov",
+      "level": "L5",
+      "managerId": "m4",
+      "rating": 3,
+      "review": "Dmitri is, without any exaggeration, one of the most impressive people I have worked with in my career, and it has been a privilege to have him on this team. His technical depth is extraordinary, his instincts are excellent, and he carries all of it with a humility that makes it land well with the people around him. He has been involved in an enormous amount of work this year across many different areas of the business, and everywhere he goes he raises the standard. Other engineers light up when they talk about working with him. He is endlessly generous with his time and I have lost count of the number of people who have told me that a single conversation with Dmitri unblocked them for weeks. He thinks at a level well above his role and he has made countless contributions that have had a huge and lasting impact on how we build things here. He is calm under pressure. He is thoughtful in disagreement. He is the first person I go to when I need a sanity check on something hard. I have no meaningful development feedback for him this cycle beyond encouraging him to keep doing exactly what he is doing. A truly outstanding year and a very well-earned Exceeds."
+    },
+    {
+      "id": "e21",
+      "name": "Amara Nwosu",
+      "level": "L3",
+      "managerId": "m5",
+      "rating": 2,
+      "review": "Amara work this year on the customer data API and she do all what was planned. The new endpoint for the consent, she build it and also the tests, and since March there is no incident from this part. Her code I must not check so much, the review is normally one round only. In the beginning she was a bit slow because the codebase is big, but after two months she has the speed like the others. When something is blocked she say it fast in the standup, she does not keep it for herself, this I appreciate very much. She is helpful with the questions from the working student. What is still missing: she take only the tickets which are given to her, she does not search by herself what can be better. For L3 this is what we expect, so from me it is Meets."
+    },
+    {
+      "id": "e22",
+      "name": "Jae-won Park",
+      "level": "L3",
+      "managerId": "m5",
+      "rating": 3,
+      "review": "Jae-won has made much more than only his tickets this year. The task was to add the new payment method in the SDK, but he see that our error codes are not the same between web and Android, and he make one common list and change both clients, so now the support team find the problem in the half of the time, they say maybe 20 minutes instead of 45. Nobody ask him for this. Also the retry logic which he write is very careful, he think about the case when the network come back in the middle, this I did not think myself. In the review of the code from the others he find real bugs, not only the style. He explain to the new colleague how the payment flow works, three sessions he made, and after he wrote it also in the wiki. For an L3 he is clearly over the bar. Exceeds."
+    },
+    {
+      "id": "e23",
+      "name": "Carlota Pires",
+      "level": "L4",
+      "managerId": "m5",
+      "rating": 2,
+      "review": "Carlota was responsible for the video transcoding project and she bring it to the end in the time which we planned. Before, one video need around 12 minutes until it is ready for the user, now it is under 3 minutes, this is measured and it holds also now. The design she wrote was correct, in the review there was nothing big to change. When after the start there was the problem with the old videos which are not converted, she did not wait, she make the migration script in the weekend by herself and she informed everybody on Monday. With the content team she speak regularly and they are satisfied. Outside from her project she did not do so much this year, and the mentoring she does only when I ask her. For L4 the project she owns completely, and this is what the level says. Meets from me."
+    },
+    {
+      "id": "e24",
+      "name": "Jonas Lindqvist",
+      "level": "L4",
+      "managerId": "m5",
+      "rating": 3,
+      "review": "Jonas make this year the new export pipeline, which before was many manual steps and now is one job that run every night. This is used by the finance team, they told me it save them around one day per week. He found himself that old pipeline lose rows when the file was too big, nobody ask him to look at this, and he fix it and write a document how it works. In the design review he was not so good to explain why his choice is better, people were confused, but the design itself was correct and we used it. With the new colleagues he is patient and explain many times. For me he is more than what we expect from L4, I give Exceeds."
+    },
+    {
+      "id": "e25",
+      "name": "Ahmed El-Sayed",
+      "level": "L5",
+      "managerId": "m5",
+      "rating": 2,
+      "review": "Ahmed leads the platform migration to the new deployment system and this is a work over three teams, search, billing and the internal tools. Until now 34 services from 40 are moved, the deploy time is from 25 minutes to 6 minutes, and the failed deploys are less than the half from before. He make the documentation and he sit together with every team for the first migration, he does not only send the link. The rollback design is from him, it save us in August when one release was bad, we go back in two minutes. He is the person which the other teams ask when they have a question about the deployment. What he does not do until now: he execute the plan which we make together, but he does not tell me what the platform must be in two years. For L5 I see Meets."
+    },
+    {
+      "id": "e26",
+      "name": "Nadia Petrova",
+      "level": "L3",
+      "managerId": "m6",
+      "rating": 2,
+      "review": "Solid year. Did the work that was asked, no complaints from the team. Meets."
+    },
+    {
+      "id": "e27",
+      "name": "Kwame Asante",
+      "level": "L3",
+      "managerId": "m6",
+      "rating": 2,
+      "review": "Reliable. Shipped his tickets, reviews were fine. Nothing to flag either way. Meets."
+    },
+    {
+      "id": "e28",
+      "name": "Elena Rossi",
+      "level": "L4",
+      "managerId": "m6",
+      "rating": 3,
+      "review": "Good year. Took on more than last year and it showed. Team likes working with her. Exceeds."
+    },
+    {
+      "id": "e29",
+      "name": "Rahul Mehta",
+      "level": "L4",
+      "managerId": "m6",
+      "rating": 2,
+      "review": "Steady. Delivered what was on the plan. A couple of dates moved but nothing serious. Meets."
+    },
+    {
+      "id": "e30",
+      "name": "Bridget Nolan",
+      "level": "L5",
+      "managerId": "m6",
+      "rating": 3,
+      "review": "Strong. Handled the hard problems without much input from me. Others come to her. Exceeds."
+    }
+  ]
+}
