@@ -65,7 +65,7 @@ Reviews are drafted with Claude's help from these specifications, then hand-edit
   evidence: Array<{
     quote: string,                   // verbatim substring of the review; checked programmatically
     dimension: 'impact' | 'craft' | 'collaboration' | 'ownership',
-    level: 'below' | 'at' | 'above',
+    level: 'well_below' | 'below' | 'at' | 'above' | 'well_above',
     rationale: string,
   }>,
   notes: string[],
@@ -88,9 +88,9 @@ If check 3 fails, the prompt is revised, not the data; the report records what f
 
 ## 5. Scoring (`src/lib/scoring.ts`, pure functions, unit-tested)
 
-- `strength(evidence, level)`: recomputed client-side from evidence levels so overrides work. Rule: map each item's level to −1/0/+1, average per dimension, average across dimensions present, then `round(2 + 1.5 × mean)` clamped to 1–4. The bundled `strength` from the model is used for display until an override exists, and the eval report notes any disagreement between the model's `strength` and this rule.
-- `managerFit(points)`: least-squares line of rating on strength for one manager's employees, with n. If all x are equal, the fit is horizontal at the mean rating. Low-sufficiency points are excluded from fits.
-- `impliedRating(strength, fit)`: point estimate and a range. Range half-width = `max(0.5, 1.5 / sqrt(n))`, rounded to the rating grid. This is a deliberately simple, transparent heuristic, labelled as such in the UI ("based on N reviews").
+- `strength(evidence)`: computed client-side from evidence levels so overrides work. Rule: map each item's level to −2/−1/0/+1/+2, average per dimension, average across dimensions present, then `2 + mean` clamped to 1–4. The result is **continuous**; it is the map's x-coordinate (no jitter needed) and is rounded only for labels ("evidence ≈ Exceeds"). The model's own `strength` is kept in the data for the eval report (which records disagreement with this rule) but the UI always uses the rule, so bundled and overridden values are comparable.
+- `managerFit(points)`: least-squares line of rating on strength for one manager's employees, using only points with medium/high sufficiency. To stabilise small samples, the manager's slope and intercept are **shrunk toward the pooled fit** (all managers' usable points) with weight `n / (n + k)`, k = 3. Returns `{a, b, n, s, xbar, sxx}` where `s` is the residual standard error. If n = 0 the fit is `null` and the UI shows "not enough evidence to infer this manager's bar". If n = 1 or all x are equal, the manager's own slope is undefined and the pooled slope is used with the intercept shrunk as above.
+- `impliedRating(strength, fit)`: point estimate `a + b·strength` and a range with half-width `max(0.5, s · sqrt(1/n + (strength − xbar)² / sxx))`, i.e. the standard error of the fitted line, floored at half a rating step. The band therefore widens when the manager is inconsistent and when the employee's evidence lies outside the range this manager has rated before. Shown in the UI as a range on the rating scale with "based on N reviews"; the method is disclosed in a footnote and in the rationale.
 - `agenda(employees)`: rank by `|rating − strength|`; group as **Discuss** (gap ≥ 1, sufficiency medium/high), **Get more input** (sufficiency low), **Looks consistent** (the rest). Each row carries a one-sentence reason.
 - `managerSummary(fit)`: one sentence per manager, e.g. "runs +0.8 above evidence", "steeper bar for Exceeds", "on the diagonal".
 
@@ -99,7 +99,7 @@ If check 3 fails, the prompt is revised, not the data; the report records what f
 Layout and interaction flow are in `.assets/ui-design.md` (wireframe + Mermaid). Summary:
 
 - **Top bar:** title, one-line reading guide, key icon (BYOK dialog).
-- **Map (left, ~60%):** X = evidence strength, Y = manager rating, integer axes with jitter; points coloured by manager, hollow when sufficiency is low; diagonal reference line; per-manager fitted lines toggleable via legend; hover tooltip; click opens drilldown. A badge shows "N overrides applied" when any exist.
+- **Map (left, ~60%):** X = evidence strength (continuous, 1–4), Y = manager rating (integer, small vertical jitter only); points coloured by manager, hollow when sufficiency is low; diagonal reference line; per-manager fitted lines toggleable via legend; hover tooltip; click opens drilldown. A badge shows "N overrides applied" when any exist.
 - **Agenda (right, default):** three groups with counts; rows open the drilldown. Below: manager summaries.
 - **Drilldown (right, on selection):** header (name, level, manager, rating vs strength); review text with evidence quotes highlighted by dimension, click for rationale; evidence list with level dropdowns (overrides); "Under other managers' bars" rows with range and n; "Re-run with Claude" button.
 - **Overrides:** stored in a `useReducer` store keyed by employee + evidence index; recompute strength, fits, agenda, and other-bars live. Reset per employee and globally.
@@ -123,7 +123,7 @@ docs/           RATIONALE.md, TIMELOG.md, superpowers/{specs,plans}
 
 ## 8. Testing
 
-- vitest unit tests on `scoring.ts`: strength rule, fits (including n=5 and degenerate x), implied-rating ranges, agenda grouping and ranking, override recomputation.
+- vitest unit tests on `scoring.ts`: strength rule (anchors: all "at" → 2, all "well_above" → 4, per-dimension averaging), fits (n=5, n=1, n=0, degenerate x, shrinkage weight), implied-rating ranges (floor at 0.5, widening on extrapolation), agenda grouping and ranking, override recomputation.
 - zod schema tests: rejects malformed extraction; quote-fidelity filter drops non-substrings.
 - `scripts/eval.ts` is the test for the extraction step; its report is committed.
 - No component tests.
@@ -138,6 +138,6 @@ docs/           RATIONALE.md, TIMELOG.md, superpowers/{specs,plans}
 ## 10. Risks
 
 - **Model scores prose, not work.** Mitigated by prompt wording and the non-native-English eval check.
-- **False precision in "under other bars".** Mitigated by ranges, n labels, and the simple disclosed heuristic.
+- **False precision in "under other bars".** Mitigated by standard-error bands that widen on inconsistency and extrapolation, shrinkage toward the pooled fit, n labels, and disclosure of the method.
 - **Reads as AI judging people.** Mitigated by framing (evidence vs rating, not employee vs employee), no manager rankings, and overrides that keep the facilitator in charge.
 - **Browser API call.** Demo trade-off; a real deployment would proxy. Key never persisted.
