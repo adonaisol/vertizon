@@ -2,10 +2,12 @@ import { useMemo, useReducer, useState } from "react";
 import { loadData } from "../lib/data";
 import { overridesReducer, countOverrides } from "../state/overrides";
 import { useDerived } from "../state/useDerived";
+import { makeMockExtractor } from "../lib/mockExtract";
 import { TopBar } from "./TopBar";
 import { CalibrationMap } from "./CalibrationMap";
 import { Agenda } from "./Agenda";
 import { Drilldown } from "./Drilldown";
+import { KeyDialog } from "./KeyDialog";
 
 export function App() {
   const { rubric, managers, employees } = useMemo(loadData, []);
@@ -20,7 +22,9 @@ export function App() {
   const toggleManager = (id: string) =>
     setHidden((prev) => { const next = new Set(prev); next.has(id) ? next.delete(id) : next.add(id); return next; });
 
-  void apiKey; void setApiKey; void keyOpen; // used in later tasks
+  const extractor = import.meta.env.VITE_MOCK_RERUN === "1"
+    ? makeMockExtractor((review) => employees.find((x) => x.review === review)?.extraction)
+    : undefined;
 
   return (
     <div className="flex h-screen flex-col text-slate-800">
@@ -41,12 +45,14 @@ export function App() {
               employee={selected} rubric={rubric} managers={managers} derived={derived}
               overrides={overrides} dispatch={dispatch}
               apiKey={apiKey} onNeedKey={() => setKeyOpen(true)} onBack={() => setSelectedId(null)}
+              extractor={extractor}
             />
           ) : (
             <Agenda employees={employees} managers={managers} derived={derived} onSelect={setSelectedId} />
           )}
         </aside>
       </main>
+      <KeyDialog open={keyOpen} onClose={() => setKeyOpen(false)} onSave={setApiKey} hasKey={apiKey !== null} />
     </div>
   );
 }

@@ -7,11 +7,12 @@ import { effectiveEvidence, type OverrideAction, type Overrides } from "../state
 import { ReviewText } from "./ReviewText";
 import { EvidenceList } from "./EvidenceList";
 import { OtherBars } from "./OtherBars";
+import { Rerun, type Extractor } from "./Rerun";
 
 export type DrilldownProps = {
   employee: Employee; rubric: Rubric; managers: Manager[]; derived: Derived;
   overrides: Overrides; dispatch: Dispatch<OverrideAction>;
-  apiKey: string | null; onNeedKey: () => void; onBack: () => void;
+  apiKey: string | null; onNeedKey: () => void; onBack: () => void; extractor?: Extractor;
 };
 
 export function Drilldown(p: DrilldownProps) {
@@ -54,7 +55,11 @@ export function Drilldown(p: DrilldownProps) {
         <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Under other managers' bars</h3>
         <OtherBars employee={e} strengthValue={s} managers={p.managers} derived={p.derived} rubric={rubric} />
       </section>
-      {/* Rerun (Task 15) */}
+      <section>
+        <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Check the model</h3>
+        <p className="mb-1 text-xs text-slate-600">Bundled runs gave strength {e.strengthByRun.join(", ")} across {e.strengthByRun.length} runs.</p>
+        <Rerun employee={e} rubric={rubric} apiKey={p.apiKey} onNeedKey={p.onNeedKey} extractor={p.extractor} />
+      </section>
     </div>
   );
 }
