@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { strength, ratingLabel, olsFit, pooledFit, managerFit, impliedRating, type Point } from "./scoring";
+import { agenda, managerSummary, usablePoints, type Scored } from "./scoring";
 import type { EvidenceItem } from "./schema";
 
 const ev = (dimension: EvidenceItem["dimension"], level: EvidenceItem["level"]): EvidenceItem => ({
@@ -95,5 +96,50 @@ describe("impliedRating", () => {
     const r = impliedRating(4, fit);
     expect(r.high).toBeLessThanOrEqual(4);
     expect(r.low).toBeGreaterThanOrEqual(1);
+  });
+});
+
+const S = (id: string, rating: number, strength: number | null, sufficiency: Scored["sufficiency"] = "high"): Scored =>
+  ({ id, name: id, managerId: "m1", rating, strength, sufficiency });
+
+describe("usablePoints", () => {
+  it("keeps only rows with sufficiency != low and non-null strength", () => {
+    const rows = [S("a", 3, 2, "high"), S("b", 2, null, "high"), S("c", 2, 1.5, "low"), S("d", 4, 3, "medium")];
+    expect(usablePoints(rows)).toEqual([{ x: 2, y: 3 }, { x: 3, y: 4 }]);
+  });
+});
+
+describe("agenda", () => {
+  it("groups and orders rows", () => {
+    const rows = agenda([S("a", 3, 2), S("b", 2, 2.1), S("c", 2, 1.5, "low"), S("d", 4, 2)], RATINGS);
+    expect(rows.map((r) => [r.id, r.group])).toEqual([
+      ["d", "discuss"], ["a", "discuss"], ["c", "more_input"], ["b", "consistent"],
+    ]);
+  });
+  it("writes a reason sentence", () => {
+    const [row] = agenda([S("a", 3, 2)], RATINGS);
+    expect(row.reason).toBe("Rated Exceeds; evidence reads as Meets.");
+    const [more] = agenda([S("c", 2, 1.5, "low")], RATINGS);
+    expect(more.reason).toBe("Review gives too little evidence to judge.");
+  });
+  it("treats null strength as more_input", () => {
+    expect(agenda([S("z", 2, null, "high")], RATINGS)[0].group).toBe("more_input");
+  });
+});
+
+describe("managerSummary", () => {
+  it("describes offset", () => {
+    const own = [S("a", 3, 2), S("b", 4, 3), S("c", 3, 2.2)];
+    expect(managerSummary({ a: 1, b: 1, n: 3, s: 0.1, xbar: 2.4, sxx: 1 }, own)).toBe("runs +0.9 above evidence");
+  });
+  it("describes slope when offset is small", () => {
+    const own = [S("a", 1, 2), S("b", 4, 3)];
+    expect(managerSummary({ a: -3, b: 2, n: 2, s: 0.1, xbar: 2.5, sxx: 1 }, own)).toBe("stretches the scale: harsh at the bottom, generous at the top");
+  });
+  it("says on the diagonal otherwise", () => {
+    expect(managerSummary({ a: 0.1, b: 1, n: 5, s: 0.1, xbar: 2.5, sxx: 1 }, [S("a", 2, 2)])).toBe("on the diagonal");
+  });
+  it("handles no fit", () => {
+    expect(managerSummary(null, [])).toBe("not enough evidence to infer this manager's bar");
   });
 });

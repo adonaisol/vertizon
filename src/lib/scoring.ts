@@ -1,4 +1,4 @@
-import type { Dimension, EvidenceItem, Level } from "./schema";
+import type { Dimension, EvidenceItem, Level, Sufficiency } from "./schema";
 
 export const LEVEL_VALUE: Record<Level, number> = {
   well_below: -2, below: -1, at: 0, above: 1, well_above: 2,
@@ -85,4 +85,42 @@ export function impliedRating(x: number, fit: Fit): { estimate: number; low: num
   const se = fit.s * Math.sqrt(1 / fit.n + (x - fit.xbar) ** 2 / fit.sxx);
   const halfWidth = Math.max(0.5, se);
   return { estimate, halfWidth, low: clamp(estimate - halfWidth, 1, 4), high: clamp(estimate + halfWidth, 1, 4) };
+}
+
+export type Scored = { id: string; name: string; managerId: string; rating: number; strength: number | null; sufficiency: Sufficiency };
+export type AgendaGroup = "discuss" | "more_input" | "consistent";
+export type AgendaRow = { id: string; group: AgendaGroup; gap: number; reason: string };
+
+export function usablePoints(rows: Scored[]): Point[] {
+  return rows.filter((r) => r.sufficiency !== "low" && r.strength !== null).map((r) => ({ x: r.strength as number, y: r.rating }));
+}
+
+export function agenda(rows: Scored[], ratings: { value: number; label: string }[]): AgendaRow[] {
+  const out: AgendaRow[] = rows.map((r) => {
+    if (r.sufficiency === "low" || r.strength === null) {
+      return { id: r.id, group: "more_input", gap: 0, reason: "Review gives too little evidence to judge." };
+    }
+    const gap = r.rating - r.strength;
+    const rated = ratingLabel(r.rating, ratings);
+    const ev = ratingLabel(r.strength, ratings);
+    if (Math.abs(gap) >= 1) {
+      return { id: r.id, group: "discuss", gap, reason: `Rated ${rated}; evidence reads as ${ev}.` };
+    }
+    return { id: r.id, group: "consistent", gap, reason: `Rated ${rated}; evidence agrees.` };
+  });
+  const order: Record<AgendaGroup, number> = { discuss: 0, more_input: 1, consistent: 2 };
+  return out.sort((p, q) => order[p.group] - order[q.group] || Math.abs(q.gap) - Math.abs(p.gap));
+}
+
+export function managerSummary(fit: Fit | null, own: Scored[]): string {
+  if (!fit) return "not enough evidence to infer this manager's bar";
+  const usable = own.filter((r) => r.sufficiency !== "low" && r.strength !== null);
+  const offset = usable.length ? mean(usable.map((r) => r.rating - (r.strength as number))) : 0;
+  if (Math.abs(offset) >= 0.3) {
+    const sign = offset > 0 ? "+" : "−";
+    return `runs ${sign}${Math.abs(offset).toFixed(1)} ${offset > 0 ? "above" : "below"} evidence`;
+  }
+  if (fit.b >= 1.3) return "stretches the scale: harsh at the bottom, generous at the top";
+  if (fit.b <= 0.7) return "compresses the scale: rates everyone near the middle";
+  return "on the diagonal";
 }
