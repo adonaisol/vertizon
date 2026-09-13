@@ -1,4 +1,6 @@
-import { z } from "zod";
+// Imports from "zod/v4" (not the bare "zod" v3-compat export) because the Anthropic SDK's
+// `zodOutputFormat` helper (src/lib/anthropic.ts) requires zod-v4-core schema objects at runtime.
+import { z } from "zod/v4";
 
 export const LEVELS = ["well_below", "below", "at", "above", "well_above"] as const;
 export const DIMENSIONS = ["impact", "craft", "collaboration", "ownership"] as const;
