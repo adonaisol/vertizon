@@ -49,7 +49,7 @@ Two real flaws sat behind those failures. Manager offsets included each manager'
 
 The prompt and the data were not changed. On re-run all 10 checks pass: offsets +0.92 (lenient), −0.53 (harsh), +0.30 (calibrated), and the non-native-English team's mean strength at 2.30 against the calibrated team's 2.36 — the two teams were written to comparable quality mixes (three Meets plus two stronger cases on each, one of the calibrated team's being Greatly Exceeds), so that comparison mostly isolates writing style.
 
-The app's per-manager sentence is computed on all of that manager's usable points, planted anomaly included, and with n=5 a single outlier moves the mean by about 0.2, so it reads smaller than the eval's plant-excluded offsets; the eval excludes plants because it is testing style, the app includes them because a facilitator should see the real team.
+The app's per-manager sentence uses all of that manager's usable points, planted anomaly included, so it differs from the eval's plant-excluded offsets: in the app the calibrated manager reads +0.44 (eval +0.30), the lenient one +0.50 (eval +0.92) and the harsh one −0.43 (eval −0.53). With n=5 one planted case moves a mean by up to 0.4. The eval excludes plants because it is testing style; the app includes them because a facilitator should see the real team.
 
 The verbose and terse managers have no fitted line at all because every one of their reviews is low sufficiency — the sufficiency rule doing exactly its job — and the compression of the strength rule inflates every offset, including the calibrated baseline.
 
