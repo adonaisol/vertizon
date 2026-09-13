@@ -1,0 +1,1819 @@
+[
+  {
+    "employeeId": "e01",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 2,
+      "sufficiency": "high",
+      "evidence": [
+        {
+          "quote": "closed 31 tickets against it, including the digest-email batching work that cut our email vendor bill by about 9%",
+          "dimension": "impact",
+          "level": "above",
+          "rationale": "The 9% cut to the vendor bill is a measurable business result. That fits the above-bar description, if Tomas delivered the batching work end-to-end."
+        },
+        {
+          "quote": "The work he is given, he finishes: nothing he committed to in sprint planning slipped past the following sprint.",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "Reliable delivery of assigned, well-defined work is the at-bar description. The wording suggests some items slipped by up to one sprint, which is still reliable."
+        },
+        {
+          "quote": "His pull requests need a normal amount of review, two rounds on average, mostly naming and test coverage",
+          "dimension": "craft",
+          "level": "at",
+          "rationale": "Normal review load, and the comments are minor (naming, test coverage). This is solid code with normal review, the at-bar description."
+        },
+        {
+          "quote": "he takes the comments well",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "He takes review feedback well, which fits communicating clearly and responding to teammates."
+        },
+        {
+          "quote": "When the paging queue backed up in March he noticed the alert before the on-call did and escalated it to the platform on-call rather than trying to fix it alone, which was the right call.",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "Escalating a blocker to the right owner is exactly the at-bar description. Spotting it before on-call shows attentiveness, but the action itself was an appropriate escalation, not initiative beyond his assigned work."
+        },
+        {
+          "quote": "He answers questions in the team channel quickly",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "Responsive to teammates, the at-bar description."
+        },
+        {
+          "quote": "wrote the runbook for the digest job",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "Documenting his own system helps the team. The review doesn't say this was unassigned or that it improved team communication more broadly, so it is not clearly above the bar."
+        },
+        {
+          "quote": "What he has not done yet is take anything on that wasn't assigned to him; the two ideas he raised in retro he left for me to pick up.",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "This shows the above-bar behavior (initiative beyond assigned tasks) is missing. It is not a below-bar failure: no commitment was dropped, and raising ideas in retro is a contribution in itself."
+        }
+      ],
+      "notes": [
+        "The review agrees with the manager's rating of 2 (Meets). Every dimension shows at-bar behavior with concrete examples, and the review names the specific gap (initiative) that separates Meets from Exceeds.",
+        "Possible above-bar signal: the digest-email batching cut the vendor bill by about 9%, which is a measurable result. The review doesn't say whether Tomas scoped and drove this as a small project end-to-end or implemented an assigned ticket. If he drove it, impact would be above the bar, but one above-bar dimension alone would not justify Exceeds.",
+        "The review has no praise without examples; almost every claim is backed by something concrete.",
+        "'Nothing ... slipped past the following sprint' implies some commitments slipped by one sprint. That is minor and consistent with reliable delivery.",
+        "The ownership gap (ideas left for the manager to pick up) shows missing above-bar behavior, not below-bar behavior."
+      ]
+    },
+    "strengthByRun": [
+      2,
+      2,
+      2
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e03",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 2,
+      "sufficiency": "high",
+      "evidence": [
+        {
+          "quote": "Nikhil owned the document indexer refresh this year and delivered it in the quarter we planned for it.",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "He owned a scoped project and delivered it on schedule, which is the L4 bar."
+        },
+        {
+          "quote": "The new indexer replaced the nightly full rebuild with incremental updates, so index freshness went from roughly 18 hours to under 10 minutes.",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "The project had a clear, measurable result. It was a single-team project, not a cross-team one."
+        },
+        {
+          "quote": "He wrote the design doc, it went through review without major correction",
+          "dimension": "craft",
+          "level": "at",
+          "rationale": "The design was sound and needed no major correction in review, which matches the bar. Nothing suggests he set standards others adopted."
+        },
+        {
+          "quote": "the rollout had one rollback on the first attempt which he diagnosed and fixed in two days",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "He owned an unplanned problem in his own project. The rollback also suggests he didn't anticipate that failure mode, so this isn't above the craft bar."
+        },
+        {
+          "quote": "He kept to the scope he was given: the indexer and its tests, nothing adjacent.",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "He owned his project's outcomes, and the review says he did nothing beyond that scope."
+        },
+        {
+          "quote": "His code reviews are prompt and he answers questions from the mobile team when they ask about index staleness.",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "He helps teammates and communicates well with a partner team, but only responds when asked. There's no mentoring or friction resolution."
+        },
+        {
+          "quote": "He followed through on the project's loose ends, including the dashboard and the alert thresholds, without me having to chase him.",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "He followed through on his own project's outcomes without prompting, which is the L4 bar."
+        },
+        {
+          "quote": "He did not take on work outside the project this year",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "The review rules out ownership beyond his own project, which is what the above-bar level requires."
+        },
+        {
+          "quote": "the one cross-team question that came up, how ranking would consume the new freshness signal, he left with me",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "He passed a cross-team issue to his manager instead of resolving it. This isn't a failure at L4, but it rules out the above-bar level."
+        }
+      ],
+      "notes": [
+        "The manager's Exceeds rating is contradicted by the text. Every concrete example is at the L4 bar, and the review explicitly rules out the above-bar behaviour on three dimensions. Impact: single-team scope. Ownership: 'nothing adjacent' and 'did not take on work outside the project'. Collaboration: the cross-team ranking question 'he left with me'.",
+        "The strongest item is the freshness improvement from about 18 hours to under 10 minutes. It's a measurable result, but the bar already expects measurable results at L4. Unless someone can show that ranking or mobile gained visible value from it, it doesn't reach the above-bar level.",
+        "The final 'Exceeds.' has no reasoning behind it. The facilitator should ask the manager what above-bar work the review leaves out, or whether they're rating how hard or valuable the project was rather than how Nikhil performed against the L4 bar.",
+        "No craft evidence suggests he anticipated failure modes or set quality standards. The first rollout needed a rollback, which he did diagnose and fix quickly."
+      ]
+    },
+    "strengthByRun": [
+      2,
+      2,
+      2
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e02",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 4,
+      "sufficiency": "high",
+      "evidence": [
+        {
+          "quote": "She rewrote the suggestion cache, took p99 from 340ms to 45ms",
+          "dimension": "impact",
+          "level": "well_above",
+          "rationale": "Took a scoped task and delivered it end-to-end with a large measured result (about 7.5x lower p99). The L3 'above' bar is small projects with measurable results; this goes past it."
+        },
+        {
+          "quote": "she found that 12% of autocomplete queries were being logged twice, which had been inflating our relevance dashboards for at least a year",
+          "dimension": "ownership",
+          "level": "well_above",
+          "rationale": "Found a long-standing data-quality bug outside her assigned task on her own. This is initiative well beyond the task."
+        },
+        {
+          "quote": "Nobody asked her to look.",
+          "dimension": "ownership",
+          "level": "above",
+          "rationale": "Makes clear the dashboard investigation was self-directed, beyond assigned work."
+        },
+        {
+          "quote": "She wrote the fix, the backfill, and a one-page note explaining what the corrected numbers meant, and the data science team has cited it twice since.",
+          "dimension": "impact",
+          "level": "well_above",
+          "rationale": "Did all the follow-through (fix, backfill, write-up), and another team used the result, so the impact reached beyond her own team."
+        },
+        {
+          "quote": "a one-page note explaining what the corrected numbers meant, and the data science team has cited it twice since",
+          "dimension": "collaboration",
+          "level": "above",
+          "rationale": "Wrote clearly for another team, and they have cited it since. Fits 'improves team communication'."
+        },
+        {
+          "quote": "Her design for the cache eviction policy went through review with two comments, both cosmetic.",
+          "dimension": "craft",
+          "level": "above",
+          "rationale": "A design that passed review with only cosmetic comments fits 'designs are sound with little guidance'."
+        },
+        {
+          "quote": "She caught a race condition in Nikhil's indexer patch during review that would have dropped documents under load.",
+          "dimension": "craft",
+          "level": "above",
+          "rationale": "Caught a serious defect in a teammate's code, which is the L3 'above' bar for craft."
+        },
+        {
+          "quote": "She also rebuilt our local dev seed script because she was tired of watching new hires lose a day to it.",
+          "dimension": "ownership",
+          "level": "above",
+          "rationale": "Improved team tooling on her own initiative, outside any assigned task."
+        },
+        {
+          "quote": "She also rebuilt our local dev seed script because she was tired of watching new hires lose a day to it.",
+          "dimension": "collaboration",
+          "level": "above",
+          "rationale": "Helps teammates by removing a day of onboarding friction for new hires."
+        }
+      ],
+      "notes": [
+        "The review is consistent with the manager's rating of 4. Impact and ownership each have well-above-bar examples with specific numbers (p99 340ms→45ms, 12% of queries logged twice for about a year), and craft has two above-bar examples.",
+        "Collaboration evidence is indirect: a written note another team cited, a defect caught in review, and a tooling fix for new hires. Nothing directly covers day-to-day communication or responsiveness. It still reads as at or above the bar, but 'well above in every dimension' goes further than the collaboration evidence shows.",
+        "'turned it into the best piece of engineering on the team this half' and 'For an L3 this is well above the bar in every dimension' are claims or conclusions, not evidence. I didn't count either.",
+        "No contradictions within the review."
+      ]
+    },
+    "strengthByRun": [
+      4,
+      4,
+      4
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e04",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 3,
+      "sufficiency": "high",
+      "evidence": [
+        {
+          "quote": "Dana led the migration of the billing service off the legacy queue, cutting p95 latency from 800ms to 120ms with no customer-facing incidents.",
+          "dimension": "impact",
+          "level": "above",
+          "rationale": "She owned the project and it had a large, measurable result (p95 latency down about 85%). Two dependent teams were affected, so the result is likely visible beyond her team. This sits between 'at' and 'above': the review never says the project itself was cross-team."
+        },
+        {
+          "quote": "She scoped the project herself",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "She owned a scoped project from start to finish, which is the L4 bar."
+        },
+        {
+          "quote": "kept the two dependent teams informed through weekly notes, which is why the cutover went smoothly",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "Good communication with partner teams, with a concrete result (a smooth cutover). This matches the at-bar description."
+        },
+        {
+          "quote": "Her design doc missed the retry semantics and we caught it late in review",
+          "dimension": "craft",
+          "level": "below",
+          "rationale": "The design needed a real correction in review, and the gap was found late. That matches the below-bar description for craft."
+        },
+        {
+          "quote": "she fixed it within the sprint and added a test suite for it",
+          "dimension": "craft",
+          "level": "at",
+          "rationale": "She fixed the gap quickly and added tests to stop it happening again. This is sound at-bar recovery, but she didn't anticipate the failure mode, which is what above-bar requires."
+        },
+        {
+          "quote": "She mentored the two new grads through their first on-call rotations, and both said her runbook was the reason they felt ready.",
+          "dimension": "collaboration",
+          "level": "above",
+          "rationale": "Clear mentoring, backed by feedback from both new grads and a runbook they used. Mentoring is the above-bar description for collaboration."
+        },
+        {
+          "quote": "she still waits for me to bring cross-team problems to her rather than picking them up herself",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "She doesn't take ownership beyond her own project unprompted, so she isn't above the bar. Nothing suggests she needs prompting on her own project, so this doesn't put her below it."
+        }
+      ],
+      "notes": [
+        "The Exceeds rating is mostly carried by collaboration (mentoring, above bar) and impact (the migration, borderline at/above). Craft is at, with a below-bar design miss. The manager explicitly says ownership is not above the bar. So the rating is defensible but close to the line between Meets and Exceeds.",
+        "'Overall a clear Exceeds for an L4 this year.' is the manager's conclusion, not evidence. 'Clear' overstates it given the craft gap and the growth area on ownership.",
+        "Whether impact counts as above bar depends on whether the migration is a cross-team project. The review mentions two dependent teams but doesn't say how involved they were beyond receiving updates.",
+        "Craft has mixed evidence: the design gap was caught late in review, but she fixed it quickly and added tests. Someone at the above bar would have anticipated the retry failure mode."
+      ]
+    },
+    "strengthByRun": [
+      3,
+      3,
+      3
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e05",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 2,
+      "sufficiency": "high",
+      "evidence": [
+        {
+          "quote": "Mei-Ling led the identity consolidation program, which pulled four separate login paths, web, iOS, Android and the partner API, onto one auth service.",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "She led a project that spanned several teams and platforms. That matches the L5 bar: 'Leads cross-team projects.'"
+        },
+        {
+          "quote": "That ran three quarters, involved five teams, and finished with support ticket volume for login problems down 40%",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "It's a measurable result that the whole org can see, across five teams. A 40% drop in login tickets could count as an org-level metric, but the above-bar level also requires shaping direction, and the review says she didn't."
+        },
+        {
+          "quote": "a single place to change password policy",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "The outcome improves the long-term health of the platform, beyond simply delivering the project."
+        },
+        {
+          "quote": "She ran the working group, wrote the migration guides each team used",
+          "dimension": "craft",
+          "level": "at",
+          "rationale": "Five teams used the migration guides she wrote, which raised the quality of execution beyond her own team. That's at bar and edges toward setting standards across teams."
+        },
+        {
+          "quote": "She ran the working group",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "She coordinated a working group across five teams, which shows working relationships across teams."
+        },
+        {
+          "quote": "did the unglamorous part herself: chasing the last two partner integrations for six weeks after everyone else had moved on",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "She owned the program through to full completion, including the long tail of partner migrations. That's strong ownership, but it was within a mandate she'd been given, so it isn't the above-bar 'without a mandate'."
+        },
+        {
+          "quote": "Her designs hold up; the token rotation scheme she picked has survived two incidents that would have broken the old setup.",
+          "dimension": "craft",
+          "level": "at",
+          "rationale": "There's concrete evidence her designs hold up under real stress (two incidents). That matches 'designs hold up under scale.'"
+        },
+        {
+          "quote": "She mentors the two L4s on the team",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "Mentoring is named explicitly in the at-bar collaboration description."
+        },
+        {
+          "quote": "has a standing office hour that engineers from payments use too",
+          "dimension": "collaboration",
+          "level": "above",
+          "rationale": "Engineers from another team seek her out, which is an early sign of the above-bar 'sought out as a partner.' It's one example, though, not a sustained effect of multiplying other teams' effectiveness."
+        },
+        {
+          "quote": "the program was one I set the direction for, and she executed it rather than shaping what we should do next",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "The manager explicitly says she executed strongly without shaping direction for multiple teams, which caps impact at the bar."
+        }
+      ],
+      "notes": [
+        "The text supports the manager's rating of 2. The evidence is concrete and consistent, and it sits at the L5 bar on all four dimensions.",
+        "It's a borderline case. The 40% drop in login tickets could be read as moving an org-level metric, and the payments office hour hints at being 'sought out as a partner'. A calibration panel could reasonably discuss a 3, but the review directly addresses the missing above-bar element: she didn't shape direction.",
+        "The review is internally consistent. It gives a specific, evidence-based reason for not rating higher instead of vague reservations.",
+        "There's no praise without examples. Every claim is backed by something concrete: scope, duration, metric, incidents, or named teams."
+      ]
+    },
+    "strengthByRun": [
+      2,
+      2,
+      2
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e07",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 2,
+      "sufficiency": "high",
+      "evidence": [
+        {
+          "quote": "Yuki did exactly what we asked of her on the mobile release tooling and did it reliably.",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "This matches the L3 bar almost word for word: she delivers well-defined tasks reliably."
+        },
+        {
+          "quote": "kept the weekly release train running for 22 consecutive weeks without a missed train",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "Sustained, reliable delivery of assigned recurring work. It is strong performance at the bar, but it is operational continuity rather than a new project."
+        },
+        {
+          "quote": "cut the build from 19 minutes to 14 by caching the dependency resolution step",
+          "dimension": "impact",
+          "level": "above",
+          "rationale": "A small improvement with a measurable result (about 26% faster builds). This is the clearest above-bar item in the review."
+        },
+        {
+          "quote": "She took over the Android build pipeline in February",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "She took on and held responsibility for a pipeline. The review frames this as assigned scope, not self-initiated work."
+        },
+        {
+          "quote": "Her changes are clean, review is routine, and I cannot remember a rollback that came from her.",
+          "dimension": "craft",
+          "level": "at",
+          "rationale": "This is exactly the at-bar description: solid code with normal review. There is no evidence of design leadership or catching others' defects."
+        },
+        {
+          "quote": "When the Play Store signing cert rotation came up she flagged it three weeks ahead and worked through the checklist with me rather than letting it surprise us.",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "Flagging a risk early and following through is a strong example of the at-bar behavior 'escalates blockers'. It falls within her assigned release scope, so it is not initiative beyond her tasks."
+        },
+        {
+          "quote": "She is responsive in channel",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "Matches the at-bar description 'responsive to teammates'."
+        },
+        {
+          "quote": "writes good release notes that the support team actually reads",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "Clear communication that another team uses. Release notes are part of the release role, so this is at the bar and at most borderline above."
+        },
+        {
+          "quote": "She has not gone looking for work beyond the release tooling",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "The manager says outright that she has not shown the above-bar behavior 'takes initiative beyond assigned tasks'."
+        }
+      ],
+      "notes": [
+        "The evidence supports a strong Meets (2), not Exceeds. Craft, collaboration, and ownership are all at the bar. Impact has one above-bar item: the build-time cut from 19 to 14 minutes.",
+        "The review argues against its own rating. The manager writes that she 'did exactly what we asked', that she 'has not gone looking for work beyond the release tooling', and that she 'earned the benefit of the doubt this year'. The last phrase admits the Exceeds is a judgment call, not something the evidence shows.",
+        "'the release tooling has never been in better shape' is general praise. Only the build-time improvement and the unbroken release train back it up.",
+        "There is no evidence of helping teammates, mentoring, design work, or catching others' defects, which are the above-bar markers for collaboration and craft.",
+        "The writing is clear and specific, so sufficiency is high. The issue is that the concrete examples mostly describe at-bar work."
+      ]
+    },
+    "strengthByRun": [
+      2,
+      2,
+      2
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e06",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 1,
+      "sufficiency": "high",
+      "evidence": [
+        {
+          "quote": "it landed two months after the date we agreed, mostly because the first implementation had to be rewritten after review found it was retrying non-idempotent calls",
+          "dimension": "impact",
+          "level": "below",
+          "rationale": "His main Q1 deliverable was two months late and had to be reworked, which matches the rubric's below-bar impact description (tasks slip or need rework)."
+        },
+        {
+          "quote": "the first implementation had to be rewritten after review found it was retrying non-idempotent calls",
+          "dimension": "craft",
+          "level": "below",
+          "rationale": "Retrying non-idempotent calls is a basic design flaw. Review caught it, and fixing it meant rewriting the whole implementation."
+        },
+        {
+          "quote": "We caught two production defects from his changes in Q3: a double-charge path on the coupon flow, which finance had to reconcile by hand, and a null handling bug in the receipt renderer.",
+          "dimension": "craft",
+          "level": "below",
+          "rationale": "Two defects reached production, and one (double-charging customers) had real financial impact and needed manual cleanup by another team."
+        },
+        {
+          "quote": "He needs close review; I would say roughly half his pull requests come back with correctness comments rather than style ones.",
+          "dimension": "craft",
+          "level": "below",
+          "rationale": "This almost exactly matches the rubric's below-bar craft description (frequent defects, needs close review)."
+        },
+        {
+          "quote": "Both were fixed quickly once flagged.",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "He responds quickly and follows through on fixes, but only after someone else flags the problem."
+        },
+        {
+          "quote": "he never hides a problem, and he tells the team early when he is stuck",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "Raising blockers early matches the at-bar ownership description (escalates blockers)."
+        },
+        {
+          "quote": "he tells the team early when he is stuck",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "Clear, early communication with teammates is the at-bar collaboration standard. Nothing suggests he helps others or improves how the team communicates."
+        }
+      ],
+      "notes": [
+        "The text contradicts the manager's rating. Impact and craft are both concretely below the bar (late, reworked main project; production defects including a double-charge; about half of PRs get correctness comments). Collaboration and ownership are only at the bar. Nothing is above the bar to offset the gaps, so the evidence points to 1 (Below), not 2 (Meets).",
+        "The rating of Meets rests on mitigating context rather than evidence about the work: 'He is newer to this codebase than anyone else on the team and I think the trajectory is fine.' The review gives no example of improvement over the year (for example, a better second half), so the 'trajectory' claim is unsupported.",
+        "'genuinely pleasant to work with' is praise with no concrete example, so it is not counted as evidence.",
+        "The review opens with 'I want to be fair about the circumstances' but never says what the circumstances were beyond codebase tenure. The facilitator may want to ask whether other factors (onboarding, scope changes, staffing) explain the slip.",
+        "The severity of the double-charge defect (financial impact, manual reconciliation by finance) could arguably justify 'well_below' for craft; 'below' was chosen because both defects were fixed quickly."
+      ]
+    },
+    "strengthByRun": [
+      1,
+      1,
+      1
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e09",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 2,
+      "sufficiency": "high",
+      "evidence": [
+        {
+          "quote": "Ben owned the payouts reconciliation service this year and shipped it on the schedule we set in January.",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "Owned and delivered a scoped project on schedule. This is the L4 at-bar."
+        },
+        {
+          "quote": "It replaced a spreadsheet process that took our ops team about six hours a week; that is now a report they read in ten minutes.",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "A clear, measurable result from a scoped project. Ops is the direct customer of the project, not a cross-team effort, so this doesn't reach the above-bar."
+        },
+        {
+          "quote": "no cross-team work",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "The manager says there were no cross-team projects, which is what the above-bar requires."
+        },
+        {
+          "quote": "The design doc was sound. I had one substantive comment about how to handle partial settlements and he had already thought about it.",
+          "dimension": "craft",
+          "level": "at",
+          "rationale": "A sound design that needed little correction and had already covered a key edge case. That is solid at-bar work. There is no sign of setting standards that others adopt."
+        },
+        {
+          "quote": "nothing that raises the bar for others",
+          "dimension": "craft",
+          "level": "at",
+          "rationale": "The manager says there is no quality-standard-setting, which rules out the craft above-bar."
+        },
+        {
+          "quote": "He works well with ops and they like him.",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "Good communication with a partner team. This matches the at-bar but is thin and has no specific example."
+        },
+        {
+          "quote": "no mentoring",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "The manager says there is no mentoring or lifting of others, which rules out the above-bar."
+        },
+        {
+          "quote": "when the bank changed their file format in August with two weeks' notice, he absorbed it without moving the launch date.",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "Owned an unplanned problem inside his own project. This is exactly the at-bar wording."
+        },
+        {
+          "quote": "Within the project he is fully autonomous and I do not worry about it.",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "Full ownership, limited to his own project."
+        },
+        {
+          "quote": "He has not yet reached outside the project",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "The manager says he hasn't owned outcomes beyond his project, which is what the above-bar requires."
+        }
+      ],
+      "notes": [
+        "The text contradicts the rating. The manager rates Exceeds but writes 'no mentoring, no cross-team work, nothing that raises the bar for others.' That rules out the above-bar in impact, collaboration and craft, and 'has not yet reached outside the project' rules it out in ownership.",
+        "The reasons given for Exceeds are not rubric criteria. The first, 'he has only been at L4 for a year,' is about tenure, which the rubric doesn't include. The second, 'what he does own, he owns completely,' describes the ownership at-bar ('Owns project outcomes, including unplanned problems').",
+        "The evidence is concrete and consistent: an on-time delivery, a measurable ops time saving (about 6 hours a week down to 10 minutes), a sound design and absorbing the bank's format change. This is strong, clean at-bar work, with nothing below the bar in any dimension.",
+        "The collaboration evidence is the thinnest: one general sentence about ops with no specific example."
+      ]
+    },
+    "strengthByRun": [
+      2,
+      2,
+      2
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e08",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 4,
+      "sufficiency": "high",
+      "evidence": [
+        {
+          "quote": "Fatima drove the shared feature-flag platform across three teams this year.",
+          "dimension": "impact",
+          "level": "well_above",
+          "rationale": "She led a cross-team platform project spanning three teams. The L4 bar is scoped projects, and this is past even the 'above' bar."
+        },
+        {
+          "quote": "Growth, checkout and the iOS client all moved onto it, and we retired two homegrown flag systems in the process.",
+          "dimension": "impact",
+          "level": "well_above",
+          "rationale": "Three teams adopted the platform and two legacy systems were retired, so the results are concrete and visible well beyond her own team."
+        },
+        {
+          "quote": "Flag-related incidents went from nine last year to one.",
+          "dimension": "impact",
+          "level": "well_above",
+          "rationale": "This is a measurable, org-level reliability result: an 89% drop in incidents."
+        },
+        {
+          "quote": "She negotiated the API with each team herself, ran the migration office hours",
+          "dimension": "collaboration",
+          "level": "above",
+          "rationale": "She personally worked out cross-team requirements and supported partner teams. That is the 'resolves cross-team friction' behavior."
+        },
+        {
+          "quote": "wrote the SDK for both TypeScript and Swift",
+          "dimension": "craft",
+          "level": "above",
+          "rationale": "She delivered the implementation in two languages across web and iOS clients. It is substantial hands-on work that other teams now use."
+        },
+        {
+          "quote": "The rollout was staged and nothing broke.",
+          "dimension": "craft",
+          "level": "above",
+          "rationale": "A disciplined, staged migration across three teams with zero breakage shows sound execution under cross-team complexity."
+        },
+        {
+          "quote": "She also mentored two engineers through the migration: Ben's first design doc was hers to review, and she spent real time on it rather than rubber-stamping.",
+          "dimension": "collaboration",
+          "level": "above",
+          "rationale": "This is concrete mentoring of two engineers, with a specific example. It matches the 'above' descriptor directly."
+        },
+        {
+          "quote": "She caught the stale-cache failure mode before launch and built the kill switch for it.",
+          "dimension": "craft",
+          "level": "above",
+          "rationale": "She spotted a failure mode before launch and built a mitigation. This matches 'anticipates failure modes' word for word."
+        },
+        {
+          "quote": "Partner teams ask for her by name now.",
+          "dimension": "collaboration",
+          "level": "above",
+          "rationale": "Partner teams seek her out, which suggests her reputation reaches past her own team. It supports the other examples but is weaker evidence by itself."
+        },
+        {
+          "quote": "She could be sharper about writing decisions down; some of the API rationale lives only in her head and in old Slack threads.",
+          "dimension": "craft",
+          "level": "below",
+          "rationale": "The API decisions for a shared platform aren't written down. This is a real but narrow gap, and a bus-factor risk for a platform three teams depend on."
+        }
+      ],
+      "notes": [
+        "The text contradicts the rating. The manager gave 2 (Meets), but the evidence puts every dimension at or above the 'above the bar' descriptor for L4, and impact is well above: three teams moved onto the platform, two legacy systems were retired, and incidents fell from 9 to 1.",
+        "The review's conclusion ('Solid year. Meets.') doesn't follow from its own content. The only criticism is the missing documentation of API rationale, and that doesn't pull a profile this strong down to Meets.",
+        "Ownership isn't tagged separately, but 'drove the shared feature-flag platform across three teams' and retiring two homegrown systems also point to ownership beyond her own project (above).",
+        "Possible explanations the facilitator could check with the manager: a forced distribution, anchoring on L4 expectations, or treating the documentation gap as more serious than the text says. None of these is stated in the review.",
+        "Strength 4 reflects work at or above the next-level bar on all four dimensions. A calibrator who reserves 4 for truly exceptional cases might settle on 3, but the text doesn't support 2."
+      ]
+    },
+    "strengthByRun": [
+      4,
+      3,
+      3
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e10",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 4,
+      "sufficiency": "high",
+      "evidence": [
+        {
+          "quote": "The new ingest platform now carries traffic from six teams, end-to-end lag dropped from around 40 seconds to under 3, and infra spend on the old clusters came down by roughly $180k annualised.",
+          "dimension": "impact",
+          "level": "above",
+          "rationale": "A platform used by six teams, with measured gains in lag and cost, goes beyond a single cross-team project. It moves org-level metrics."
+        },
+        {
+          "quote": "she wrote the schema-evolution standard that ads, growth and fraud all adopted",
+          "dimension": "craft",
+          "level": "above",
+          "rationale": "She wrote a technical standard that three teams adopted. This matches 'defines technical direction and standards across teams'."
+        },
+        {
+          "quote": "She ran the design review series herself and talked two teams out of building their own thing, patiently, over months.",
+          "dimension": "collaboration",
+          "level": "above",
+          "rationale": "Steering two other teams away from duplicate work over months makes other teams more effective. It also shows her shaping direction for multiple teams."
+        },
+        {
+          "quote": "She is the person other staff engineers go to before they write a design doc.",
+          "dimension": "collaboration",
+          "level": "above",
+          "rationale": "Being sought out by engineers more senior than her matches 'sought out as a partner'. This is a general claim, not a specific example."
+        },
+        {
+          "quote": "Nobody handed her this mandate; she built the case for it in a memo last January.",
+          "dimension": "ownership",
+          "level": "above",
+          "rationale": "She started an org-level effort without a mandate and backed it with a written case. This matches 'drives change without a mandate'."
+        },
+        {
+          "quote": "she takes on too much and the long tail of migration work is slower than it should be",
+          "dimension": "ownership",
+          "level": "below",
+          "rationale": "Slow migration follow-through is a small gap in seeing outcomes all the way through. It is small next to the rest of the evidence."
+        }
+      ],
+      "notes": [
+        "The evidence supports the manager's rating of 4. Impact, craft, collaboration and ownership each have at least one concrete example above the L5 bar.",
+        "The review's only concern is the slow long tail of migration work and taking on too much. 'Greatly Exceeds, easily' passes over this, though it doesn't change the conclusion.",
+        "'She is the person other staff engineers go to' is a general claim with no specific instance behind it.",
+        "The review never mentions mentoring directly, even though mentoring is part of the at-bar collaboration expectation. The evidence above the bar makes up for this.",
+        "'the first time those three teams have agreed on anything in my time here' is the manager's opinion and was not counted as separate evidence."
+      ]
+    },
+    "strengthByRun": [
+      4,
+      4,
+      4
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e12",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 3,
+      "sufficiency": "high",
+      "evidence": [
+        {
+          "quote": "She took the agent console rewrite, scoped as a six-week project, and delivered it in seven with average handle time moving from 4.2 minutes to 3.1, a real number that held for two quarters.",
+          "dimension": "impact",
+          "level": "above",
+          "rationale": "She delivered a small project end-to-end with a measurable, lasting result (a 26% drop in handle time that held for two quarters). That matches the above-bar description. The one-week overrun is a minor slip."
+        },
+        {
+          "quote": "without being asked, fixed the macro-expansion bug that support had been working around for two years",
+          "dimension": "ownership",
+          "level": "above",
+          "rationale": "She took initiative beyond her assigned tasks and fixed a problem that had gone unaddressed for two years."
+        },
+        {
+          "quote": "she found it by sitting with the support team for a day, which nobody else on this team has bothered to do",
+          "dimension": "collaboration",
+          "level": "above",
+          "rationale": "She sought out another team on her own to understand their pain points. This goes beyond being responsive."
+        },
+        {
+          "quote": "Her designs need little from me.",
+          "dimension": "craft",
+          "level": "above",
+          "rationale": "This matches the above-bar wording ('Designs are sound with little guidance'). No specific design is named, but the SQL injection catch backs up the craft claim."
+        },
+        {
+          "quote": "She caught a SQL injection path in a teammate's patch during review.",
+          "dimension": "craft",
+          "level": "above",
+          "rationale": "A concrete case of catching a serious defect in someone else's code, which is the above-bar craft description."
+        },
+        {
+          "quote": "she over-explains in writing, her documents run three times longer than they need to",
+          "dimension": "collaboration",
+          "level": "below",
+          "rationale": "Overlong documents hurt clear communication. This is a mild problem, not unresponsiveness or being hard to work with."
+        },
+        {
+          "quote": "she has twice committed to dates in front of stakeholders before checking with me",
+          "dimension": "ownership",
+          "level": "below",
+          "rationale": "Two specific times she made commitments without coordinating first. This is a judgment problem, though there is no sign the commitments were missed."
+        }
+      ],
+      "notes": [
+        "The text contradicts the rating. The manager writes 'She is doing more than the job requires,' which is the definition of Exceeds, and then gives Meets.",
+        "The evidence reaches the above bar on impact (measurable end-to-end project), craft (sound designs, caught a SQL injection) and ownership (fixed a two-year-old bug without being asked). The two criticisms are real but narrow and don't outweigh this.",
+        "'The judgment is still developing' is vague. The only concrete support for it is the two times she committed to dates early. The review never says those dates slipped or caused problems.",
+        "The one-week overrun on a six-week project isn't raised as a concern and is small next to the result.",
+        "Wording like 'better than I expected' suggests the manager may be anchoring on earlier expectations rather than on this period's work."
+      ]
+    },
+    "strengthByRun": [
+      3,
+      3,
+      3
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e11",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 2,
+      "sufficiency": "medium",
+      "evidence": [
+        {
+          "quote": "the observability agent upgrade went out in Q2",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "Delivered an assigned project as planned. This is reliable delivery of well-defined work."
+        },
+        {
+          "quote": "the metrics cardinality cleanup in Q3 that took our time-series count down by about 30%",
+          "dimension": "impact",
+          "level": "above",
+          "rationale": "A small project with a measurable result (~30% fewer time series). This matches the above-bar description for L3 impact."
+        },
+        {
+          "quote": "he kept the dashboards current",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "Ongoing follow-through on an assigned responsibility."
+        },
+        {
+          "quote": "None of it slipped.",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "Directly contradicts the below-bar descriptor ('Tasks slip or need rework'). This is on-time delivery at the bar."
+        },
+        {
+          "quote": "The code is clean enough and review is unremarkable.",
+          "dimension": "craft",
+          "level": "at",
+          "rationale": "Solid code that gets through normal review. This is the at-bar description almost word for word."
+        },
+        {
+          "quote": "He does the ticket, he closes the ticket, and he stops.",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "Finishes what he commits to but doesn't go beyond it. Follow-through meets the bar; going beyond assigned work would be above it."
+        },
+        {
+          "quote": "When the tracing sampler started dropping spans in June he noted it in the channel and waited three days for somebody else to pick it up.",
+          "dimension": "ownership",
+          "level": "below",
+          "rationale": "The only concrete below-bar example. He raised the problem but didn't drive it to resolution or escalate further, and waited for others. He did at least flag it, which partly counts as escalating."
+        },
+        {
+          "quote": "He answers questions when asked and does not ask many.",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "Responsive to teammates. Asking few questions is not a rubric failing, and there's no sign he is hard to work with."
+        }
+      ],
+      "notes": [
+        "The text contradicts the rating. The manager gave Below (1), but nearly all the concrete evidence meets the L3 bar, and the cardinality cleanup (~30% fewer time series) arguably exceeds it. Nothing describes slipped tasks, frequent defects, or being hard to work with.",
+        "The standard applied doesn't match the rubric. 'At L3 I expect someone to start showing me they want more than the assigned queue' treats 'Takes initiative beyond assigned tasks' as the minimum, but the rubric lists it as above-bar ownership. Not showing above-bar behaviour supports Meets, not Below.",
+        "The manager calls the year 'unremarkable', which describes work at the bar, not below it.",
+        "The tracing sampler incident is the only concrete below-bar example. It's a single case, and he did flag it in the channel. On its own it isn't enough for an overall Below.",
+        "'He is not curious about the systems around his own' is a personal-trait judgement with no example, so it wasn't counted as evidence.",
+        "Collaboration and craft evidence is thin: one general statement each, with no specific examples."
+      ]
+    },
+    "strengthByRun": [
+      2,
+      2,
+      2
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e13",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 2,
+      "sufficiency": "high",
+      "evidence": [
+        {
+          "quote": "He led the fraud-scoring rewrite across payments and risk",
+          "dimension": "impact",
+          "level": "above",
+          "rationale": "Led a cross-team project spanning two orgs (payments and risk), which meets the L5 bar. Combined with the measured results below, it goes further."
+        },
+        {
+          "quote": "the new rules engine caught $2.1M in fraudulent volume in its first two quarters that the old system missed",
+          "dimension": "impact",
+          "level": "above",
+          "rationale": "A concrete, measurable result at org level, which matches the 'results move org-level metrics' description."
+        },
+        {
+          "quote": "took model-serving latency from 210ms to 35ms",
+          "dimension": "craft",
+          "level": "at",
+          "rationale": "A large, measured performance improvement (about 6x) in a production serving system shows the design holds up under scale. There's no evidence he set standards for other teams or raised the team's bar."
+        },
+        {
+          "quote": "He owned it end to end, including the parts nobody assigned him",
+          "dimension": "ownership",
+          "level": "above",
+          "rationale": "Took ownership beyond his assigned scope. The two examples that follow back this up."
+        },
+        {
+          "quote": "when the risk team's data pipeline broke over the holidays he fixed their code himself rather than filing a ticket",
+          "dimension": "ownership",
+          "level": "above",
+          "rationale": "Acted to fix another team's outage without a mandate, which fits 'drives change without a mandate'. It also means he went around the owning team (see notes)."
+        },
+        {
+          "quote": "he has quietly carried the on-call burden for two services that are not his",
+          "dimension": "ownership",
+          "level": "above",
+          "rationale": "Takes operational responsibility for services outside his area, which goes beyond owning team-level outcomes."
+        },
+        {
+          "quote": "Two partner teams escalated to me about him this year.",
+          "dimension": "collaboration",
+          "level": "well_below",
+          "rationale": "The L5 bar is building working relationships across teams. Here two partner teams formally escalated about him instead."
+        },
+        {
+          "quote": "The risk team's lead asked that he not attend their design reviews after he called their proposal amateur hour in front of six people.",
+          "dimension": "collaboration",
+          "level": "well_below",
+          "rationale": "A specific incident that led a partner team to shut him out of their design reviews. This is the opposite of 'sought out as a partner'."
+        },
+        {
+          "quote": "The mobile team stopped inviting him to the fraud integration sync in March and routed questions through me instead; they said they would rather wait a day than be told they were wrong in that tone.",
+          "dimension": "collaboration",
+          "level": "well_below",
+          "rationale": "A second partner team removed him from a cross-team forum and now routes questions through his manager, which slows their work and makes the manager a bottleneck. This is the opposite of multiplying other teams' effectiveness."
+        },
+        {
+          "quote": "I have raised this with him three times and the pattern has not changed.",
+          "dimension": "collaboration",
+          "level": "well_below",
+          "rationale": "The problem is persistent. He has had direct feedback three times without changing, so this isn't a one-off."
+        }
+      ],
+      "notes": [
+        "The profile is very uneven. 'Meets' here means impact and ownership above the bar, collaboration well below it, and craft at it. It doesn't mean he meets the bar across the board. Calibration should decide explicitly whether a well-below dimension caps the rating or is offset by strong results. A 2 is defensible, but a 3 would be hard to justify at L5, where working across teams is central to the level.",
+        "Collaboration has no positive evidence: nothing about mentoring or relationships that work. The review describes two partner teams separately cutting him out of their forums.",
+        "Some ownership evidence cuts both ways. Fixing the risk team's code 'rather than filing a ticket' shows initiative, but it also bypassed the owning team, which may have added to the friction with that team.",
+        "'Quietly carried the on-call burden for two services that are not his' may point to a hidden single point of failure or burnout risk. If the on-call load isn't visible to anyone, it also cuts against owning the team's long-term health.",
+        "'Rafael's technical output this year was the strongest on my team' is a comparative claim with no example of its own. The specific results that follow do back it up in substance.",
+        "The review ends with the bare word 'Meets.' and doesn't explain how the manager weighed strong results against the collaboration problems. Ask the manager for that reasoning, and whether there's a written improvement plan for the collaboration issues.",
+        "The collaboration problems create a real delivery cost: the mobile team would 'rather wait a day'. That partly offsets the impact evidence, since his behavior is slowing a partner team's integration work."
+      ]
+    },
+    "strengthByRun": [
+      2,
+      2,
+      2
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e14",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 3,
+      "sufficiency": "high",
+      "evidence": [
+        {
+          "quote": "She shipped the contract-testing layer for the warehouse, which now blocks about 40 bad schema changes a quarter before they reach production",
+          "dimension": "impact",
+          "level": "above",
+          "rationale": "She shipped a project with a clear, measurable result, and it protects production data used by more than her own team."
+        },
+        {
+          "quote": "Revenue reporting has not needed a correction in three quarters",
+          "dimension": "impact",
+          "level": "well_above",
+          "rationale": "This is a sustained result the whole company can see, in a business-critical area, and it goes well past the L4 bar."
+        },
+        {
+          "quote": "she got analytics, growth and finance to adopt it without any authority to make them",
+          "dimension": "collaboration",
+          "level": "above",
+          "rationale": "She got three other teams to adopt her work without any formal authority. That is resolving cross-team friction and influencing beyond her team."
+        },
+        {
+          "quote": "She wrote the standard, she wrote the tooling",
+          "dimension": "craft",
+          "level": "above",
+          "rationale": "She wrote a standard that other teams adopted, which matches the above-bar description 'sets quality standards others adopt'."
+        },
+        {
+          "quote": "the backfill guard she added caught a duplicate-load bug within a week of landing",
+          "dimension": "craft",
+          "level": "above",
+          "rationale": "This is a concrete example of anticipating a failure mode, and it paid off quickly."
+        },
+        {
+          "quote": "She mentors well, and two engineers asked to work with her by name",
+          "dimension": "collaboration",
+          "level": "above",
+          "rationale": "Mentoring is above-bar behavior, and two engineers asking to work with her by name is concrete evidence for it."
+        },
+        {
+          "quote": "She is occasionally slow to declare something finished and polishes past the point of value",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "This is a small drag on delivery speed, not a failure to follow through. She does not fall below the ownership bar."
+        }
+      ],
+      "notes": [
+        "Strength is 3, but it is close to 4. Impact is well above the L4 bar: company-wide data-quality change, adoption by three other orgs, and three quarters with no revenue-reporting corrections. Craft and collaboration are above the bar. A facilitator could reasonably ask whether this is a Greatly Exceeds case.",
+        "The review barely covers ownership directly. The comparison to before her work ('before her, we found those in dashboards...') suggests she took on a problem nobody owned, but it never says whether the work was assigned. So the above-bar ownership criterion 'fixes what nobody assigned' is not shown.",
+        "The opening line 'Ingrid rebuilt how this company does data quality' is a summary claim, but the concrete examples that follow support it.",
+        "The only negative, over-polishing and being slow to call work finished, is minor. It does not contradict the rating.",
+        "The review does not contradict itself, and it does not rely on praise without examples."
+      ]
+    },
+    "strengthByRun": [
+      3,
+      3,
+      3
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e16",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 2,
+      "sufficiency": "low",
+      "evidence": [
+        {
+          "quote": "She asks wonderful questions in reviews and she has a real instinct for when something is not quite right.",
+          "dimension": "craft",
+          "level": "at",
+          "rationale": "This is the closest the review gets to craft: she takes part in code reviews and spots problems. But it names no defect she caught and no design she produced, so it doesn't show the 'catches others' defects' bar. At most it supports normal, solid participation in reviews."
+        },
+        {
+          "quote": "She has made countless improvements to our systems, many of them the kind nobody notices until they are gone",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "Hints that she does improvement work nobody assigned, but no specific improvement, system, or result is named. Not enough to support 'takes initiative beyond assigned tasks'."
+        },
+        {
+          "quote": "She has contributed to so many different projects that I honestly lose track",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "Says she worked on many projects but gives no deliverable, no scope, and no measurable result. Nothing shows her owning a small project end-to-end, which is the bar for above."
+        },
+        {
+          "quote": "she has that rare quality of making the people around her feel heard",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "A personality description with no concrete example of helping a teammate or improving how the team communicates. It fits the at-bar standard of communicating clearly, but nothing more is shown."
+        },
+        {
+          "quote": "She is dependable",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "A single-word claim with no example of a commitment she kept or a blocker she escalated."
+        }
+      ],
+      "notes": [
+        "The review is almost entirely adjectives and sentiment ('joy to work with', 'energy and the positivity', 'thoughtful', 'kind', 'endlessly curious', 'humble'). It names no project, deliverable, metric, defect caught, design, or specific act of helping a teammate.",
+        "It says the overall impact was substantial ('the overall impact of her work this year has been substantial') but gives nothing to back that up.",
+        "'Her growth over the last twelve months has been genuinely remarkable' is not supported by any before-and-after example.",
+        "Relies on secondhand reputation ('The feedback I hear about her from across the organisation is uniformly glowing', 'People want her on their projects') rather than her actual work.",
+        "Contradiction with the rating: the manager rated her 3 (Exceeds), but the text shows nothing above the L3 bar on any dimension. No end-to-end project with measurable results, no sound designs or defects caught, no concrete example of improving team communication, and no specific initiative beyond assigned work.",
+        "Strength of 2 is a default because nothing concrete points above or below the bar. The text can't confirm Meets or Exceeds either way. Suggest asking the manager for 2–3 specific examples (project, outcome, defect caught, teammate helped) before calibration."
+      ]
+    },
+    "strengthByRun": [
+      2,
+      2,
+      2
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e17",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 2,
+      "sufficiency": "low",
+      "evidence": [
+        {
+          "quote": "He has worked on a huge number of things this year, more than I could reasonably list here",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "Says there was a lot of work but doesn't name a single project or outcome. The manager explicitly declines to list any. This shows activity, not impact, and can't support an above-bar rating."
+        },
+        {
+          "quote": "His impact this year has been enormous and far-reaching",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "A strong adjective with nothing behind it: no project, metric or result. It doesn't meet the L3 above-bar standard of 'small projects end-to-end with measurable results'."
+        },
+        {
+          "quote": "His technical judgement is excellent and his colleagues trust it",
+          "dimension": "craft",
+          "level": "at",
+          "rationale": "A general claim with no example of a design, code quality, tests or defects caught. Taken at face value it's consistent with the bar, but it shows nothing specific."
+        },
+        {
+          "quote": "I have watched him defuse more than one tense conversation with nothing more than patience and good faith",
+          "dimension": "collaboration",
+          "level": "above",
+          "rationale": "The closest thing to an observed behavior in the review, and it points toward improving team communication. But no situation, people or outcome is described, so it counts for little."
+        },
+        {
+          "quote": "He never drops something.",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "Claims follow-through, which is the at-bar behavior. It's an absolute statement with no example of a commitment kept or a blocker escalated."
+        },
+        {
+          "quote": "He is the person who quietly picks up the thing everyone else walked past, and he does it without needing any credit for it",
+          "dimension": "ownership",
+          "level": "above",
+          "rationale": "Describes initiative beyond assigned work, which is the above-bar behavior, but never says what he picked up. It's unverifiable as written."
+        }
+      ],
+      "notes": [
+        "The manager rated Exceeds, but the text has no concrete examples to support that. Every statement is a trait or a general claim ('calm', 'steady', 'quiet excellence', 'enormous and far-reaching').",
+        "No project, deliverable, metric, incident or date is mentioned anywhere. The manager says the work was 'more than I could reasonably list here' and then lists none of it.",
+        "Impact and craft are the weakest dimensions. Nothing shows end-to-end delivery or measurable results, which is what above-bar impact at L3 requires.",
+        "A lot of the review is about character and the manager's personal appreciation ('genuine highlight of my year', 'says everything about his character'), which the rubric doesn't measure.",
+        "'He has grown tremendously' doesn't say what the growth was.",
+        "The strength of 2 is a low-confidence placeholder, not a finding that Peter is at Meets. Before calibration, the manager should add 2–3 specific examples, such as projects delivered and their outcomes, or specific things he picked up without being asked."
+      ]
+    },
+    "strengthByRun": [
+      2,
+      2,
+      2
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e15",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 2,
+      "sufficiency": "high",
+      "evidence": [
+        {
+          "quote": "Samuel delivered the mobile checkout redesign on the date he committed to, and conversion on the payment step moved up 1.4%, which held after the A/B test closed.",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "Owned and delivered a scoped project on schedule with a measurable, lasting result. This matches the L4 impact bar exactly."
+        },
+        {
+          "quote": "That is the scoped project he owned and he owned it properly, including the two weeks of Android-specific bugs after launch that were not fun for anyone.",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "He stayed with the project through unplanned post-launch problems. The at-bar ownership definition names this directly: owning outcomes 'including unplanned problems'."
+        },
+        {
+          "quote": "The design doc was adequate.",
+          "dimension": "craft",
+          "level": "at",
+          "rationale": "Thin, but it points to a sound design that didn't need substantial correction. Nothing suggests below-bar craft, and nothing shows above-bar craft either."
+        },
+        {
+          "quote": "He did not take on anything that was not handed to him.",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "Taking on unassigned work is an above-bar trait. Not doing it means he isn't above the bar. It doesn't make him below it, which would mean needing prompting to follow through, and the review says the opposite."
+        },
+        {
+          "quote": "His code reviews on other people's work are one-line approvals; I have stopped counting the number of times he has approved a patch in under two minutes.",
+          "dimension": "collaboration",
+          "level": "below",
+          "rationale": "Concrete pattern of shallow reviews. He isn't helping teammates or improving their work, which fits 'rarely lifts others'."
+        },
+        {
+          "quote": "He does not engage in design discussion unless directly asked",
+          "dimension": "collaboration",
+          "level": "below",
+          "rationale": "Stays out of team design work, which fits 'works well alone but rarely lifts others'."
+        },
+        {
+          "quote": "when the checkout and payments teams disagreed about error-state ownership he sat it out for a month",
+          "dimension": "collaboration",
+          "level": "below",
+          "rationale": "Resolving cross-team friction is formally an above-bar trait. But the dispute touched his own checkout area, so sitting it out for a month suggests weak communication with partners, which is part of the at-bar expectation. Tagged below, with caveats."
+        }
+      ],
+      "notes": [
+        "The text contradicts the manager's rating of 1 (Below). By the rubric's own definitions, impact, ownership and craft are at the L4 bar. Only collaboration is clearly below. That adds up to Meets (2).",
+        "The manager's closing line, 'One scoped project delivered is not a year at L4', conflicts with the at-bar impact definition ('Owns and delivers scoped projects with measurable results'). The rubric doesn't set a minimum number of projects, and this one had a measurable, lasting result.",
+        "Several criticisms are about the absence of above-bar behavior: not taking unassigned work, and not resolving cross-team friction. The manager treats them as below-bar failings. Missing above-bar traits supports 'not Exceeds', not 'Below'.",
+        "The review says he 'owned it properly' but also calls the year 'thin'. The 'thin' judgment rests mostly on collaboration gaps and missing above-bar work, not on any failure within his own project.",
+        "The collaboration concerns are concrete and worth raising in calibration: consistently shallow code reviews, not joining design discussions, and a month of non-engagement in a dispute over his own area. One below-bar dimension could justify a low-end Meets, but on this text it doesn't support Below overall.",
+        "The craft evidence is thin: one word ('adequate') and no specifics about design quality or how he handled ambiguity."
+      ]
+    },
+    "strengthByRun": [
+      2,
+      2,
+      2
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e18",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 2,
+      "sufficiency": "low",
+      "evidence": [
+        {
+          "quote": "He is patient with newer engineers in a way that is genuinely rare.",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "Describes a behavior (helping newer engineers) that is about at the L4 bar, 'helps teammates'. There's no example of mentoring a specific person or a result, so it isn't evidence for 'mentors others' (above)."
+        },
+        {
+          "quote": "He has a wonderful way of explaining complicated things simply, and people seek him out for exactly that reason.",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "Being sought out for explanations is a small observable signal of helping teammates and communicating well, which is at the bar. It names no person, topic or result."
+        }
+      ],
+      "notes": [
+        "Nearly the whole review is adjectives and character praise ('absolute pleasure', 'brilliant in design discussions', 'work ethic is second to none', 'culture carrier'). None of it comes with a concrete example, so it doesn't count as evidence.",
+        "Impact: nothing to judge. The manager says Ravi was 'involved in so many projects this year that I would struggle to name them all' but names none. 'The countless improvements he has made across our systems have had a huge impact' gives no specific improvement, system or metric. The L4 bar asks for 'measurable results', and the review never states one.",
+        "Impact: 'the value he adds goes well beyond anything that would ever show up in a ticket queue' reads as a hint that there's little traceable output. That lines up with the below-bar wording 'results are hard to point to'.",
+        "Craft: 'brilliant in design discussions' and 'his standards are extremely high... for what we ship' don't point to any design, standard others adopted or failure mode he anticipated. Nothing supports above-bar craft.",
+        "Ownership: 'always willing to jump in wherever the need is greatest' is generic. There's no example of owning an outcome, handling an unplanned problem or fixing something nobody assigned.",
+        "The manager rated Exceeds (3), and the review calls it 'An easy Exceeds'. The text doesn't back that up: none of the four dimensions has a concrete example above the bar. The strength of 2 is a default reflecting that there's no evidence either way, not a positive finding that Ravi meets the bar. Ask the manager for named projects, results and specific examples before calibrating."
+      ]
+    },
+    "strengthByRun": [
+      2,
+      2,
+      2
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e20",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 2,
+      "sufficiency": "low",
+      "evidence": [
+        {
+          "quote": "I have lost count of the number of people who have told me that a single conversation with Dmitri unblocked them for weeks",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "The closest thing to evidence in the review. It suggests he helps and mentors people widely, but it's secondhand and names no people, teams or problems. It doesn't show he multiplies other teams' effectiveness at the above-bar level."
+        },
+        {
+          "quote": "He is the first person I go to when I need a sanity check on something hard",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "Shows the manager trusts him and seeks him out. That's one relationship inside his own reporting line, not evidence that other teams seek him out as a partner."
+        },
+        {
+          "quote": "He has been involved in an enormous amount of work this year across many different areas of the business",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "Hints at breadth, but 'involved in' doesn't mean leading, and no project or result is named. It can't be checked against 'leads cross-team projects with results visible across the org', let alone the above-bar standard."
+        }
+      ],
+      "notes": [
+        "The review praises him without examples: 'extraordinary' technical depth, 'excellent' instincts, 'raises the standard', 'countless contributions that have had a huge and lasting impact', 'thinks at a level well above his role'. None of these points to a specific piece of work, so none counts as evidence.",
+        "Impact: no named project, launch, metric or outcome. Nothing supports the above-bar standard of 'results move org-level metrics'.",
+        "Craft: no design, system, standard or technical decision is described. 'Everywhere he goes he raises the standard' is a general claim with no example.",
+        "Ownership: no evidence at all. Nothing shows he owns team- or org-level outcomes, long-term health, or drove change without a mandate.",
+        "Collaboration is the only dimension with even vague evidence, and it's secondhand and unspecific.",
+        "The text doesn't contradict the manager's Exceeds, but it doesn't support it either. Its tone ('one of the most impressive people I have worked with') suggests something closer to Greatly Exceeds, which also doesn't match the Exceeds rating.",
+        "'I have no meaningful development feedback' gives calibration nothing to work with. Ask the manager for 2–3 concrete examples (projects he led, their cross-team or org results, a design or standard he set, an outcome he owned) before accepting the rating.",
+        "Strength 2 is a placeholder because of low sufficiency. It is not a judgment that his work meets the bar."
+      ]
+    },
+    "strengthByRun": [
+      2,
+      2,
+      2
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e19",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 2,
+      "sufficiency": "low",
+      "evidence": [
+        {
+          "quote": "the two biggest deliverables she owned this year each slipped by a quarter",
+          "dimension": "impact",
+          "level": "below",
+          "rationale": "This is the only concrete statement about what she delivered. Both of her main scoped projects were a quarter late. The L4 bar is delivering scoped projects with measurable results, and no results are described for either one."
+        },
+        {
+          "quote": "much of that was outside her control and I do not hold it against her at all",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "The manager says the slips were mostly outside her control but doesn't say how she handled the unplanned problems. Rated 'at' tentatively because the text gives no sign she needed prompting, and no sign she went beyond the bar either."
+        },
+        {
+          "quote": "she always ships on time; I genuinely cannot think of a commitment she has not honoured",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "A general claim of reliability with no example. The review's own admission that both major deliverables slipped a quarter contradicts it, so it carries little weight."
+        },
+        {
+          "quote": "She gives thoughtful, generous code reviews and she has a real gift for making newer engineers feel safe asking questions",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "Describes helping teammates through code reviews and supporting newer engineers, which matches the L4 bar. There's no specific mentoring relationship or cross-team friction resolved, so it doesn't reach 'above'."
+        }
+      ],
+      "notes": [
+        "The review contradicts itself: it says she 'always ships on time' and 'cannot think of a commitment she has not honoured', then admits 'the two biggest deliverables she owned this year each slipped by a quarter'.",
+        "The manager's rating of Exceeds (3) isn't supported by the text. The only concrete delivery evidence is negative, collaboration is at the bar, and nothing is shown above the bar on any dimension.",
+        "The manager explicitly puts attitude above results: 'What matters far more to me is the attitude, the growth, and the extraordinary care'. The rubric scores impact and ownership, not attitude.",
+        "Craft has no concrete evidence. 'Meticulous', 'fast', 'technical instincts are superb' and 'curiosity is boundless' are adjectives without examples of designs or implementations.",
+        "'She has touched an enormous number of projects this year and improved every one of them' names no projects or improvements, so I didn't count it as evidence. If specific cross-team contributions exist, they could support a higher impact rating, but the text doesn't give them.",
+        "The slips are blamed on factors 'outside her control' without saying what those factors were or how she responded. A calibrator should ask what happened before deciding between Below and Meets on impact and ownership.",
+        "Much of the text is enthusiastic praise without substance ('phenomenal engineer', 'infectious', 'People adore working with her', 'tremendous year'). Given how thin the evidence is, a rating of 1 on impact alone is also defensible."
+      ]
+    },
+    "strengthByRun": [
+      2,
+      2,
+      2
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e21",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 2,
+      "sufficiency": "high",
+      "evidence": [
+        {
+          "quote": "she do all what was planned",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "Reliably delivers planned, well-defined work. This matches the L3 bar. Nothing suggests self-driven projects with measurable results."
+        },
+        {
+          "quote": "The new endpoint for the consent, she build it and also the tests",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "A concrete assigned deliverable (consent endpoint) shipped with tests. This is solid task delivery, not an end-to-end project she scoped herself."
+        },
+        {
+          "quote": "since March there is no incident from this part",
+          "dimension": "craft",
+          "level": "at",
+          "rationale": "No incidents on her component in production shows solid, reliable code. That meets the bar. There is no evidence of design leadership or catching other people's defects."
+        },
+        {
+          "quote": "Her code I must not check so much, the review is normally one round only.",
+          "dimension": "craft",
+          "level": "at",
+          "rationale": "Code usually passes review in one round, which fits 'solid code and tests with normal review'."
+        },
+        {
+          "quote": "In the beginning she was a bit slow because the codebase is big, but after two months she has the speed like the others.",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "Slow for the first two months while learning a large codebase, then at the same pace as peers. Net effect for the year is at the bar."
+        },
+        {
+          "quote": "When something is blocked she say it fast in the standup, she does not keep it for herself",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "Raises blockers quickly. The rubric names 'escalates blockers' as part of the L3 bar."
+        },
+        {
+          "quote": "She is helpful with the questions from the working student.",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "Responsive to a junior colleague. The claim is short and has no concrete example, so it doesn't clearly show 'actively helps teammates / improves team communication' at the above-bar level."
+        },
+        {
+          "quote": "she take only the tickets which are given to her, she does not search by herself what can be better.",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "She doesn't take initiative beyond assigned work, so she isn't above the bar. Because she follows through and escalates blockers, she stays at the bar rather than below."
+        }
+      ],
+      "notes": [
+        "The text supports the manager's rating of 2 (Meets). There are concrete examples for impact, craft and ownership, and every one lands at the L3 bar.",
+        "The review is written in non-native English. The grammar says nothing about the employee and was not weighted.",
+        "Ownership is borderline: 'she take only the tickets which are given to her' partly matches the below-bar wording 'Waits to be told'. It was rated at the bar because she follows through and escalates blockers. The manager frames it as a growth area, not a failing.",
+        "Collaboration evidence is thin: the one line about helping the working student and the standup behavior. It has no concrete example, so it can't support an above-bar rating.",
+        "The slow start is a ramp-up issue that the review says was resolved after two months. It isn't an ongoing concern."
+      ]
+    },
+    "strengthByRun": [
+      2,
+      2,
+      2
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e22",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 3,
+      "sufficiency": "high",
+      "evidence": [
+        {
+          "quote": "he see that our error codes are not the same between web and Android, and he make one common list and change both clients, so now the support team find the problem in the half of the time, they say maybe 20 minutes instead of 45.",
+          "dimension": "impact",
+          "level": "above",
+          "rationale": "He delivered a small cross-client project end-to-end, and it had a measurable result: support diagnosis time dropped from about 45 to about 20 minutes. This matches the L3 'above' bar."
+        },
+        {
+          "quote": "Nobody ask him for this.",
+          "dimension": "ownership",
+          "level": "above",
+          "rationale": "The error-code unification was self-initiated and went beyond his assigned task."
+        },
+        {
+          "quote": "the retry logic which he write is very careful, he think about the case when the network come back in the middle, this I did not think myself.",
+          "dimension": "craft",
+          "level": "above",
+          "rationale": "The design was sound and caught an edge case the manager had not thought of. This shows design judgment with little guidance."
+        },
+        {
+          "quote": "In the review of the code from the others he find real bugs, not only the style.",
+          "dimension": "craft",
+          "level": "above",
+          "rationale": "He catches substantive defects in other people's code, which is named directly in the L3 'above' craft bar."
+        },
+        {
+          "quote": "He explain to the new colleague how the payment flow works, three sessions he made, and after he wrote it also in the wiki.",
+          "dimension": "collaboration",
+          "level": "above",
+          "rationale": "He actively helped a new teammate, with three sessions as a concrete example, and wrote wiki documentation that improves shared team knowledge."
+        }
+      ],
+      "notes": [
+        "The evidence supports the manager's rating of 3 (Exceeds). All four dimensions have a concrete example above the bar. None clearly reaches 'well_above', so a 4 would not be supported.",
+        "The review never confirms that his assigned task (adding the new payment method in the SDK) was delivered, or how well. Baseline task reliability is implied but not stated.",
+        "The 20-vs-45-minute figure is a secondhand estimate from the support team ('they say maybe'), not a measured metric.",
+        "The opening line 'much more than only his tickets' and the closing 'clearly over the bar' are summary statements. They are not counted as evidence, but concrete examples back them up.",
+        "The non-native English grammar was ignored when judging the work."
+      ]
+    },
+    "strengthByRun": [
+      3,
+      3,
+      3
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e23",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 2,
+      "sufficiency": "high",
+      "evidence": [
+        {
+          "quote": "Carlota was responsible for the video transcoding project and she bring it to the end in the time which we planned.",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "She owned a scoped project and delivered it on schedule, which is the L4 bar."
+        },
+        {
+          "quote": "Before, one video need around 12 minutes until it is ready for the user, now it is under 3 minutes, this is measured and it holds also now.",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "A large, measured result that has held up over time. The review doesn't say it was cross-team work or seen outside the team, so it's a strong 'at' rather than 'above'."
+        },
+        {
+          "quote": "The design she wrote was correct, in the review there was nothing big to change.",
+          "dimension": "craft",
+          "level": "at",
+          "rationale": "A sound design that needed little correction in review. There's no sign that others adopted her standards or that she anticipated failure modes beyond the norm."
+        },
+        {
+          "quote": "When after the start there was the problem with the old videos which are not converted, she did not wait, she make the migration script in the weekend by herself and she informed everybody on Monday.",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "She took on an unplanned problem inside her own project without being asked and told people about it. The L4 bar names exactly this: owning outcomes 'including unplanned problems'."
+        },
+        {
+          "quote": "With the content team she speak regularly and they are satisfied.",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "Regular communication with a partner team, who are satisfied, matches 'communicates well with partners'."
+        },
+        {
+          "quote": "Outside from her project she did not do so much this year",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "Direct evidence against the 'above' bar (owning outcomes beyond her own project). Her ownership stays inside her project."
+        },
+        {
+          "quote": "the mentoring she does only when I ask her",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "She helps teammates when asked, but mentoring is reactive. That fits 'helps teammates', not the proactive mentoring the 'above' bar describes."
+        }
+      ],
+      "notes": [
+        "The text supports the manager's Meets (2) rating. All seven pieces of evidence sit at the L4 bar, and the review itself states the limits on reaching 'above': little work outside her project and mentoring only when asked.",
+        "The 12 min to under 3 min improvement is the strongest item. A reviewer might argue it for 'above' if the result was visible to users or other teams, but the review only mentions the content team being satisfied and gives no cross-team scope.",
+        "Doing the migration on a weekend shows commitment, but it's still an unplanned problem within her own project. The rubric counts that as 'at', not 'above'. Working hours shouldn't raise the rating by themselves.",
+        "The review's non-native grammar was not held against the employee. Every claim is concrete and the review doesn't contradict itself."
+      ]
+    },
+    "strengthByRun": [
+      2,
+      2,
+      2
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e24",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 3,
+      "sufficiency": "high",
+      "evidence": [
+        {
+          "quote": "Jonas make this year the new export pipeline, which before was many manual steps and now is one job that run every night.",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "He owned and delivered a scoped project with a clear before and after: manual steps became one automated nightly job."
+        },
+        {
+          "quote": "This is used by the finance team, they told me it save them around one day per week.",
+          "dimension": "impact",
+          "level": "above",
+          "rationale": "The result is measurable (about one day per week saved) and visible outside his own team, to finance."
+        },
+        {
+          "quote": "He found himself that old pipeline lose rows when the file was too big, nobody ask him to look at this, and he fix it",
+          "dimension": "ownership",
+          "level": "above",
+          "rationale": "He found and fixed a data-loss bug that nobody had assigned to him."
+        },
+        {
+          "quote": "and write a document how it works",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "He documented the fix and the system, which follows through beyond the code change."
+        },
+        {
+          "quote": "In the design review he was not so good to explain why his choice is better, people were confused",
+          "dimension": "collaboration",
+          "level": "below",
+          "rationale": "The review names a concrete communication weakness: reviewers were confused by how he justified his design."
+        },
+        {
+          "quote": "but the design itself was correct and we used it",
+          "dimension": "craft",
+          "level": "at",
+          "rationale": "The design was sound and adopted without needing substantial correction."
+        },
+        {
+          "quote": "With the new colleagues he is patient and explain many times.",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "He helps new teammates patiently. The review doesn't describe structured mentoring, so this is at the bar, not above."
+        }
+      ],
+      "notes": [
+        "The text supports the manager's rating of 3 (Exceeds). The above-bar evidence is in impact (finance saves about one day per week) and ownership (an unassigned data-loss fix). Craft is at the bar, and collaboration is mixed.",
+        "Collaboration cuts both ways: he is patient with new colleagues, but he explained his design poorly in review. That weakness is about communication, not the design itself, which the review calls correct.",
+        "The closing line 'For me he is more than what we expect from L4' is the manager's opinion and was not counted as evidence.",
+        "It's unclear whether the row-loss bug was in the old pipeline being replaced or found during the migration. Either way, the review says it was unassigned work.",
+        "The review is written in non-native English. The writing style was not held against the employee.",
+        "All evidence comes from one project (the export pipeline), so the case is concrete but narrow."
+      ]
+    },
+    "strengthByRun": [
+      3,
+      3,
+      3
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e26",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 2,
+      "sufficiency": "low",
+      "evidence": [
+        {
+          "quote": "Did the work that was asked",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "Suggests assigned tasks were delivered, which matches the L3 bar. It names no task, project, deadline or result, so it's weak evidence."
+        },
+        {
+          "quote": "Did the work that was asked",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "Suggests the employee followed through on assigned work. \"The work that was asked\" also implies nothing beyond assigned tasks, so there's no sign of above-bar initiative. There's no example of escalating blockers."
+        },
+        {
+          "quote": "no complaints from the team",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "Only shows the absence of negative feedback. It doesn't show clear communication or responsiveness to teammates. It's weak support for at-bar and rules out nothing."
+        }
+      ],
+      "notes": [
+        "The whole review is three short sentences with no concrete examples. It names no projects, results, code quality, incidents or specific interactions.",
+        "\"Solid year\" is a general positive word with no example behind it, so it isn't counted as evidence.",
+        "Craft has no evidence at all. Nothing is said about code quality, tests, defects or reviews.",
+        "\"no complaints from the team\" only shows that nothing went wrong. It doesn't show at-bar collaboration.",
+        "The manager's rating of 2 (Meets) doesn't conflict with the text. The text just gives almost nothing to check it against. Worth asking the manager for specific examples, at least one per dimension, before calibration.",
+        "\"Did the work that was asked\" implies no work beyond assigned tasks, which would argue against any rating above Meets if one were proposed."
+      ]
+    },
+    "strengthByRun": [
+      2,
+      2,
+      2
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e27",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 2,
+      "sufficiency": "low",
+      "evidence": [
+        {
+          "quote": "Shipped his tickets",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "Shipping assigned tickets matches 'delivers well-defined tasks reliably.' But there's no scope, examples or outcomes, so nothing suggests above-bar impact."
+        },
+        {
+          "quote": "reviews were fine",
+          "dimension": "craft",
+          "level": "at",
+          "rationale": "Loosely matches 'solid code and tests with normal review.' It's unclear whether this means reviews of his code or code reviews he gave. Either way, it signals normal quality with no defects or standout designs mentioned."
+        }
+      ],
+      "notes": [
+        "The text doesn't contradict the manager's rating of 2 (Meets). What little evidence there is points to at-bar work, but the review gives too little to confirm the rating.",
+        "\"Reliable.\" is a one-word description with no example, so it isn't counted as evidence. It could apply to impact or ownership.",
+        "\"reviews were fine\" is ambiguous: it could mean reviews of his code or reviews he did for others. Only the first fits the craft bar directly, and 'fine' only signals meeting the bar.",
+        "The review gives no evidence for collaboration (communication, responsiveness, helping teammates) or ownership (follow-through, raising blockers, taking initiative).",
+        "\"Nothing to flag either way\" says there's nothing notable, but it doesn't show at-bar performance on the dimensions the review leaves out.",
+        "Suggest asking the manager for one or two concrete examples, especially for collaboration and ownership, before calibration."
+      ]
+    },
+    "strengthByRun": [
+      2,
+      2,
+      2
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e25",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 3,
+      "sufficiency": "high",
+      "evidence": [
+        {
+          "quote": "Ahmed leads the platform migration to the new deployment system and this is a work over three teams, search, billing and the internal tools.",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "He leads a cross-team project covering three teams, which matches the L5 bar."
+        },
+        {
+          "quote": "Until now 34 services from 40 are moved, the deploy time is from 25 minutes to 6 minutes, and the failed deploys are less than the half from before.",
+          "dimension": "impact",
+          "level": "above",
+          "rationale": "These are measured results on shared deployment metrics across 34 services: deploy time down about 76% and failed deploys halved. Platform-wide metrics like these fit 'results move org-level metrics'."
+        },
+        {
+          "quote": "The rollback design is from him, it save us in August when one release was bad, we go back in two minutes.",
+          "dimension": "craft",
+          "level": "at",
+          "rationale": "His rollback design worked in a real production incident, rolling back in two minutes. That shows a design that holds up in practice. It is sound work but doesn't show him setting standards across teams."
+        },
+        {
+          "quote": "He make the documentation and he sit together with every team for the first migration, he does not only send the link.",
+          "dimension": "collaboration",
+          "level": "above",
+          "rationale": "He wrote the documentation and sat with each team for its first migration. This is hands-on enablement of other teams, not just working relationships, and fits 'multiplies other teams' effectiveness'."
+        },
+        {
+          "quote": "He is the person which the other teams ask when they have a question about the deployment.",
+          "dimension": "collaboration",
+          "level": "above",
+          "rationale": "Other teams come to him with deployment questions, which matches 'sought out as a partner'."
+        },
+        {
+          "quote": "he execute the plan which we make together, but he does not tell me what the platform must be in two years.",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "He carries a jointly made plan through to results (34/40 services moved). That is ownership of outcomes. He doesn't define long-term direction or drive change without a mandate, so this is at the bar, not above it."
+        }
+      ],
+      "notes": [
+        "The text and the rating disagree. The manager gives Meets, but the evidence puts Impact (org-wide deploy metrics) and Collaboration (other teams seek him out, hands-on help with each team's first migration) above the L5 bar. Craft and Ownership are at the bar. That pattern supports Exceeds.",
+        "The manager's only argument for Meets is that Ahmed doesn't set a two-year platform vision. That describes the above-bar standards ('defines technical direction', 'drives change without a mandate'). It is not evidence of falling short of the at-bar standard. It explains why this isn't Greatly Exceeds, but not why it's only Meets.",
+        "It's a judgment call whether the impact is above the bar. Deploy metrics are clearly org-level results, but the plan was made jointly, so he isn't 'shaping direction' himself. Even if Impact is rated at the bar, Collaboration is still clearly above, so the case for Meets remains weak.",
+        "The review is written in non-native English. I did not count the grammar for or against the employee. The claims themselves are specific and quantified.",
+        "The migration is still in progress (34 of 40 services). The remaining 6 services might be the hardest ones. It's worth asking whether there is a completion timeline."
+      ]
+    },
+    "strengthByRun": [
+      3,
+      3,
+      2
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e28",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 2,
+      "sufficiency": "low",
+      "evidence": [],
+      "notes": [
+        "The review has no concrete evidence. It names no projects, results, designs, people she helped, or specific problems she owned, so no statement could be tagged against the rubric.",
+        "'Took on more than last year and it showed.' is a vague claim about impact. It doesn't say what she took on, whether it was a scoped or cross-team project, or what the results were. That isn't enough to place her at the bar, let alone above it.",
+        "'Team likes working with her.' is about how likeable she is, not what she did. It gives no example of helping teammates, mentoring, or resolving cross-team friction, so it doesn't show collaboration at or above the bar.",
+        "'Good year.' is general praise with nothing specific behind it.",
+        "Craft and ownership aren't mentioned at all.",
+        "The manager's rating is 3 (Exceeds), but the review only asserts it ('Exceeds.') and gives no reasons. Exceeds needs evidence above the L4 bar, such as cross-team delivery, standards others adopt, mentoring, or owning work beyond her own project. None of that is in the text.",
+        "The strength of 2 is a placeholder because nothing in the text supports going above Meets. It doesn't mean the work was judged to be at Meets. Recommend sending the review back to the manager for specific examples before calibration."
+      ]
+    },
+    "strengthByRun": [
+      2,
+      2,
+      2
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e29",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 2,
+      "sufficiency": "low",
+      "evidence": [
+        {
+          "quote": "Delivered what was on the plan.",
+          "dimension": "impact",
+          "level": "at",
+          "rationale": "Says the planned work got done, which fits the L4 bar of delivering scoped projects. But it names no project, scope or measurable result, so it's weak evidence even for 'at'."
+        },
+        {
+          "quote": "A couple of dates moved but nothing serious.",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "Minor schedule slips described as not serious. Nothing suggests the employee needed prompting to follow through, and nothing shows how they handled the slips or any unplanned problems. Read as roughly at the bar, but it's ambiguous."
+        }
+      ],
+      "notes": [
+        "The review has four short sentences. 'Steady.' and 'Meets.' are conclusions, not evidence.",
+        "No evidence at all for craft (design or implementation quality, handling ambiguity) or collaboration (helping teammates, communicating with partners).",
+        "Impact evidence names no project and gives no measurable results. The L4 'at' bar asks for scoped projects with measurable results, so it's unclear whether the employee owned projects or only completed tasks (which would be 'below').",
+        "The moved dates are mentioned without cause or how they were handled. More detail could push ownership either way.",
+        "The text doesn't contradict the manager's rating of 2, but it doesn't really support it either. The facilitator should ask for concrete examples, especially for craft and collaboration, before calibrating."
+      ]
+    },
+    "strengthByRun": [
+      2,
+      2,
+      2
+    ],
+    "droppedQuotes": []
+  },
+  {
+    "employeeId": "e30",
+    "model": "claude-opus-5",
+    "extraction": {
+      "strength": 2,
+      "sufficiency": "low",
+      "evidence": [
+        {
+          "quote": "Handled the hard problems without much input from me.",
+          "dimension": "ownership",
+          "level": "at",
+          "rationale": "Shows she works on her own on difficult work, which is expected at L5. It doesn't say which problems, at what scope (own project, team or org) or with what outcome. There's nothing showing team-level or org-level outcomes or driving change without a mandate, so it can't support 'above'."
+        },
+        {
+          "quote": "Others come to her.",
+          "dimension": "collaboration",
+          "level": "at",
+          "rationale": "Could hint at the above-bar 'sought out as a partner', but it doesn't say who comes to her (teammates or other teams), what for, or what came of it. It doesn't show cross-team relationships or multiplying other teams, so the most it can support is 'at'."
+        }
+      ],
+      "notes": [
+        "The review has four sentences. 'Strong.' and 'Exceeds.' are conclusions with no examples behind them, so they aren't counted as evidence.",
+        "No evidence for Impact: no projects, cross-team scope, results or metrics are mentioned.",
+        "No evidence for Craft: no designs, quality improvements, standards or technical direction are mentioned.",
+        "The manager's rating of 3 (Exceeds) isn't supported by the text. Both quotes are too vague to show above-bar work at L5, and two of the four dimensions have no evidence at all.",
+        "The strength of 2 reflects only what the text shows. It doesn't mean the employee is performing at Meets. Given the low sufficiency, the facilitator should ask the manager for specific examples (named projects, cross-team scope, measurable outcomes, who seeks her out and why) before the rating is calibrated.",
+        "'Without much input from me' describes independence on her own work. The L5 rubric's 'below' descriptor for ownership ('Owns own projects but not team-level outcomes') matches this about as well as the 'at' descriptor does. It was tagged 'at' because the scope isn't stated, but it could be read lower."
+      ]
+    },
+    "strengthByRun": [
+      2,
+      2,
+      2
+    ],
+    "droppedQuotes": []
+  }
+]
