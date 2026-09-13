@@ -22,4 +22,8 @@ reported by the author and cross-checked against gaps in the transcript.
 | 15:12 | 15:30 | 18m    | Key dialog + live re-run; browser checks in Chrome; fixed dropped fit lines and diff level marking — Task 15 |
 | 15:30 | 16:05 | 35m    | README + rationale draft; final whole-branch review; fix wave (no-evidence points, disclosures, reset-all, a11y, responsive, contradiction chip); 401 path verified in Chrome |
 
-**Running total: ~269 min active** (as of 16:05, including the ~10 min of pre-work). Deployment, video and transcript export not yet included.
+| 16:05 | 16:12 | 7m     | Wrap-up: status review, remaining-work estimate; paused |
+
+**Running total: ~276 min active** (as of 16:12, including the ~10 min of pre-work). Session paused here.
+
+Remaining (estimated 1h45–2h20): review app + edit rationale in own voice; remove `.assets` from git, merge `build` → `main`, create GitHub repo and push; Netlify deploy + README URL; ~5 min video; transcript export + README link; submission email.
