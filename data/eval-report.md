@@ -6,7 +6,7 @@ Model: claude-opus-5. 30 reviews × 3 runs. Generated 2026-09-13.
 Identical strength across runs: 28/30. Max spread histogram: {"0":28,"1":2}.
 
 ## 2. Quote fidelity
-Quotes kept: 186. Dropped (not verbatim): 0. Fidelity: 100.0%.
+Quotes kept (canonical run): 186. Dropped as non-verbatim (all runs): 0.
 
 ## 3. Rule vs model strength
 Client-side strength rule within 0.5 of the model's own strength: 23/29.
@@ -35,7 +35,7 @@ Client-side strength rule within 0.5 of the model's own strength: 23/29.
 | planted contradictory (e13) lands in Discuss | PASS | group=discuss |
 | planted self_contradicting (e19) lands in Discuss or is noted as contradictory | PASS | group=more_input noted=true |
 
-Note: the non-native and calibrated teams were written at the same true quality (two Exceeds, three Meets), so comparing their mean strength isolates the effect of writing style.
+Note: the non-native and calibrated teams were written to comparable quality mixes — three Meets plus two stronger cases on each, one of the calibrated team's being Greatly Exceeds — so the comparison mostly isolates writing style.
 
 ## 6. Changes made in response
 See notes below.

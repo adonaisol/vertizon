@@ -26,13 +26,19 @@ export function Agenda({ employees, managers, derived, onSelect }: { employees: 
                 const e = byId.get(r.id)!;
                 const mi = managers.findIndex((m) => m.id === e.managerId);
                 const low = e.extraction.sufficiency === "low";
+                const contradictionNoted = e.extraction.notes.some((n) => /contradict/i.test(n));
                 return (
                   <li key={r.id}>
                     <button onClick={() => onSelect(r.id)} className="flex w-full items-start gap-2 py-1.5 text-left hover:bg-slate-50">
                       <span className="mt-1 inline-block h-2.5 w-2.5 shrink-0 rounded-full border-2" style={{ borderColor: managerColor(mi), background: low ? "white" : managerColor(mi) }} />
                       <span className="flex-1">
                         <span className="font-medium">{e.name}</span> <span className="text-slate-500">· {e.level} · {e.manager.name}</span>
-                        <div className="text-xs text-slate-600">{r.reason}</div>
+                        <div className="text-xs text-slate-600">
+                          {r.reason}
+                          {contradictionNoted && (
+                            <span className="ml-1 rounded bg-amber-100 px-1 text-[10px] text-amber-800">model flagged a contradiction</span>
+                          )}
+                        </div>
                       </span>
                     </button>
                   </li>
@@ -45,13 +51,18 @@ export function Agenda({ employees, managers, derived, onSelect }: { employees: 
       <section>
         <h2 className="text-sm font-semibold text-slate-900">Managers</h2>
         <ul className="mt-1 space-y-1 text-xs">
-          {managers.map((m, i) => (
-            <li key={m.id} className="flex items-center gap-2">
-              <span className="inline-block h-2 w-4 rounded-sm" style={{ background: managerColor(i) }} />
-              <span className="w-28 font-medium">{m.name}</span>
-              <span className="text-slate-600">{derived.summaries[m.id]}</span>
-            </li>
-          ))}
+          {managers.map((m, i) => {
+            const usable = derived.scored.filter(
+              (s) => s.managerId === m.id && s.sufficiency !== "low" && s.strength !== null,
+            ).length;
+            return (
+              <li key={m.id} className="flex items-center gap-2">
+                <span className="inline-block h-2 w-4 rounded-sm" style={{ background: managerColor(i) }} />
+                <span className="w-28 font-medium">{m.name}</span>
+                <span className="text-slate-600">{derived.summaries[m.id]} · n={usable}</span>
+              </li>
+            );
+          })}
         </ul>
       </section>
     </div>

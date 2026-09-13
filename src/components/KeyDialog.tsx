@@ -3,8 +3,9 @@ import { useState } from "react";
 export function KeyDialog({ open, onClose, onSave, hasKey }: { open: boolean; onClose: () => void; onSave: (key: string | null) => void; hasKey: boolean }) {
   const [value, setValue] = useState("");
   if (!open) return null;
+  const handleClose = () => { setValue(""); onClose(); };
   return (
-    <div className="fixed inset-0 z-10 flex items-center justify-center bg-black/30 p-4" onClick={onClose}>
+    <div className="fixed inset-0 z-10 flex items-center justify-center bg-black/30 p-4" onClick={handleClose}>
       <div className="w-full max-w-md rounded-lg bg-white p-5 shadow-xl" onClick={(e) => e.stopPropagation()}>
         <h2 className="text-base font-semibold">Anthropic API key</h2>
         <p className="mt-1 text-xs text-slate-600">
@@ -13,11 +14,12 @@ export function KeyDialog({ open, onClose, onSave, hasKey }: { open: boolean; on
         </p>
         <input
           type="password" value={value} onChange={(e) => setValue(e.target.value)} placeholder="sk-ant-…"
+          onKeyDown={(e) => { if (e.key === "Escape") handleClose(); }}
           className="mt-3 w-full rounded border border-slate-300 px-2 py-1 text-sm" autoFocus
         />
         <div className="mt-3 flex justify-end gap-2 text-sm">
           {hasKey && <button onClick={() => { onSave(null); onClose(); }} className="px-2 py-1 text-slate-600 hover:underline">Forget key</button>}
-          <button onClick={onClose} className="px-2 py-1 text-slate-600 hover:underline">Cancel</button>
+          <button onClick={handleClose} className="px-2 py-1 text-slate-600 hover:underline">Cancel</button>
           <button onClick={() => { if (value.trim()) { onSave(value.trim()); setValue(""); onClose(); } }} className="rounded bg-slate-800 px-3 py-1 text-white">Use key</button>
         </div>
       </div>

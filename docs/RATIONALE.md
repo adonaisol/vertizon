@@ -40,14 +40,18 @@ This is what ML teams do when they audit human labelers, applied to managers —
 
 `scripts/eval.ts` checks 30 reviews × 3 runs (`data/eval-report.md`):
 
-- **Stability:** strength identical across all three runs for 28/30 employees; the other two moved one point.
+- **Stability:** the model's own holistic integer strength is identical across all three runs for 28/30 employees; the other two moved one point — only the canonical run's evidence is stored, so the plotted rule value's own run-to-run variation is not separately measured.
 - **Quote fidelity:** 186 quotes returned, 0 dropped as non-verbatim.
 - **Rule vs model:** the client-side rule lands within 0.5 of the model's own holistic integer for 23/29 employees. The rule averages and therefore compresses; the model commits to a whole number. The UI uses the rule everywhere, so bundled and overridden values stay comparable.
 - **Planted truth, first run:** 4 of 10 checks failed. Lenient offset +0.50, harsh −0.42, calibrated +0.44, and the planted contradictory case (e13) landed in "Looks consistent" instead of Discuss.
 
 Two real flaws sat behind those failures. Manager offsets included each manager's own planted anomaly, dragging every offset — the calibrated baseline included — toward the mean, and because the strength rule compresses, fixed absolute thresholds were the wrong test; I excluded planted employees from the offsets and made the lenient/harsh checks relative to the calibrated baseline. The second was a product defect: a single averaged gap hides a spiky per-dimension profile — one dimension well above the bar and another well below cancel to zero, which is exactly what a contradictory review looks like. So `scoring.ts` gained `dimensionSpread`, and an "uneven profile" rule that routes a case to Discuss when its dimension spread is ≥ 2, whatever the average gap.
 
-The prompt and the data were not changed. On re-run all 10 checks pass: offsets +0.92 (lenient), −0.53 (harsh), +0.30 (calibrated), and the non-native-English team's mean strength at 2.30 against the calibrated team's 2.36 — both were written at the same true quality, so that comparison isolates writing style.
+The prompt and the data were not changed. On re-run all 10 checks pass: offsets +0.92 (lenient), −0.53 (harsh), +0.30 (calibrated), and the non-native-English team's mean strength at 2.30 against the calibrated team's 2.36 — the two teams were written to comparable quality mixes (three Meets plus two stronger cases on each, one of the calibrated team's being Greatly Exceeds), so that comparison mostly isolates writing style.
+
+The app's per-manager sentence is computed on all of that manager's usable points, planted anomaly included, and with n=5 a single outlier moves the mean by about 0.2, so it reads smaller than the eval's plant-excluded offsets; the eval excludes plants because it is testing style, the app includes them because a facilitator should see the real team.
+
+The verbose and terse managers have no fitted line at all because every one of their reviews is low sufficiency — the sufficiency rule doing exactly its job — and the compression of the strength rule inflates every offset, including the calibrated baseline.
 
 ## 5. What was cut
 

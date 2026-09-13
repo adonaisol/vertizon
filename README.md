@@ -10,12 +10,13 @@ This tool scores the written evidence in each performance review against a share
 
     npm install
     npm run dev
+    npm test
 
 Everything needed is bundled (synthetic company + precomputed extractions). An Anthropic API key is only needed for the optional "Re-run with Claude" button; it is held in memory and never stored.
 
 ## Regenerate the data
 
-    npm run extract   # 30 reviews × 3 runs, through Claude Code headless mode (`claude -p`), no API key needed
+    npm run extract   # 30 reviews × 3 runs, through Claude Code headless mode (`claude -p`); needs an authenticated Claude Code CLI (`claude` logged in), no Anthropic API key required
     npm run eval      # writes data/eval-report.md
 
 The extraction prompt and validation are identical between the precompute and the in-browser re-run; only the transport differs (`claude -p` vs the Anthropic SDK). The browser path was verified with a mocked extractor (success) and against the real API with an invalid key (401 handling); it was not run end to end with a valid key during development.

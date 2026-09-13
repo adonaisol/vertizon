@@ -27,18 +27,19 @@ export function App() {
     : undefined;
 
   return (
-    <div className="flex h-screen flex-col text-slate-800">
+    <div className="flex min-h-screen flex-col text-slate-800">
       <TopBar hasKey={apiKey !== null} onKeyClick={() => setKeyOpen(true)} />
-      <main className="grid flex-1 grid-cols-1 gap-4 overflow-hidden p-4 md:grid-cols-[3fr_2fr]">
+      <main className="grid flex-1 grid-cols-1 gap-4 p-4 min-[900px]:grid-cols-[3fr_2fr]">
         <div className="min-h-[420px] overflow-hidden rounded-lg border border-slate-200 bg-white p-2">
           <CalibrationMap
             employees={employees} managers={managers} derived={derived}
             selectedId={selectedId} onSelect={setSelectedId}
             hiddenManagers={hiddenManagers} onToggleManager={toggleManager}
             overrideCount={countOverrides(overrides)}
+            onResetAll={() => dispatch({ type: "resetAll" })}
           />
         </div>
-        <aside className="overflow-y-auto rounded-lg border border-slate-200 bg-white p-4 text-sm">
+        <aside className="overflow-y-auto rounded-lg border border-slate-200 bg-white p-4 text-sm min-[900px]:max-h-[calc(100vh-6rem)]">
           {selected ? (
             <Drilldown
               key={selected.id}

@@ -14,6 +14,7 @@ type Props = {
   hiddenManagers: Set<string>;
   onToggleManager: (id: string) => void;
   overrideCount: number;
+  onResetAll: () => void;
 };
 
 type Datum = { x: number; y: number; id: string; name: string; managerName: string; low: boolean; selected: boolean; color: string };
@@ -43,15 +44,17 @@ function PointShape(props: { cx?: number; cy?: number; payload?: Datum }) {
   );
 }
 
-export function CalibrationMap({ employees, managers, derived, selectedId, onSelect, hiddenManagers, onToggleManager, overrideCount }: Props) {
-  const data: Datum[] = employees
-    .filter((e) => !hiddenManagers.has(e.managerId))
+export function CalibrationMap({ employees, managers, derived, selectedId, onSelect, hiddenManagers, onToggleManager, overrideCount, onResetAll }: Props) {
+  const visible = employees.filter((e) => !hiddenManagers.has(e.managerId));
+  const noEvidenceCount = visible.filter((e) => derived.strengthById[e.id] === null).length;
+  const data: Datum[] = visible
+    .filter((e) => derived.strengthById[e.id] !== null)
     .map((e) => {
-      const s = derived.strengthById[e.id];
+      const s = derived.strengthById[e.id] as number;
       const mi = managers.findIndex((m) => m.id === e.managerId);
       return {
-        x: s ?? 1, y: e.rating + jitter(e.id), id: e.id, name: e.name, managerName: e.manager.name,
-        low: e.extraction.sufficiency === "low" || s === null, selected: e.id === selectedId, color: managerColor(mi),
+        x: s, y: e.rating + jitter(e.id), id: e.id, name: e.name, managerName: e.manager.name,
+        low: e.extraction.sufficiency === "low", selected: e.id === selectedId, color: managerColor(mi),
       };
     });
 
@@ -59,8 +62,20 @@ export function CalibrationMap({ employees, managers, derived, selectedId, onSel
     <section className="flex h-full flex-col">
       <div className="flex items-center justify-between px-2 pb-1 text-xs text-slate-600">
         <span>● solid = enough evidence · ○ hollow = too little to judge · dashed = rating matches evidence</span>
-        {overrideCount > 0 && <span className="rounded bg-amber-100 px-2 py-0.5 text-amber-800">{overrideCount} override{overrideCount > 1 ? "s" : ""} applied</span>}
+        <span className="flex items-center gap-2">
+          {overrideCount > 0 && (
+            <>
+              <span className="rounded bg-amber-100 px-2 py-0.5 text-amber-800">{overrideCount} override{overrideCount > 1 ? "s" : ""} applied</span>
+              <button type="button" onClick={onResetAll} className="rounded border border-slate-300 px-2 py-0.5 text-slate-600 hover:bg-slate-50">Reset all</button>
+            </>
+          )}
+        </span>
       </div>
+      {noEvidenceCount > 0 && (
+        <div className="px-2 pb-1 text-[11px] text-slate-500">
+          {noEvidenceCount} review(s) with no extractable evidence are not plotted — see Get more input
+        </div>
+      )}
       <div className="min-h-[360px] flex-1">
         <ResponsiveContainer width="100%" height="100%">
           <ScatterChart margin={{ top: 10, right: 20, bottom: 30, left: 10 }}>
@@ -99,10 +114,17 @@ export function CalibrationMap({ employees, managers, derived, selectedId, onSel
           </ScatterChart>
         </ResponsiveContainer>
       </div>
-      <ul className="flex flex-wrap gap-x-4 gap-y-1 px-2 pt-2 text-xs">
+      <p className="px-2 pt-2 text-[11px] text-slate-500">Click a manager below to toggle their points and fitted line.</p>
+      <ul className="flex flex-wrap gap-x-4 gap-y-1 px-2 pt-1 text-xs">
         {managers.map((m, i) => (
           <li key={m.id}>
-            <button onClick={() => onToggleManager(m.id)} className={`flex items-center gap-1 ${hiddenManagers.has(m.id) ? "opacity-40" : ""}`}>
+            <button
+              type="button"
+              aria-pressed={!hiddenManagers.has(m.id)}
+              onClick={() => onToggleManager(m.id)}
+              title={`Toggle ${m.name}'s points and line`}
+              className={`flex items-center gap-1 ${hiddenManagers.has(m.id) ? "opacity-40" : ""}`}
+            >
               <span className="inline-block h-2 w-4 rounded-sm" style={{ background: managerColor(i) }} />
               {m.name}
             </button>
