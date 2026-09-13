@@ -4,6 +4,7 @@ import { overridesReducer, countOverrides } from "../state/overrides";
 import { useDerived } from "../state/useDerived";
 import { TopBar } from "./TopBar";
 import { CalibrationMap } from "./CalibrationMap";
+import { Agenda } from "./Agenda";
 
 export function App() {
   const { rubric, managers, employees } = useMemo(loadData, []);
@@ -32,7 +33,7 @@ export function App() {
           />
         </div>
         <aside className="overflow-y-auto rounded-lg border border-slate-200 bg-white p-4 text-sm">
-          {selectedId ? <p>Selected: {selectedId}</p> : <p>Agenda goes here.</p>}
+          {selectedId ? <p>Selected: {selectedId}</p> : <Agenda employees={employees} managers={managers} derived={derived} onSelect={setSelectedId} />}
         </aside>
       </main>
     </div>
