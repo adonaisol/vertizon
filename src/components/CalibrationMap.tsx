@@ -67,11 +67,11 @@ export function CalibrationMap({ employees, managers, derived, selectedId, onSel
             <CartesianGrid strokeDasharray="2 4" stroke="#e2e8f0" />
             <XAxis type="number" dataKey="x" domain={[0.8, 4.2]} ticks={RATING_TICKS} tickFormatter={(v) => LABELS[v] ?? ""} label={{ value: "Evidence strength", position: "bottom", offset: 10, fontSize: 12 }} />
             <YAxis type="number" dataKey="y" domain={[0.8, 4.2]} ticks={RATING_TICKS} tickFormatter={(v) => LABELS[v] ?? ""} width={90} label={{ value: "Manager rating", angle: -90, position: "insideLeft", fontSize: 12 }} />
-            <ReferenceLine segment={[{ x: 1, y: 1 }, { x: 4, y: 4 }]} stroke="#94a3b8" strokeDasharray="4 4" />
+            <ReferenceLine segment={[{ x: 1, y: 1 }, { x: 4, y: 4 }]} stroke="#94a3b8" strokeDasharray="4 4" ifOverflow="hidden" />
             {managers.map((m, i) => {
               const f = derived.fits[m.id];
               if (!f || hiddenManagers.has(m.id)) return null;
-              return <ReferenceLine key={m.id} segment={[{ x: 1, y: f.a + f.b }, { x: 4, y: f.a + 4 * f.b }]} stroke={managerColor(i)} strokeWidth={1.5} strokeOpacity={0.7} />;
+              return <ReferenceLine key={m.id} segment={[{ x: 1, y: f.a + f.b }, { x: 4, y: f.a + 4 * f.b }]} stroke={managerColor(i)} strokeWidth={1.5} strokeOpacity={0.7} ifOverflow="hidden" />;
             })}
             <Tooltip
               cursor={false}

@@ -52,22 +52,32 @@ export function Rerun({ employee: e, rubric, apiKey, onNeedKey, extractor = real
       {state.status === "done" && (() => {
         const ls = strength(state.live.evidence);
         const fmt = (x: number | null) => (x === null ? "none" : `${ratingLabel(x, rubric.ratings)} (${x.toFixed(1)})`);
-        const bundledQuotes = new Set(bundled.evidence.map((i) => i.quote));
-        const liveQuotes = new Set(state.live.evidence.map((i) => i.quote));
+        const bundledLevelByQuote = new Map(bundled.evidence.map((i) => [i.quote, i.level]));
+        const liveLevelByQuote = new Map(state.live.evidence.map((i) => [i.quote, i.level]));
         return (
           <div className="mt-2 grid grid-cols-2 gap-3 text-xs">
             <div>
               <div className="font-semibold">Bundled</div>
               <div>evidence {fmt(bs)} · sufficiency {bundled.sufficiency}</div>
-              <ul className="mt-1 space-y-0.5">{bundled.evidence.map((i, k) => <li key={k} className={liveQuotes.has(i.quote) ? "" : "text-red-700 line-through"}>{i.dimension} · {i.level} · “{i.quote}”</li>)}</ul>
+              <ul className="mt-1 space-y-0.5">{bundled.evidence.map((i, k) => {
+                const otherLevel = liveLevelByQuote.get(i.quote);
+                if (otherLevel === undefined) return <li key={k} className="text-red-700 line-through">{i.dimension} · {i.level} · “{i.quote}”</li>;
+                if (otherLevel !== i.level) return <li key={k} className="text-amber-700">{i.dimension} · {i.level} · “{i.quote}” (now {otherLevel})</li>;
+                return <li key={k}>{i.dimension} · {i.level} · “{i.quote}”</li>;
+              })}</ul>
             </div>
             <div>
               <div className="font-semibold">Live</div>
               <div>evidence {fmt(ls)} · sufficiency {state.live.sufficiency}</div>
-              <ul className="mt-1 space-y-0.5">{state.live.evidence.map((i, k) => <li key={k} className={bundledQuotes.has(i.quote) ? "" : "text-emerald-700"}>{i.dimension} · {i.level} · “{i.quote}”</li>)}</ul>
+              <ul className="mt-1 space-y-0.5">{state.live.evidence.map((i, k) => {
+                const otherLevel = bundledLevelByQuote.get(i.quote);
+                if (otherLevel === undefined) return <li key={k} className="text-emerald-700">{i.dimension} · {i.level} · “{i.quote}”</li>;
+                if (otherLevel !== i.level) return <li key={k} className="text-amber-700">{i.dimension} · {i.level} · “{i.quote}” (was {otherLevel})</li>;
+                return <li key={k}>{i.dimension} · {i.level} · “{i.quote}”</li>;
+              })}</ul>
               {state.dropped.length > 0 && <div className="mt-1 text-slate-500">{state.dropped.length} quote(s) dropped as non-verbatim</div>}
             </div>
-            <p className="col-span-2 text-slate-500">Struck = only in bundled; green = only in live. Bundled data is not replaced.</p>
+            <p className="col-span-2 text-slate-500">Struck = only in bundled; green = only in live; amber = level changed. Bundled data is not replaced.</p>
           </div>
         );
       })()}
