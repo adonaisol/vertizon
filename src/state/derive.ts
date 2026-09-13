@@ -1,6 +1,6 @@
 import type { Employee } from "../lib/data";
 import type { Manager, Rubric } from "../lib/schema";
-import { agenda, managerFit, managerSummary, pooledFit, strength, usablePoints, type AgendaRow, type Fit, type Scored } from "../lib/scoring";
+import { agenda, dimensionMeans, managerFit, managerSummary, pooledFit, strength, usablePoints, type AgendaRow, type Fit, type Scored } from "../lib/scoring";
 import { effectiveEvidence, type Overrides } from "./overrides";
 
 export type Derived = {
@@ -13,11 +13,15 @@ export type Derived = {
 };
 
 export function derive(employees: Employee[], managers: Manager[], rubric: Rubric, overrides: Overrides): Derived {
-  const scored: Scored[] = employees.map((e) => ({
-    id: e.id, name: e.name, managerId: e.managerId, rating: e.rating,
-    strength: strength(effectiveEvidence(e, overrides)),
-    sufficiency: e.extraction.sufficiency,
-  }));
+  const scored: Scored[] = employees.map((e) => {
+    const evidence = effectiveEvidence(e, overrides);
+    return {
+      id: e.id, name: e.name, managerId: e.managerId, rating: e.rating,
+      strength: strength(evidence),
+      sufficiency: e.extraction.sufficiency,
+      dims: dimensionMeans(evidence),
+    };
+  });
   const pooled = pooledFit(usablePoints(scored));
   const fits: Record<string, Fit | null> = {};
   const summaries: Record<string, string> = {};

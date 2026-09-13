@@ -8,16 +8,41 @@ export function clamp(x: number, lo: number, hi: number): number {
   return Math.min(hi, Math.max(lo, x));
 }
 
-/** Evidence-implied rating on the 1-4 scale. Continuous. Null when there is no evidence. */
-export function strength(evidence: EvidenceItem[]): number | null {
-  if (evidence.length === 0) return null;
+/** Mean LEVEL_VALUE per dimension present in the evidence. */
+export function dimensionMeans(evidence: EvidenceItem[]): Partial<Record<Dimension, number>> {
   const byDim = new Map<Dimension, number[]>();
   for (const e of evidence) {
     const arr = byDim.get(e.dimension) ?? [];
     arr.push(LEVEL_VALUE[e.level]);
     byDim.set(e.dimension, arr);
   }
-  const dimMeans = [...byDim.values()].map((v) => v.reduce((a, b) => a + b, 0) / v.length);
+  const out: Partial<Record<Dimension, number>> = {};
+  for (const [dim, vals] of byDim) out[dim] = vals.reduce((a, b) => a + b, 0) / vals.length;
+  return out;
+}
+
+function spreadOfMeans(means: Partial<Record<Dimension, number>>): number {
+  const vals = Object.values(means) as number[];
+  return vals.length < 2 ? 0 : Math.max(...vals) - Math.min(...vals);
+}
+
+/** Max − min of dimensionMeans; 0 when fewer than 2 dimensions are present. */
+export function dimensionSpread(evidence: EvidenceItem[]): number {
+  return spreadOfMeans(dimensionMeans(evidence));
+}
+
+function describeMean(m: number): string {
+  if (m >= 1.5) return "well above";
+  if (m >= 0.5) return "above";
+  if (m <= -1.5) return "well below";
+  if (m <= -0.5) return "below";
+  return "at";
+}
+
+/** Evidence-implied rating on the 1-4 scale. Continuous. Null when there is no evidence. */
+export function strength(evidence: EvidenceItem[]): number | null {
+  if (evidence.length === 0) return null;
+  const dimMeans = Object.values(dimensionMeans(evidence)) as number[];
   const mean = dimMeans.reduce((a, b) => a + b, 0) / dimMeans.length;
   return clamp(2 + mean, 1, 4);
 }
@@ -87,7 +112,7 @@ export function impliedRating(x: number, fit: Fit): { estimate: number; low: num
   return { estimate, halfWidth, low: clamp(estimate - halfWidth, 1, 4), high: clamp(estimate + halfWidth, 1, 4) };
 }
 
-export type Scored = { id: string; name: string; managerId: string; rating: number; strength: number | null; sufficiency: Sufficiency };
+export type Scored = { id: string; name: string; managerId: string; rating: number; strength: number | null; sufficiency: Sufficiency; dims: Partial<Record<Dimension, number>> };
 export type AgendaGroup = "discuss" | "more_input" | "consistent";
 export type AgendaRow = { id: string; group: AgendaGroup; gap: number; reason: string };
 
@@ -99,6 +124,15 @@ export function agenda(rows: Scored[], ratings: { value: number; label: string }
   const out: AgendaRow[] = rows.map((r) => {
     if (r.sufficiency === "low" || r.strength === null) {
       return { id: r.id, group: "more_input", gap: 0, reason: "Review gives too little evidence to judge." };
+    }
+    if (spreadOfMeans(r.dims) >= 2) {
+      const entries = Object.entries(r.dims) as [Dimension, number][];
+      const hi = entries.reduce((a, b) => (b[1] > a[1] ? b : a));
+      const lo = entries.reduce((a, b) => (b[1] < a[1] ? b : a));
+      return {
+        id: r.id, group: "discuss", gap: r.rating - r.strength,
+        reason: `Uneven profile: ${hi[0]} ${describeMean(hi[1])} the bar, ${lo[0]} ${describeMean(lo[1])} the bar.`,
+      };
     }
     const gap = r.rating - r.strength;
     const rated = ratingLabel(r.rating, ratings);

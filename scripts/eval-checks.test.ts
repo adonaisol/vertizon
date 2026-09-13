@@ -4,7 +4,7 @@ import type { ExtractionRecord } from "../src/lib/schema";
 
 const rec = (id: string, runs: number[], dropped: string[] = []): ExtractionRecord => ({
   employeeId: id, model: "m", strengthByRun: runs, droppedQuotes: dropped,
-  extraction: { strength: runs[0] as 1, sufficiency: "high", evidence: [{ quote: "q", dimension: "impact", level: "at", rationale: "" }], notes: [] },
+  extraction: { strength: runs[0], sufficiency: "high", evidence: [{ quote: "q", dimension: "impact", level: "at", rationale: "" }], notes: [] },
 });
 
 describe("stability", () => {

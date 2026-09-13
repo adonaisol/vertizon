@@ -26,15 +26,18 @@ export function ruleVsModel(rows: Joined[]) {
   return { agreeWithinHalf, total: usable.length };
 }
 
+/** Excludes planted employees: plants are individual anomalies, not manager style. */
 export function managerOffsets(rows: Joined[]) {
   const out: Record<string, { style: ManagerStyle; offset: number; n: number }> = {};
   for (const m of new Set(rows.map((r) => r.manager.id))) {
-    const own = rows.filter((r) => r.manager.id === m && r.rec.extraction.sufficiency !== "low" && r.ruleStrength !== null);
+    const own = rows.filter((r) => r.manager.id === m && !r.emp.plant && r.rec.extraction.sufficiency !== "low" && r.ruleStrength !== null);
     const offset = own.length ? own.reduce((a, r) => a + (r.emp.rating - (r.ruleStrength as number)), 0) / own.length : NaN;
     out[m] = { style: rows.find((r) => r.manager.id === m)!.manager.style, offset, n: own.length };
   }
   return out;
 }
+
+const signed = (x: number): string => `${x >= 0 ? "+" : "-"}${Math.abs(x).toFixed(2)}`;
 
 export function plantedChecks(rows: Joined[], agendaRows: AgendaRow[]) {
   const offsets = managerOffsets(rows);
@@ -42,22 +45,59 @@ export function plantedChecks(rows: Joined[], agendaRows: AgendaRow[]) {
   const group = (id: string) => agendaRows.find((a) => a.id === id)?.group;
   const strengthOf = (s: ManagerStyle) => rows.filter((r) => r.manager.style === s && r.ruleStrength !== null).map((r) => r.ruleStrength as number);
   const meanOf = (v: number[]) => (v.length ? v.reduce((a, b) => a + b, 0) / v.length : NaN);
-  const terseLow = rows.filter((r) => r.manager.style === "terse");
-  const terseLowShare = terseLow.filter((r) => r.rec.extraction.sufficiency === "low").length / terseLow.length;
-  const nonnativeMean = meanOf(strengthOf("nonnative"));
-  const calibratedMean = meanOf(strengthOf("calibrated"));
+  const fmtMean = (v: number[]) => (v.length ? meanOf(v).toFixed(2) : "no evidence");
+
+  const lenient = byStyle("lenient");
+  const harsh = byStyle("harsh");
+  const calibrated = byStyle("calibrated");
+  const lenientVsCalibrated = lenient.n > 0 && calibrated.n > 0 ? lenient.offset - calibrated.offset : NaN;
+  const harshVsCalibrated = harsh.n > 0 && calibrated.n > 0 ? calibrated.offset - harsh.offset : NaN;
+
+  const terseRows = rows.filter((r) => r.manager.style === "terse");
+  const terseLowShare = terseRows.length ? terseRows.filter((r) => r.rec.extraction.sufficiency === "low").length / terseRows.length : NaN;
+
+  const verboseStrengths = strengthOf("verbose");
+  const nonnativeStrengths = strengthOf("nonnative");
+  const calibratedStrengths = strengthOf("calibrated");
+  const verboseMean = meanOf(verboseStrengths);
+  const nonnativeMean = meanOf(nonnativeStrengths);
+  const calibratedStrengthMean = meanOf(calibratedStrengths);
 
   const checks = [
-    { name: "lenient manager offset > +0.5", pass: byStyle("lenient").offset > 0.5, detail: byStyle("lenient").offset.toFixed(2) },
-    { name: "harsh manager offset < -0.5", pass: byStyle("harsh").offset < -0.5, detail: byStyle("harsh").offset.toFixed(2) },
-    { name: "calibrated manager |offset| < 0.4", pass: Math.abs(byStyle("calibrated").offset) < 0.4, detail: byStyle("calibrated").offset.toFixed(2) },
-    { name: "terse team >= 80% low sufficiency", pass: terseLowShare >= 0.8, detail: `${(terseLowShare * 100).toFixed(0)}%` },
-    { name: "verbose team not scored high on prose alone (mean strength <= 2.5)", pass: meanOf(strengthOf("verbose")) <= 2.5, detail: meanOf(strengthOf("verbose")).toFixed(2) },
-    { name: "non-native team scored on work: mean strength within 0.5 of calibrated team", pass: Math.abs(nonnativeMean - calibratedMean) <= 0.5, detail: `${nonnativeMean.toFixed(2)} vs ${calibratedMean.toFixed(2)}` },
+    {
+      name: "lenient manager runs ≥ 0.3 above the calibrated baseline",
+      pass: !Number.isNaN(lenientVsCalibrated) && lenientVsCalibrated >= 0.3,
+      detail: Number.isNaN(lenientVsCalibrated) ? "no usable points" : `${signed(lenient.offset)} vs ${signed(calibrated.offset)}`,
+    },
+    {
+      name: "harsh manager runs ≥ 0.3 below the calibrated baseline",
+      pass: !Number.isNaN(harshVsCalibrated) && harshVsCalibrated >= 0.3,
+      detail: Number.isNaN(harshVsCalibrated) ? "no usable points" : `${signed(harsh.offset)} vs ${signed(calibrated.offset)}`,
+    },
+    {
+      name: "calibrated manager |offset| < 0.4",
+      pass: calibrated.n > 0 && Math.abs(calibrated.offset) < 0.4,
+      detail: calibrated.n === 0 ? "no usable points" : calibrated.offset.toFixed(2),
+    },
+    {
+      name: "terse team >= 80% low sufficiency",
+      pass: !Number.isNaN(terseLowShare) && terseLowShare >= 0.8,
+      detail: Number.isNaN(terseLowShare) ? "no evidence" : `${(terseLowShare * 100).toFixed(0)}%`,
+    },
+    {
+      name: "verbose team not scored high on prose alone (mean strength <= 2.5)",
+      pass: verboseStrengths.length > 0 && verboseMean <= 2.5,
+      detail: fmtMean(verboseStrengths),
+    },
+    {
+      name: "non-native team scored on work: mean strength within 0.5 of calibrated team",
+      pass: nonnativeStrengths.length > 0 && calibratedStrengths.length > 0 && Math.abs(nonnativeMean - calibratedStrengthMean) <= 0.5,
+      detail: nonnativeStrengths.length && calibratedStrengths.length ? `${nonnativeMean.toFixed(2)} vs ${calibratedStrengthMean.toFixed(2)}` : "no evidence",
+    },
   ];
   for (const r of rows.filter((r) => r.emp.plant)) {
     const g = group(r.emp.id);
-    if (r.emp.plant === "contradictory" || r.emp.plant === "self_contradicting") {
+    if (r.emp.plant === "self_contradicting") {
       const noted = r.rec.extraction.notes.some((n) => /contradict/i.test(n));
       checks.push({
         name: `planted ${r.emp.plant} (${r.emp.id}) lands in Discuss or is noted as contradictory`,

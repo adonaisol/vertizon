@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { strength, ratingLabel, olsFit, pooledFit, managerFit, impliedRating, type Point } from "./scoring";
+import { strength, ratingLabel, olsFit, pooledFit, managerFit, impliedRating, dimensionMeans, dimensionSpread, type Point } from "./scoring";
 import { agenda, managerSummary, usablePoints, type Scored } from "./scoring";
 import type { EvidenceItem } from "./schema";
 
@@ -30,6 +30,27 @@ describe("strength", () => {
   });
   it("returns null with no evidence", () => {
     expect(strength([])).toBeNull();
+  });
+});
+
+describe("dimensionMeans", () => {
+  it("averages within each dimension present", () => {
+    const items = [ev("impact", "above"), ev("impact", "well_above"), ev("collaboration", "well_below")];
+    expect(dimensionMeans(items)).toEqual({ impact: 1.5, collaboration: -2 });
+  });
+  it("is empty with no evidence", () => {
+    expect(dimensionMeans([])).toEqual({});
+  });
+});
+
+describe("dimensionSpread", () => {
+  it("is the max minus the min of the dimension means", () => {
+    const items = [ev("impact", "above"), ev("collaboration", "well_below")];
+    expect(dimensionSpread(items)).toBe(3);
+  });
+  it("is 0 with fewer than 2 dimensions", () => {
+    expect(dimensionSpread([ev("impact", "above")])).toBe(0);
+    expect(dimensionSpread([])).toBe(0);
   });
 });
 
@@ -100,7 +121,7 @@ describe("impliedRating", () => {
 });
 
 const S = (id: string, rating: number, strength: number | null, sufficiency: Scored["sufficiency"] = "high"): Scored =>
-  ({ id, name: id, managerId: "m1", rating, strength, sufficiency });
+  ({ id, name: id, managerId: "m1", rating, strength, sufficiency, dims: {} });
 
 describe("usablePoints", () => {
   it("keeps only rows with sufficiency != low and non-null strength", () => {
@@ -124,6 +145,18 @@ describe("agenda", () => {
   });
   it("treats null strength as more_input", () => {
     expect(agenda([S("z", 2, null, "high")], RATINGS)[0].group).toBe("more_input");
+  });
+  it("flags an uneven dimension profile as discuss even when the gap is zero", () => {
+    const row = { ...S("u", 2, 2), dims: { impact: 1, collaboration: -2 } };
+    const [r] = agenda([row], RATINGS);
+    expect(r.group).toBe("discuss");
+    expect(r.gap).toBe(0);
+    expect(r.reason).toBe("Uneven profile: impact above the bar, collaboration well below the bar.");
+  });
+  it("does not trigger the uneven-profile rule when spread is under 2", () => {
+    const row = { ...S("v", 2, 2), dims: { impact: 1, craft: 0.5 } };
+    const [r] = agenda([row], RATINGS);
+    expect(r.group).toBe("consistent");
   });
 });
 

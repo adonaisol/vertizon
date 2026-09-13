@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { EmployeesFileSchema, ExtractionRecordSchema, RubricSchema } from "../src/lib/schema";
-import { agenda, strength, type Scored } from "../src/lib/scoring";
+import { agenda, dimensionMeans, strength, type Scored } from "../src/lib/scoring";
 import { managerOffsets, plantedChecks, quoteFidelity, ruleVsModel, stability, type Joined } from "./eval-checks";
 import { z } from "zod/v4";
 
@@ -9,10 +9,17 @@ const { managers, employees } = EmployeesFileSchema.parse(JSON.parse(readFileSyn
 const recs = z.array(ExtractionRecordSchema).parse(JSON.parse(readFileSync("data/extractions.json", "utf8")));
 
 const rows: Joined[] = employees.map((emp) => {
-  const rec = recs.find((r) => r.employeeId === emp.id)!;
-  return { emp, manager: managers.find((m) => m.id === emp.managerId)!, rec, ruleStrength: strength(rec.extraction.evidence) };
+  const rec = recs.find((r) => r.employeeId === emp.id);
+  if (!rec) throw new Error(`No extraction for ${emp.id}`);
+  const manager = managers.find((m) => m.id === emp.managerId);
+  if (!manager) throw new Error(`No manager ${emp.managerId}`);
+  return { emp, manager, rec, ruleStrength: strength(rec.extraction.evidence) };
 });
-const scored: Scored[] = rows.map((r) => ({ id: r.emp.id, name: r.emp.name, managerId: r.emp.managerId, rating: r.emp.rating, strength: r.ruleStrength, sufficiency: r.rec.extraction.sufficiency }));
+const scored: Scored[] = rows.map((r) => ({
+  id: r.emp.id, name: r.emp.name, managerId: r.emp.managerId, rating: r.emp.rating,
+  strength: r.ruleStrength, sufficiency: r.rec.extraction.sufficiency,
+  dims: dimensionMeans(r.rec.extraction.evidence),
+}));
 const agendaRows = agenda(scored, rubric.ratings);
 
 const st = stability(recs);
