@@ -6,6 +6,7 @@ import type { Derived } from "../state/derive";
 import { effectiveEvidence, type OverrideAction, type Overrides } from "../state/overrides";
 import { ReviewText } from "./ReviewText";
 import { EvidenceList } from "./EvidenceList";
+import { OtherBars } from "./OtherBars";
 
 export type DrilldownProps = {
   employee: Employee; rubric: Rubric; managers: Manager[]; derived: Derived;
@@ -49,7 +50,10 @@ export function Drilldown(p: DrilldownProps) {
         />
       </section>
 
-      {/* OtherBars (Task 14) */}
+      <section>
+        <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Under other managers' bars</h3>
+        <OtherBars employee={e} strengthValue={s} managers={p.managers} derived={p.derived} rubric={rubric} />
+      </section>
       {/* Rerun (Task 15) */}
     </div>
   );
