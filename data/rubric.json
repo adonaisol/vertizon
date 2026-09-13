@@ -1,0 +1,46 @@
+{
+  "ratings": [
+    { "value": 1, "label": "Below" },
+    { "value": 2, "label": "Meets" },
+    { "value": 3, "label": "Exceeds" },
+    { "value": 4, "label": "Greatly Exceeds" }
+  ],
+  "dimensions": [
+    {
+      "id": "impact",
+      "name": "Impact",
+      "bars": {
+        "L3": { "below": "Tasks slip or need rework; limited effect on team goals.", "at": "Delivers well-defined tasks reliably; contributes to team goals.", "above": "Delivers small projects end-to-end with measurable results." },
+        "L4": { "below": "Delivers tasks but not scoped projects; results are hard to point to.", "at": "Owns and delivers scoped projects with measurable results.", "above": "Delivers cross-team projects; results visible beyond the team." },
+        "L5": { "below": "Delivers projects but not at cross-team scope.", "at": "Leads cross-team projects with results visible across the org.", "above": "Shapes direction for multiple teams; results move org-level metrics." }
+      }
+    },
+    {
+      "id": "craft",
+      "name": "Craft",
+      "bars": {
+        "L3": { "below": "Frequent defects; needs close review.", "at": "Solid code and tests with normal review.", "above": "Designs are sound with little guidance; catches others' defects." },
+        "L4": { "below": "Designs need substantial correction in review.", "at": "Sound designs and implementations; handles ambiguity within the project.", "above": "Sets quality standards others adopt; anticipates failure modes." },
+        "L5": { "below": "Designs are sound but do not raise the team's bar.", "at": "Raises quality across the team; designs hold up under scale.", "above": "Defines technical direction and standards across teams." }
+      }
+    },
+    {
+      "id": "collaboration",
+      "name": "Collaboration",
+      "bars": {
+        "L3": { "below": "Hard to work with or unresponsive.", "at": "Communicates clearly; responsive to teammates.", "above": "Actively helps teammates; improves team communication." },
+        "L4": { "below": "Works well alone but rarely lifts others.", "at": "Helps teammates; communicates well with partners.", "above": "Mentors others; resolves cross-team friction." },
+        "L5": { "below": "Collaborates within the team but not across.", "at": "Mentors; builds working relationships across teams.", "above": "Multiplies other teams' effectiveness; sought out as a partner." }
+      }
+    },
+    {
+      "id": "ownership",
+      "name": "Ownership",
+      "bars": {
+        "L3": { "below": "Waits to be told; drops the ball on follow-through.", "at": "Follows through on commitments; escalates blockers.", "above": "Takes initiative beyond assigned tasks." },
+        "L4": { "below": "Needs prompting to follow through on project outcomes.", "at": "Owns project outcomes, including unplanned problems.", "above": "Owns outcomes beyond own project; fixes what nobody assigned." },
+        "L5": { "below": "Owns own projects but not team-level outcomes.", "at": "Owns team-level outcomes and long-term health.", "above": "Owns org-level outcomes; drives change without a mandate." }
+      }
+    }
+  ]
+}
