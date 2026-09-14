@@ -23,8 +23,8 @@ reported by the author and cross-checked against gaps in the transcript.
 | 15:30 | 16:05 | 35m    | README + rationale draft; final whole-branch review; fix wave (no-evidence points, disclosures, reset-all, a11y, responsive, contradiction chip); 401 path verified in Chrome |
 | 16:05 | 16:12 | 7m     | Wrap-up: status review, remaining-work estimate; paused |
 | 16:12 | 16:16 | 4m     | Removed `.assets` from git; moved the UI sketch to `docs/` |
-| 09-14 07:05 | 07:30 | 25m | Resumed: doc fixes, tests/build re-verified (58/58, clean), transcript exported locally, merged `build` → `main` |
+| 09-14 07:21 | 07:30 | 9m | Resumed: committed doc fixes, tests/build re-verified (58/58, clean), transcript exported locally, merged `build` → `main` |
 
-**Running total: ~305 min active** (as of 2026-09-14 07:30, including the ~10 min of pre-work).
+**Running total: ~289 min active** (as of 2026-09-14 07:30, including the ~10 min of pre-work).
 
 Remaining (estimated 1h–1h30): review app + edit rationale in own voice; create GitHub repo and push; Netlify deploy + README URL; ~5 min video; publish transcript + README link; submission email.
