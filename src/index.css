@@ -1,1 +1,3 @@
 @import "tailwindcss";
+
+summary::-webkit-details-marker { display: none; }

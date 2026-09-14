@@ -8,6 +8,7 @@ import { CalibrationMap } from "./CalibrationMap";
 import { Agenda } from "./Agenda";
 import { Drilldown } from "./Drilldown";
 import { KeyDialog } from "./KeyDialog";
+import { HelpDialog } from "./HelpDialog";
 
 export function App() {
   const { rubric, managers, employees } = useMemo(loadData, []);
@@ -16,6 +17,7 @@ export function App() {
   const [hiddenManagers, setHidden] = useState<Set<string>>(new Set());
   const [apiKey, setApiKey] = useState<string | null>(null);
   const [keyOpen, setKeyOpen] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
   const derived = useDerived(employees, managers, rubric, overrides);
   const selected = employees.find((e) => e.id === selectedId) ?? null;
 
@@ -28,7 +30,7 @@ export function App() {
 
   return (
     <div className="flex min-h-screen flex-col text-slate-800">
-      <TopBar hasKey={apiKey !== null} onKeyClick={() => setKeyOpen(true)} />
+      <TopBar hasKey={apiKey !== null} onKeyClick={() => setKeyOpen(true)} onHelpClick={() => setHelpOpen(true)} />
       <main className="grid flex-1 grid-cols-1 gap-4 p-4 min-[900px]:grid-cols-[3fr_2fr]">
         <div className="min-h-[420px] overflow-hidden rounded-lg border border-slate-200 bg-white p-2">
           <CalibrationMap
@@ -53,6 +55,7 @@ export function App() {
           )}
         </aside>
       </main>
+      <HelpDialog open={helpOpen} onClose={() => setHelpOpen(false)} />
       <KeyDialog open={keyOpen} onClose={() => setKeyOpen(false)} onSave={setApiKey} hasKey={apiKey !== null} />
     </div>
   );

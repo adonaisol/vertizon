@@ -61,7 +61,7 @@ export function CalibrationMap({ employees, managers, derived, selectedId, onSel
   return (
     <section className="flex h-full flex-col">
       <div className="flex items-center justify-between px-2 pb-1 text-xs text-slate-600">
-        <span>● solid = enough evidence · ○ hollow = too little to judge · dashed = rating matches evidence</span>
+        <span className="font-medium text-slate-700">Rating vs. evidence, one point per employee</span>
         <span className="flex items-center gap-2">
           {overrideCount > 0 && (
             <>
@@ -114,7 +114,17 @@ export function CalibrationMap({ employees, managers, derived, selectedId, onSel
           </ScatterChart>
         </ResponsiveContainer>
       </div>
-      <p className="px-2 pt-2 text-[11px] text-slate-500">Click a manager below to toggle their points and fitted line.</p>
+      <div className="px-2 pt-2 text-xs text-slate-600">
+        <p className="font-medium text-slate-800">Is this rating a property of the evidence, or of who wrote it?</p>
+        <p className="mt-0.5">
+          Each point is one employee: how strong the written evidence in their review is (across) against the rating
+          their manager gave (up). On the dashed diagonal the two agree. Points well above it are rated higher than
+          their evidence supports; points well below are rated lower. Each coloured line is one manager's fitted
+          rating-vs-evidence line: above the pack means generous, below means harsh, steeper means they want more
+          evidence per step. Hollow points come from reviews too thin to judge and do not shape the lines.
+        </p>
+        <p className="mt-1 text-[11px] text-slate-500">Click a point to open the employee. Click a manager below to hide or show their points and line.</p>
+      </div>
       <ul className="flex flex-wrap gap-x-4 gap-y-1 px-2 pt-1 text-xs">
         {managers.map((m, i) => (
           <li key={m.id}>

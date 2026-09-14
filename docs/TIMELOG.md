@@ -24,7 +24,9 @@ reported by the author and cross-checked against gaps in the transcript.
 | 16:05 | 16:12 | 7m     | Wrap-up: status review, remaining-work estimate; paused |
 | 16:12 | 16:16 | 4m     | Removed `.assets` from git; moved the UI sketch to `docs/` |
 | 09-14 07:21 | 07:30 | 9m | Resumed: committed doc fixes, tests/build re-verified (58/58, clean), transcript exported locally, merged `build` → `main` |
+| 09-14 07:30 | 07:50 | 20m | Author: manual code review, test runs of the web app, UX notes (reported by the author) |
+| 09-14 07:50 | 08:15 | 25m | UX pass from the author's notes: header subtitle, tagline + how-to-read under chart, help dialog, agenda header, two-column legend, collapsible groups; README rewrite with screenshot; ui-design notes |
 
-**Running total: ~289 min active** (as of 2026-09-14 07:30, including the ~10 min of pre-work).
+**Running total: ~334 min active** (as of 2026-09-14 08:15, including the ~10 min of pre-work).
 
 Remaining (estimated 1h–1h30): review app + edit rationale in own voice; create GitHub repo and push; Netlify deploy + README URL; ~5 min video; publish transcript + README link; submission email.

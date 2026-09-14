@@ -81,3 +81,56 @@ flowchart TD
     API --> Diff[Side-by-side:<br>bundled vs live extraction]
     Drill -- back --> Agenda
 ```
+
+## Design updates after the first review (2026-09-14)
+
+The first build put the tagline next to the page title, a one-line symbol key
+above the chart, and the manager summaries at the bottom of the agenda. On a
+first viewing it was hard to tell what the page was for. Changes made:
+
+- **Header.** The title now has a one-sentence subtitle underneath it that
+  says what the application does ("checks each performance rating against the
+  written evidence behind it…"). The tagline ("Is this rating a property of the
+  evidence, or of who wrote it?") moved under the chart, followed by a short
+  paragraph on how to read the axes, the diagonal, the manager lines and hollow
+  points. The chart header now carries only a plain caption and the override
+  chip.
+- **Help dialog.** A `? help` button sits in front of the key button and opens
+  a modal that explains, section by section: the map, the agenda, the employee
+  drilldown and overrides, "under other managers' bars", and re-running with
+  Claude. Closes on Escape, backdrop click or the Close link.
+- **Agenda header and legend.** The agenda pane now has a heading and a
+  subtitle explaining what the groups are for. The manager legend moved from
+  the bottom of the pane to the top, into a two-column block: managers
+  (colour, name, one-line summary of their fitted line, n) on the left and a
+  key to the map's marks (solid point, hollow point, dashed diagonal, coloured
+  line) on the right. The chart keeps its own manager row underneath, because
+  that row is the toggle.
+- **Collapsible agenda groups.** Discuss, Get more input and Looks consistent
+  are native `<details>` elements, so each expands and collapses independently
+  with no state to manage and keyboard support for free. Discuss and Get more
+  input start open; Looks consistent starts collapsed since it is the largest
+  group and the least actionable.
+
+Updated wireframe of the default panel:
+
+```
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ Calibration Map                                             [? help] [🔑 key] │
+│ Checks each performance rating against the written evidence behind it, …     │
+├───────────────────────────────────────┬──────────────────────────────────────┤
+│ Rating vs. evidence, one point per    │ Agenda                               │
+│ employee                 [n overrides]│ Every employee, grouped by what the  │
+│                                       │ meeting should do with them…         │
+│  (chart)                              │ ┌─ Managers ──────┬─ Evidence ─────┐ │
+│                                       │ │ ── Priya  +0.4  │ ● enough       │ │
+│                                       │ │ ── Tom    +0.5  │ ○ too little   │ │
+│                                       │ │ ── …            │ ╱ diagonal     │ │
+│                                       │ └─────────────────┴─ ── mgr line ──┘ │
+│ Is this rating a property of the      │ ▼ Discuss (6) · …                    │
+│ evidence, or of who wrote it?         │     rows…                            │
+│ Each point is one employee: …         │ ▼ Get more input (10) · …            │
+│ Click a point… Click a manager below… │     rows…                            │
+│ ■ Priya ■ Tom ■ Marcus ■ …  (toggles) │ ▶ Looks consistent (14) · …          │
+└───────────────────────────────────────┴──────────────────────────────────────┘
+```
