@@ -63,4 +63,11 @@ Because the browser path uses the SDK and I had no key, it was verified two ways
 
 ## AI transcripts
 
-The Claude Code session used to design and build this: <TRANSCRIPT LINK>
+The full Claude Code sessions used to design, build and revise this, rendered as HTML: **https://vertizon.netlify.app/transcripts/** (source in `public/transcripts/`, so they ship with the site).
+
+- `2026-09-13-build` – theme choice, design, plan, subagent-driven build, eval, docs
+- `2026-09-14-review` – resume, the author's UX review and the pass that followed, README rewrite, deploy, time-log audit
+
+They were generated with [claude-code-transcripts](https://github.com/simonw/claude-code-transcripts):
+
+    uvx claude-code-transcripts json --repo adonaisol/vertizon -o public/transcripts/<name> ~/.claude/projects/<project>/<session>.jsonl
