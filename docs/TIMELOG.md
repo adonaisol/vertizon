@@ -1,6 +1,6 @@
 # Time log
 
-Active working time only; breaks excluded. Times are local (2026-09-13).
+Active working time only; breaks excluded. Times are local; 2026-09-13 unless a row says otherwise.
 Turn timestamps come from the Claude Code session transcript; breaks were
 reported by the author and cross-checked against gaps in the transcript.
 
@@ -22,7 +22,9 @@ reported by the author and cross-checked against gaps in the transcript.
 | 15:12 | 15:30 | 18m    | Key dialog + live re-run; browser checks in Chrome; fixed dropped fit lines and diff level marking — Task 15 |
 | 15:30 | 16:05 | 35m    | README + rationale draft; final whole-branch review; fix wave (no-evidence points, disclosures, reset-all, a11y, responsive, contradiction chip); 401 path verified in Chrome |
 | 16:05 | 16:12 | 7m     | Wrap-up: status review, remaining-work estimate; paused |
+| 16:12 | 16:16 | 4m     | Removed `.assets` from git; moved the UI sketch to `docs/` |
+| 09-14 07:05 | 07:30 | 25m | Resumed: doc fixes, tests/build re-verified (58/58, clean), transcript exported locally, merged `build` → `main` |
 
-**Running total: ~276 min active** (as of 16:12, including the ~10 min of pre-work). Session paused here.
+**Running total: ~305 min active** (as of 2026-09-14 07:30, including the ~10 min of pre-work).
 
-Remaining (estimated 1h45–2h20): review app + edit rationale in own voice; remove `.assets` from git, merge `build` → `main`, create GitHub repo and push; Netlify deploy + README URL; ~5 min video; transcript export + README link; submission email.
+Remaining (estimated 1h–1h30): review app + edit rationale in own voice; create GitHub repo and push; Netlify deploy + README URL; ~5 min video; publish transcript + README link; submission email.
