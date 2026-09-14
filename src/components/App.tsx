@@ -51,7 +51,7 @@ export function App() {
               extractor={extractor}
             />
           ) : (
-            <Agenda employees={employees} managers={managers} derived={derived} onSelect={setSelectedId} />
+            <Agenda employees={employees} managers={managers} rubric={rubric} derived={derived} onSelect={setSelectedId} />
           )}
         </aside>
       </main>

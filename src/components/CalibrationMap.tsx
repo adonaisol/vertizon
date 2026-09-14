@@ -123,6 +123,12 @@ export function CalibrationMap({ employees, managers, derived, selectedId, onSel
           rating-vs-evidence line: above the pack means generous, below means harsh, steeper means they want more
           evidence per step. Hollow points come from reviews too thin to judge and do not shape the lines.
         </p>
+        <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-slate-700">
+          <li className="flex items-center gap-1.5"><span className="inline-block h-2.5 w-2.5 rounded-full border-2 border-slate-600 bg-slate-600" /> solid: enough evidence to judge</li>
+          <li className="flex items-center gap-1.5"><span className="inline-block h-2.5 w-2.5 rounded-full border-2 border-slate-600 bg-white" /> hollow: too little evidence, not in the lines</li>
+          <li className="flex items-center gap-1.5"><span className="inline-block w-4 border-t-2 border-dashed border-slate-400" /> dashed diagonal: rating matches evidence</li>
+          <li className="flex items-center gap-1.5"><span className="inline-block w-4 border-t-2 border-slate-600" /> coloured line: one manager's fitted line</li>
+        </ul>
         <p className="mt-1 text-[11px] text-slate-500">Click a point to open the employee. Click a manager below to hide or show their points and line.</p>
       </div>
       <ul className="flex flex-wrap gap-x-4 gap-y-1 px-2 pt-1 text-xs">

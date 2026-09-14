@@ -1,8 +1,9 @@
 import type { Employee } from "../lib/data";
-import type { Manager } from "../lib/schema";
+import type { Manager, Rubric } from "../lib/schema";
 import type { AgendaGroup } from "../lib/scoring";
 import type { Derived } from "../state/derive";
 import { managerColor } from "./colors";
+import { DIMENSION_COLORS } from "./dimensionColors";
 import { flagsSelfContradiction } from "../lib/notes";
 
 const GROUPS: { key: AgendaGroup; title: string; hint: string; defaultOpen: boolean }[] = [
@@ -11,7 +12,7 @@ const GROUPS: { key: AgendaGroup; title: string; hint: string; defaultOpen: bool
   { key: "consistent", title: "Looks consistent", hint: "rating matches the evidence", defaultOpen: false },
 ];
 
-export function Agenda({ employees, managers, derived, onSelect }: { employees: Employee[]; managers: Manager[]; derived: Derived; onSelect: (id: string) => void }) {
+export function Agenda({ employees, managers, rubric, derived, onSelect }: { employees: Employee[]; managers: Manager[]; rubric: Rubric; derived: Derived; onSelect: (id: string) => void }) {
   const byId = new Map(employees.map((e) => [e.id, e]));
   return (
     <div className="space-y-5">
@@ -22,7 +23,7 @@ export function Agenda({ employees, managers, derived, onSelect }: { employees: 
         </p>
       </div>
 
-      <Legend managers={managers} derived={derived} />
+      <Legend managers={managers} rubric={rubric} derived={derived} />
 
       {GROUPS.map((g) => {
         const rows = derived.agenda.filter((r) => r.group === g.key);
@@ -64,7 +65,7 @@ export function Agenda({ employees, managers, derived, onSelect }: { employees: 
   );
 }
 
-function Legend({ managers, derived }: { managers: Manager[]; derived: Derived }) {
+function Legend({ managers, rubric, derived }: { managers: Manager[]; rubric: Rubric; derived: Derived }) {
   return (
     <section className="grid grid-cols-1 gap-x-6 gap-y-3 rounded-md border border-slate-200 bg-slate-50 p-3 sm:grid-cols-2">
       <div>
@@ -87,25 +88,19 @@ function Legend({ managers, derived }: { managers: Manager[]; derived: Derived }
         </ul>
       </div>
       <div>
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">Evidence</h3>
+        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">Rubric dimensions</h3>
         <ul className="mt-1 space-y-1 text-xs text-slate-700">
-          <li className="flex items-center gap-2">
-            <span className="inline-block h-2.5 w-2.5 shrink-0 rounded-full border-2 border-slate-600 bg-slate-600" />
-            <span><b>Solid point</b>: enough evidence to judge</span>
-          </li>
-          <li className="flex items-center gap-2">
-            <span className="inline-block h-2.5 w-2.5 shrink-0 rounded-full border-2 border-slate-600 bg-white" />
-            <span><b>Hollow point</b>: too little evidence; not used in manager lines</span>
-          </li>
-          <li className="flex items-center gap-2">
-            <span className="inline-block w-4 shrink-0 border-t-2 border-dashed border-slate-400" />
-            <span><b>Dashed diagonal</b>: rating matches evidence</span>
-          </li>
-          <li className="flex items-center gap-2">
-            <span className="inline-block w-4 shrink-0 border-t-2 border-slate-600" />
-            <span><b>Coloured line</b>: one manager's fitted rating-vs-evidence line</span>
-          </li>
+          {rubric.dimensions.map((d) => (
+            <li key={d.id} className="flex items-center gap-2">
+              <span className="inline-block h-3 w-4 shrink-0 rounded-sm" style={{ background: DIMENSION_COLORS[d.id] }} />
+              <span className="font-medium">{d.name}</span>
+            </li>
+          ))}
         </ul>
+        <p className="mt-2 text-[11px] text-slate-500">
+          Each quote in a review is graded against the bar for one of these dimensions at the employee's level. The
+          colours mark the quotes in the drilldown.
+        </p>
       </div>
     </section>
   );

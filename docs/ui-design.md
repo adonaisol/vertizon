@@ -102,10 +102,11 @@ first viewing it was hard to tell what the page was for. Changes made:
 - **Agenda header and legend.** The agenda pane now has a heading and a
   subtitle explaining what the groups are for. The manager legend moved from
   the bottom of the pane to the top, into a two-column block: managers
-  (colour, name, one-line summary of their fitted line, n) on the left and a
-  key to the map's marks (solid point, hollow point, dashed diagonal, coloured
-  line) on the right. The chart keeps its own manager row underneath, because
-  that row is the toggle.
+  (colour, name, one-line summary of their fitted line, n) on the left and the
+  rubric dimensions (Impact, Craft, Collaboration, Ownership, in the colours
+  used to highlight quotes in the drilldown) on the right. The key to the map's
+  marks (solid point, hollow point, dashed diagonal, coloured line) sits as a
+  horizontal row under the chart, next to the manager toggle row.
 - **Collapsible agenda groups.** Discuss, Get more input and Looks consistent
   are native `<details>` elements, so each expands and collapses independently
   with no state to manage and keyboard support for free. Discuss and Get more
@@ -122,7 +123,7 @@ Updated wireframe of the default panel:
 │ Rating vs. evidence, one point per    │ Agenda                               │
 │ employee                 [n overrides]│ Every employee, grouped by what the  │
 │                                       │ meeting should do with them…         │
-│  (chart)                              │ ┌─ Managers ──────┬─ Evidence ─────┐ │
+│  (chart)                              │ ┌─ Managers ──────┬─ Rubric ───────┐ │
 │                                       │ │ ── Priya  +0.4  │ ● enough       │ │
 │                                       │ │ ── Tom    +0.5  │ ○ too little   │ │
 │                                       │ │ ── …            │ ╱ diagonal     │ │
@@ -130,7 +131,8 @@ Updated wireframe of the default panel:
 │ Is this rating a property of the      │ ▼ Discuss (6) · …                    │
 │ evidence, or of who wrote it?         │     rows…                            │
 │ Each point is one employee: …         │ ▼ Get more input (10) · …            │
-│ Click a point… Click a manager below… │     rows…                            │
+│ ● solid ○ hollow ╱ diagonal ── line   │     rows…                            │
+│ Click a point… Click a manager below… │                                      │
 │ ■ Priya ■ Tom ■ Marcus ■ …  (toggles) │ ▶ Looks consistent (14) · …          │
 └───────────────────────────────────────┴──────────────────────────────────────┘
 ```
