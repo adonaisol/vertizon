@@ -21,7 +21,6 @@ reported by the author and cross-checked against gaps in the transcript.
 | 14:54 | 15:12 | 18m    | UI: app shell, calibration map, agenda, drilldown, other-managers' bars — Tasks 11–14 |
 | 15:12 | 15:30 | 18m    | Key dialog + live re-run; browser checks in Chrome; fixed dropped fit lines and diff level marking — Task 15 |
 | 15:30 | 16:05 | 35m    | README + rationale draft; final whole-branch review; fix wave (no-evidence points, disclosures, reset-all, a11y, responsive, contradiction chip); 401 path verified in Chrome |
-
 | 16:05 | 16:12 | 7m     | Wrap-up: status review, remaining-work estimate; paused |
 
 **Running total: ~276 min active** (as of 16:12, including the ~10 min of pre-work). Session paused here.

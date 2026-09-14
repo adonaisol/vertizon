@@ -64,20 +64,20 @@
 
 ```mermaid
 flowchart TD
-    Load[App loads bundled JSON:\nemployees + rubric + extractions] --> Map
-    Map[Calibration map\nX evidence · Y rating\nper-manager fit lines] --> Agenda[Agenda panel\nDiscuss / Get more input / Consistent]
+    Load[App loads bundled JSON:<br>employees + rubric + extractions] --> Map
+    Map[Calibration map<br>X evidence · Y rating<br>per-manager fit lines] --> Agenda[Agenda panel<br>Discuss / Get more input / Consistent]
     Map -- click point --> Drill[Employee drilldown]
     Agenda -- click row --> Drill
-    Drill --> Review[Review text\nquotes highlighted]
-    Drill --> Evidence[Evidence list\nlevel dropdowns]
-    Drill --> Bars[Under other managers' bars\nrange + n]
+    Drill --> Review[Review text<br>quotes highlighted]
+    Drill --> Evidence[Evidence list<br>level dropdowns]
+    Drill --> Bars[Under other managers' bars<br>range + n]
     Drill --> Rerun[Re-run with Claude]
-    Evidence -- override level --> Recompute[Recompute strength\n+ manager fits]
+    Evidence -- override level --> Recompute[Recompute strength<br>+ manager fits]
     Recompute --> Map
     Recompute --> Bars
-    Rerun -- no key --> KeyModal[Paste API key\nstored in React state only]
+    Rerun -- no key --> KeyModal[Paste API key<br>stored in React state only]
     KeyModal --> Rerun
-    Rerun -- key present --> API[api.anthropic.com\nsame prompt, zod-validated]
-    API --> Diff[Side-by-side:\nbundled vs live extraction]
+    Rerun -- key present --> API[api.anthropic.com<br>same prompt, zod-validated]
+    API --> Diff[Side-by-side:<br>bundled vs live extraction]
     Drill -- back --> Agenda
 ```
