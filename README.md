@@ -2,7 +2,7 @@
 
 A tool for performance-review **calibration meetings**: the meeting where managers compare the ratings they gave their reports so that "Exceeds" means the same thing on every team. It answers one question for each rating: *is this rating supported by the evidence written in the review, or does it mostly reflect who wrote it?*
 
-**Live demo:** <NETLIFY URL>
+**Live demo:** https://vertizon.netlify.app
 
 ![Calibration Map: rating vs. evidence chart on the left, meeting agenda on the right](docs/img/calibration-map.png)
 

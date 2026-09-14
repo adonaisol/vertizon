@@ -69,7 +69,7 @@ Authentication, editing reviews, export, multi-cycle history, per-manager scorec
 
 ## 7. Time spent
 
-About 324 minutes of active work as of the last entry in `docs/TIMELOG.md`, excluding breaks and including roughly 10 minutes of pre-reading on the day the brief arrived. The first 276 minutes covered the build; the rest was the author's review, a UX pass from that review, and the README rewrite.
+About 332 minutes of active work as of the last entry in `docs/TIMELOG.md`, excluding breaks and including roughly 10 minutes of pre-reading on the day the brief arrived. The first 276 minutes covered the build; the rest was the author's review, a UX pass from that review, the README rewrite, and deployment.
 
 ## 8. Disclosure
 
