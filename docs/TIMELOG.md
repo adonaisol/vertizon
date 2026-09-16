@@ -29,8 +29,10 @@ reported by the author and cross-checked against gaps in the transcript.
 | 09-14 07:46 | 08:07 | 6m | Author: created the GitHub repo and pushed; manual Netlify deploy (reported by the author; 6 of the 21 wall-clock minutes) |
 | 09-14 08:07 | 08:08 | 1m | README live-demo URL; time log |
 | 09-14 08:13 | 08:30 | 17m | Time-log audit against transcript timestamps; transcripts exported into `public/transcripts/` and linked from the README |
+| 09-14 08:25 | 08:28 | 3m | Author: Regenerated final transcript, ended Claude session, redeployed app to Netlify with new `/transcripts` path |
+| 09-16 ~22:15 | ~23:30 | 75m | Author: Preparing explanation doc, presentation slides and explainer video |
 
-**Running total: ~344 min active** (as of 2026-09-14 08:30, including the ~10 min of pre-work). Deployed at https://vertizon.netlify.app.
+**Running total: ~347 min active** (as of 2026-09-14 08:30, including the ~10 min of pre-work). Deployed at https://vertizon.netlify.app.
 
 Audit (2026-09-14): every row above was checked against the timestamps of the Claude Code sessions, including subagent sessions. Transcript-backed activity on 09-13 sums to ~271 min against 266 logged; on 09-14 the transcript-backed rows are exact to the minute and the author-reported rows (review, push/deploy) fit inside the gaps. The one thing the transcript cannot show is whether the author was at the keyboard during the autonomous build window (13:22–15:26 on 09-13); it is logged as active because the author was directing and reviewing throughout (Chrome extension set up at 15:26, browser checks after).
 
